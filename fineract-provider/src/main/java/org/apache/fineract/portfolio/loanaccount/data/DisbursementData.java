@@ -20,6 +20,7 @@ package org.apache.fineract.portfolio.loanaccount.data;
 
 import java.math.BigDecimal;
 
+import org.apache.fineract.infrastructure.bulkimport.constants.TemplatePopulateImportConstants;
 import org.joda.time.LocalDate;
 
 /**
@@ -35,15 +36,49 @@ public class DisbursementData implements Comparable<DisbursementData> {
     @SuppressWarnings("unused")
     private final String loanChargeId;
     private final BigDecimal chargeAmount;
+    private final BigDecimal waivedChargeAmount;
+
+    //import fields
+    private transient Integer rowIndex;
+    private String dateFormat;
+    private String locale;
+    private String note;
+    private transient String linkAccountId;
+
+    public  static DisbursementData importInstance(LocalDate actualDisbursementDate,String linkAccountId,
+            Integer rowIndex,String locale,String dateFormat){
+        return new DisbursementData(actualDisbursementDate,linkAccountId,rowIndex,locale,dateFormat);
+    }
+    private DisbursementData(LocalDate actualDisbursementDate,String linkAccountId,
+            Integer rowIndex,String locale,String dateFormat) {
+        this.dateFormat= dateFormat;
+        this.locale= locale;
+        this.actualDisbursementDate = actualDisbursementDate;
+        this.rowIndex = rowIndex;
+        this.note="";
+        this.linkAccountId=linkAccountId;
+        this.id=null;
+        this.expectedDisbursementDate=null;
+        this.principal=null;
+        this.loanChargeId=null;
+        this.chargeAmount=null;
+        this.waivedChargeAmount=null;
+
+    }
+
+    public String getLinkAccountId() {
+        return linkAccountId;
+    }
 
     public DisbursementData(Long id, final LocalDate expectedDisbursementDate, final LocalDate actualDisbursementDate,
-            final BigDecimal principalDisbursed, final String loanChargeId, BigDecimal chargeAmount) {
+            final BigDecimal principalDisbursed, final String loanChargeId, BigDecimal chargeAmount, BigDecimal waivedChargeAmount) {
         this.id = id;
         this.expectedDisbursementDate = expectedDisbursementDate;
         this.actualDisbursementDate = actualDisbursementDate;
         this.principal = principalDisbursed;
         this.loanChargeId = loanChargeId;
         this.chargeAmount = chargeAmount;
+        this.waivedChargeAmount = waivedChargeAmount;
     }
 
     public LocalDate disbursementDate() {
@@ -81,6 +116,14 @@ public class DisbursementData implements Comparable<DisbursementData> {
     private boolean occursOnDayFromAndUpToAndIncluding(final LocalDate fromNotInclusive, final LocalDate upToAndInclusive,
             final LocalDate target) {
         return target != null && target.isAfter(fromNotInclusive) && !target.isAfter(upToAndInclusive);
+    }
+
+    
+    public BigDecimal getWaivedChargeAmount() {
+        if(this.waivedChargeAmount == null){
+            return BigDecimal.ZERO;
+        }
+        return this.waivedChargeAmount;
     }
 
 }

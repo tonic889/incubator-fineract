@@ -115,6 +115,7 @@ import org.apache.fineract.portfolio.loanaccount.exception.LoanOfficerUnassignme
 import org.apache.fineract.portfolio.loanaccount.exception.MultiDisbursementDataRequiredException;
 import org.apache.fineract.portfolio.loanaccount.exception.UndoLastTrancheDisbursementException;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.data.LoanScheduleDTO;
+import org.apache.fineract.portfolio.loanaccount.loanschedule.data.LoanScheduleParams;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.domain.AprCalculator;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.domain.LoanApplicationTerms;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.domain.LoanScheduleGenerator;
@@ -862,7 +863,11 @@ public class Loan extends AbstractPersistableCustom<Long> {
             break;
             case PERCENT_OF_AMOUNT_AND_INTEREST:
                 final BigDecimal totalInterestCharged = getTotalInterest();
-                amount = getPrincpal().getAmount().add(totalInterestCharged);
+                if (isMultiDisburmentLoan() && loanCharge.isDisbursementCharge()) {
+                    amount = getTotalAllTrancheDisbursementAmount().getAmount().add(totalInterestCharged);
+                }else{
+                    amount = getPrincpal().getAmount().add(totalInterestCharged);
+                }
             break;
             case PERCENT_OF_INTEREST:
                 amount = getTotalInterest();
@@ -878,6 +883,31 @@ public class Loan extends AbstractPersistableCustom<Long> {
             break;
         }
         return amount;
+    }
+
+    private Money getTotalAllTrancheDisbursementAmount() {
+        Money amount = Money.zero(getCurrency());
+        if (isMultiDisburmentLoan()) {
+            for (final LoanDisbursementDetails loanDisbursementDetail : this.disbursementDetails) {
+                amount = amount.plus(loanDisbursementDetail.principal());
+            }
+        }
+        return amount;
+    }
+
+    private boolean isFirstTrancheDisbursement() {
+        if (isMultiDisburmentLoan()) {
+            int totalTranchDisbursementCount = 0;
+            for (final LoanDisbursementDetails loanDisbursementDetail : this.disbursementDetails) {
+                if(loanDisbursementDetail.actualDisbursementDate() != null){
+                    totalTranchDisbursementCount++;
+                }
+            }
+            if(totalTranchDisbursementCount < 2){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -2587,10 +2617,24 @@ public class Loan extends AbstractPersistableCustom<Long> {
         final RoundingMode roundingMode = MoneyHelper.getRoundingMode();
         final MathContext mc = new MathContext(8, roundingMode);
 
-        final InterestMethod interestMethod = this.loanRepaymentScheduleDetail.getInterestMethod();
         final LoanApplicationTerms loanApplicationTerms = constructLoanApplicationTerms(scheduleGeneratorDTO);
-
-        final LoanScheduleGenerator loanScheduleGenerator = scheduleGeneratorDTO.getLoanScheduleFactory().create(interestMethod);
+        LoanScheduleGenerator loanScheduleGenerator = null;
+        if (loanApplicationTerms.isEqualAmortization()) {
+            if (loanApplicationTerms.getInterestMethod().isDecliningBalnce()) {
+                final LoanScheduleGenerator decliningLoanScheduleGenerator = scheduleGeneratorDTO.getLoanScheduleFactory().create(
+                        InterestMethod.DECLINING_BALANCE);
+                Set<LoanCharge> loanCharges = charges();
+                LoanScheduleModel loanSchedule = decliningLoanScheduleGenerator.generate(mc, loanApplicationTerms, loanCharges, scheduleGeneratorDTO.getHolidayDetailDTO());
+                
+                loanApplicationTerms.updateTotalInterestDue(Money.of(loanApplicationTerms.getCurrency(), loanSchedule.getTotalInterestCharged()));
+                
+                
+            }
+            loanScheduleGenerator = scheduleGeneratorDTO.getLoanScheduleFactory().create(InterestMethod.FLAT);
+        } else {
+            loanScheduleGenerator = scheduleGeneratorDTO.getLoanScheduleFactory().create(loanApplicationTerms.getInterestMethod());
+        }
+        
         final LoanScheduleModel loanSchedule = loanScheduleGenerator.generate(mc, loanApplicationTerms, charges(),
                 scheduleGeneratorDTO.getHolidayDetailDTO());
         return loanSchedule;
@@ -3167,7 +3211,7 @@ public class Loan extends AbstractPersistableCustom<Long> {
 
         boolean isAllChargesPaid = true;
         for (final LoanCharge loanCharge : this.charges) {
-            if (loanCharge.isActive() && !(loanCharge.isPaid() || loanCharge.isWaived())) {
+            if (loanCharge.isActive() && loanCharge.amount().compareTo(BigDecimal.ZERO) == 1 && !(loanCharge.isPaid() || loanCharge.isWaived())) {
                 isAllChargesPaid = false;
                 break;
             }
@@ -3845,7 +3889,11 @@ public class Loan extends AbstractPersistableCustom<Long> {
         return disbursementDate;
     }
 
-    public LocalDate getWrittenOffDate() {
+	public void setActualDisbursementDate(Date actualDisbursementDate) {
+		this.actualDisbursementDate = actualDisbursementDate;
+	}
+
+	public LocalDate getWrittenOffDate() {
         LocalDate writtenOffDate = null;
         if (this.writtenOffOnDate != null) {
             writtenOffDate = new LocalDate(this.writtenOffOnDate);
@@ -4706,11 +4754,14 @@ public class Loan extends AbstractPersistableCustom<Long> {
         return loanCharges;
     }
 
-    public Set<LoanInstallmentCharge> generateInstallmentLoanCharges(final LoanCharge loanCharge) {
-        final Set<LoanInstallmentCharge> loanChargePerInstallments = new HashSet<>();
+    public List<LoanInstallmentCharge> generateInstallmentLoanCharges(final LoanCharge loanCharge) {
+        final List<LoanInstallmentCharge> loanChargePerInstallments = new ArrayList<>();
         if (loanCharge.isInstalmentFee()) {
             List<LoanRepaymentScheduleInstallment> installments = getRepaymentScheduleInstallments() ;
             for (final LoanRepaymentScheduleInstallment installment : installments) {
+            	if(installment.isRecalculatedInterestComponent()){
+            		continue;
+            	}
                 BigDecimal amount = BigDecimal.ZERO;
                 if (loanCharge.getChargeCalculation().isFlat()) {
                     amount = loanCharge.amountOrPercentage();
@@ -5070,11 +5121,11 @@ public class Loan extends AbstractPersistableCustom<Long> {
         this.interestRecalculatedOn = DateUtils.getDateOfTenant();
         LocalDate lastRepaymentDate = this.getLastRepaymentPeriodDueDate(true);
         Set<LoanCharge> charges = this.charges();
-        for (LoanCharge loanCharge : charges) {
+        for (final LoanCharge loanCharge : charges) {
             if (!loanCharge.isDueAtDisbursement()) {
                 updateOverdueScheduleInstallment(loanCharge);
                 if (loanCharge.getDueLocalDate() == null || (!lastRepaymentDate.isBefore(loanCharge.getDueLocalDate()))) {
-                    if (!loanCharge.isWaived()
+                    if ((loanCharge.isInstalmentFee() || !loanCharge.isWaived())
                             && (loanCharge.getDueLocalDate() == null || !lastTransactionDate.isAfter(loanCharge.getDueLocalDate()))) {
                         recalculateLoanCharge(loanCharge, generatorDTO.getPenaltyWaitPeriod());
                         loanCharge.updateWaivedAmount(getCurrency());
@@ -5540,23 +5591,26 @@ public class Loan extends AbstractPersistableCustom<Long> {
             if (loanDisbursementDetails.actualDisbursementDate() != null) {
                 actualDisbursementDate = new LocalDate(loanDisbursementDetails.actualDisbursementDate());
             }
-
+            BigDecimal waivedChargeAmount = null;
             disbursementData.add(new DisbursementData(loanDisbursementDetails.getId(), expectedDisbursementDate, actualDisbursementDate,
-                    loanDisbursementDetails.principal(), null, null));
+                    loanDisbursementDetails.principal(), null, null, waivedChargeAmount));
         }
 
         return disbursementData;
     }
 
     /**
+     * @param applicationCurrency
      * @param restCalendarInstance
      *            TODO
      * @param compoundingCalendarInstance
      *            TODO
+     * @param loanCalendar
      * @param floatingRateDTO
      *            TODO
-     * @param isChangeEmiIfRepaymentDateSameAsDisbursementDateEnabled 
-     * @param loanCalendarInstance
+     * @param isSkipRepaymentonmonthFirst
+     * @param numberofdays
+     * @param holidayDetailDTO
      *            Used for accessing the loan's calendar object
      * @return application terms of the Loan object
      **/
@@ -6036,12 +6090,24 @@ public class Loan extends AbstractPersistableCustom<Long> {
         return nextRepaymentDate;
     }
 
-    public BigDecimal getDerivedAmountForCharge(LoanCharge loanCharge) {
+    public BigDecimal getDerivedAmountForCharge(final LoanCharge loanCharge) {
         BigDecimal amount = BigDecimal.ZERO;
         if (isMultiDisburmentLoan() && (loanCharge.getCharge().getChargeTimeType() == ChargeTimeType.DISBURSEMENT.getValue())) {
             amount = getApprovedPrincipal();
         } else {
-            amount = getPrincpal().getAmount();
+            // If charge type is specified due date and loan is multi disburment
+            // loan.
+            // Then we need to get as of this loan charge due date how much
+            // amount disbursed.
+            if (loanCharge.isSpecifiedDueDate() && this.isMultiDisburmentLoan()) {
+                for (final LoanDisbursementDetails loanDisbursementDetails : this.getDisbursementDetails()) {
+                    if (!loanDisbursementDetails.expectedDisbursementDate().after(loanCharge.getDueDate())) {
+                        amount = amount.add(loanDisbursementDetails.principal());
+                    }
+                }
+            } else {
+                amount = getPrincpal().getAmount();
+            }
         }
         return amount;
     }

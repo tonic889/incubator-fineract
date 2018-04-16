@@ -49,6 +49,8 @@ import org.apache.fineract.infrastructure.dataqueries.exception.DatatableEntryRe
 import org.apache.fineract.infrastructure.dataqueries.exception.DatatableNotFoundException;
 import org.apache.fineract.infrastructure.dataqueries.exception.DatatableSystemErrorException;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
+import org.apache.fineract.infrastructure.security.utils.ColumnValidator;
+import org.apache.fineract.infrastructure.security.utils.SQLInjectionValidator;
 import org.apache.fineract.useradministration.domain.AppUser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -105,6 +107,7 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
     private final ConfigurationDomainService configurationDomainService;
     private final CodeReadPlatformService codeReadPlatformService;
     private final DataTableValidator dataTableValidator;
+    private final ColumnValidator columnValidator;
 
     // private final GlobalConfigurationWritePlatformServiceJpaRepositoryImpl
     // configurationWriteService;
@@ -113,7 +116,8 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
     public ReadWriteNonCoreDataServiceImpl(final RoutingDataSource dataSource, final PlatformSecurityContext context,
             final FromJsonHelper fromJsonHelper, final GenericDataService genericDataService,
             final DatatableCommandFromApiJsonDeserializer fromApiJsonDeserializer, final CodeReadPlatformService codeReadPlatformService,
-            final ConfigurationDomainService configurationDomainService, final DataTableValidator dataTableValidator) {
+            final ConfigurationDomainService configurationDomainService, final DataTableValidator dataTableValidator,
+            final ColumnValidator columnValidator) {
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(this.dataSource);
         this.context = context;
@@ -124,6 +128,7 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
         this.codeReadPlatformService = codeReadPlatformService;
         this.configurationDomainService = configurationDomainService;
         this.dataTableValidator = dataTableValidator;
+        this.columnValidator = columnValidator;
         // this.configurationWriteService = configurationWriteService;
     }
 
@@ -134,6 +139,7 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
         if (appTable == null) {
             andClause = "";
         } else {
+        	SQLInjectionValidator.validateSQLInput(appTable);
             andClause = " and application_table_name = '" + appTable + "'";
         }
 
@@ -164,6 +170,7 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
     public DatatableData retrieveDatatable(final String datatable) {
 
         // PERMITTED datatables
+    	SQLInjectionValidator.validateSQLInput(datatable);
         final String sql = "select application_table_name, registered_table_name" + " from x_registered_table " + " where exists"
                 + " (select 'f'" + " from m_appuser_role ur " + " join m_role r on r.id = ur.role_id"
                 + " left join m_role_permission rp on rp.role_id = r.id" + " left join m_permission p on p.id = rp.permission_id"
@@ -859,7 +866,7 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
             final String apptableName = this.fromJsonHelper.extractStringNamed("apptableName", element);
 
             validateDatatableName(datatableName);
-
+            int rowCount = getRowCount(datatableName);
             final List<ResultsetColumnHeaderData> columnHeaderData = this.genericDataService.fillResultsetColumnHeaders(datatableName);
             final Map<String, ResultsetColumnHeaderData> mapColumnNameDefinition = new HashMap<>();
             for (final ResultsetColumnHeaderData columnHeader : columnHeaderData) {
@@ -905,7 +912,10 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
             if (changeColumns == null && addColumns == null && dropColumns == null) { return; }
 
             if (dropColumns != null) {
-
+                if(rowCount>0){
+                	throw new GeneralPlatformDomainRuleException("error.msg.non.empty.datatable.column.cannot.be.deleted",
+                            "Non-empty datatable columns can not be deleted.");
+                }
                 StringBuilder sqlBuilder = new StringBuilder("ALTER TABLE `" + datatableName + "`");
                 final StringBuilder constrainBuilder = new StringBuilder();
                 final List<String> codeMappings = new ArrayList<>();
@@ -928,7 +938,12 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
                 final StringBuilder constrainBuilder = new StringBuilder();
                 final Map<String, Long> codeMappings = new HashMap<>();
                 for (final JsonElement column : addColumns) {
-                    parseDatatableColumnForAdd(column.getAsJsonObject(), sqlBuilder, datatableName.toLowerCase().replaceAll("\\s", "_"),
+                	JsonObject columnAsJson = column.getAsJsonObject();
+                	if(rowCount>0 && columnAsJson.has("mandatory") && columnAsJson.get("mandatory").getAsBoolean()){
+                		throw new GeneralPlatformDomainRuleException("error.msg.non.empty.datatable.mandatory.column.cannot.be.added",
+                                "Non empty datatable mandatory columns can not be added.");
+                	}
+                    parseDatatableColumnForAdd(columnAsJson, sqlBuilder, datatableName.toLowerCase().replaceAll("\\s", "_"),
                             constrainBuilder, codeMappings, isConstraintApproach);
                 }
 
@@ -1047,10 +1062,14 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
     }
 
     private void assertDataTableEmpty(final String datatableName) {
-        final String sql = "select count(*) from `" + datatableName + "`";
-        final int rowCount = this.jdbcTemplate.queryForObject(sql, Integer.class);
+        final int rowCount = getRowCount(datatableName);
         if (rowCount != 0) { throw new GeneralPlatformDomainRuleException("error.msg.non.empty.datatable.cannot.be.deleted",
                 "Non-empty datatable cannot be deleted."); }
+    }
+    
+    private int getRowCount(final String datatableName){
+    	final String sql = "select count(*) from `" + datatableName + "`";
+        return this.jdbcTemplate.queryForObject(sql, Integer.class);
     }
 
     @Transactional
@@ -1161,11 +1180,14 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
         // id only used for reading a specific entry in a one to many datatable
         // (when updating)
         if (id == null) {
-            sql = sql + "select * from `" + dataTableName + "` where " + getFKField(appTable) + " = " + appTableId;
+        	String whereClause = getFKField(appTable) + " = " + appTableId;
+        	SQLInjectionValidator.validateSQLInput(whereClause);
+            sql = sql + "select * from `" + dataTableName + "` where " + whereClause;
         } else {
             sql = sql + "select * from `" + dataTableName + "` where id = " + id;
         }
 
+        this.columnValidator.validateSqlInjection(sql, order);
         if (order != null) {
             sql = sql + " order by " + order;
         }
@@ -1185,7 +1207,9 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
         // id only used for reading a specific entry in a one to many datatable
         // (when updating)
         if (id == null) {
-            sql = sql + "select * from `" + dataTableName + "` where " + getFKField(appTable) + " = " + appTableId;
+        	String whereClause = getFKField(appTable) + " = " + appTableId;
+        	SQLInjectionValidator.validateSQLInput(whereClause);
+            sql = sql + "select * from `" + dataTableName + "` where " + whereClause;
         } else {
             sql = sql + "select * from `" + dataTableName + "` where id = " + id;
         }
@@ -1333,6 +1357,7 @@ public class ReadWriteNonCoreDataServiceImpl implements ReadWriteNonCoreDataServ
     }
 
     private String queryForApplicationTableName(final String datatable) {
+    	SQLInjectionValidator.validateSQLInput(datatable);
         final String sql = "SELECT application_table_name FROM x_registered_table where registered_table_name = '" + datatable + "'";
 
         final SqlRowSet rs = this.jdbcTemplate.queryForRowSet(sql);

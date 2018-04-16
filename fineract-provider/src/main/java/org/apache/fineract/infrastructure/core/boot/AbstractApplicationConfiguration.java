@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.infrastructure.core.boot;
 
+import org.apache.fineract.notification.config.MessagingConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -32,7 +33,7 @@ import org.springframework.context.annotation.PropertySource;
  * Base Spring Configuration with what's common to all Configuration subclasses.
  *
  * Notably the EnableAutoConfiguration excludes relevant for (and often adjusted
- * when upgrading versions of) Spring Boot, the "old" (pre. Spring Boot &
+ * when upgrading versions of) Spring Boot, the "old" (pre. Spring Boot &amp;
  * MariaDB4j) fineract appContext.xml which all configurations need, and the
  * web.xml successor WebXmlConfiguration.
  *
@@ -40,7 +41,8 @@ import org.springframework.context.annotation.PropertySource;
  * and MariaDB4j (because those differ in the subclasses).
  */
 @Configuration
-@Import({ WebXmlConfiguration.class, WebXmlOauthConfiguration.class, WebFrontEndConfiguration.class })
+@Import({ WebXmlConfiguration.class, WebXmlOauthConfiguration.class, WebFrontEndConfiguration.class,
+	MessagingConfiguration.class, WebTwoFactorXmlConfiguration.class })
 @ImportResource({ "classpath*:META-INF/spring/appContext.xml" })
 @PropertySource(value="classpath:META-INF/spring/jdbc.properties")
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class,

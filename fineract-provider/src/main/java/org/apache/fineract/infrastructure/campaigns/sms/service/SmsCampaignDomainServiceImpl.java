@@ -34,6 +34,8 @@ import javax.annotation.PostConstruct;
 import org.apache.fineract.infrastructure.campaigns.sms.constants.SmsCampaignTriggerType;
 import org.apache.fineract.infrastructure.campaigns.sms.domain.SmsCampaign;
 import org.apache.fineract.infrastructure.campaigns.sms.domain.SmsCampaignRepository;
+import org.apache.fineract.infrastructure.campaigns.sms.exception.SmsRuntimeException;
+import org.apache.fineract.infrastructure.campaigns.sms.serialization.SmsCampaignValidator;
 import org.apache.fineract.infrastructure.sms.domain.SmsMessage;
 import org.apache.fineract.infrastructure.sms.domain.SmsMessageRepository;
 import org.apache.fineract.infrastructure.sms.scheduler.SmsMessageScheduledJobService;
@@ -76,13 +78,15 @@ public class SmsCampaignDomainServiceImpl implements SmsCampaignDomainService {
     private final GroupRepository groupRepository;
 
     private final SmsMessageScheduledJobService smsMessageScheduledJobService; 
+    private final SmsCampaignValidator smsCampaignValidator;
     
     @Autowired
     public SmsCampaignDomainServiceImpl(final SmsCampaignRepository smsCampaignRepository, final SmsMessageRepository smsMessageRepository,
                                         final BusinessEventNotifierService businessEventNotifierService, final OfficeRepository officeRepository,
                                         final SmsCampaignWritePlatformService smsCampaignWritePlatformCommandHandler,
                                         final GroupRepository groupRepository,
-                                        final SmsMessageScheduledJobService smsMessageScheduledJobService){
+                                        final SmsMessageScheduledJobService smsMessageScheduledJobService,
+                                        final SmsCampaignValidator smsCampaignValidator){
         this.smsCampaignRepository = smsCampaignRepository;
         this.smsMessageRepository = smsMessageRepository;
         this.businessEventNotifierService = businessEventNotifierService;
@@ -90,6 +94,7 @@ public class SmsCampaignDomainServiceImpl implements SmsCampaignDomainService {
         this.smsCampaignWritePlatformCommandHandler = smsCampaignWritePlatformCommandHandler;
         this.groupRepository = groupRepository;
         this.smsMessageScheduledJobService = smsMessageScheduledJobService ;
+        this.smsCampaignValidator = smsCampaignValidator;
     }
 
     @PostConstruct
@@ -204,20 +209,25 @@ public class SmsCampaignDomainServiceImpl implements SmsCampaignDomainService {
 										Office campaignOffice = this.officeRepository.findOne(Long.valueOf(value));
 										if (campaignOffice
 												.doesNotHaveAnOfficeInHierarchyWithId(client.getOffice().getId())) {
-											throw new RuntimeException();
+											throw new SmsRuntimeException("error.msg.no.office",
+													"Office not found for the id");
 										}
 									} else {
-										throw new RuntimeException();
+										throw new SmsRuntimeException("error.msg.no.id.attribute",
+												"Office Id attribute is notfound");
 									}
 								}
 							}
 							String message = this.smsCampaignWritePlatformCommandHandler.compileSmsTemplate(
 									smsCampaign.getMessage(), smsCampaign.getCampaignName(), smsParams);
 							Object mobileNo = smsParams.get("mobileNo");
-							if (mobileNo != null) {
+							if (this.smsCampaignValidator.isValidNotificationOrSms(client, smsCampaign, mobileNo)) {
+								String mobileNumber = null;
+		                    	if(mobileNo != null){
+		                    		mobileNumber = mobileNo.toString();
+		                    	}
 								SmsMessage smsMessage = SmsMessage.pendingSms(null, null, client, null, message,
-										mobileNo.toString(), smsCampaign);
-								this.smsMessageRepository.save(smsMessage);
+										mobileNumber, smsCampaign, smsCampaign.isNotification());
 								Collection<SmsMessage> messages = new ArrayList<>();
 								messages.add(smsMessage);
 								Map<SmsCampaign, Collection<SmsMessage>> smsDataMap = new HashMap<>();
@@ -258,19 +268,25 @@ public class SmsCampaignDomainServiceImpl implements SmsCampaignDomainService {
 							if (key.equals("officeId")) {
 								Office campaignOffice = this.officeRepository.findOne(Long.valueOf(value));
 								if (campaignOffice.doesNotHaveAnOfficeInHierarchyWithId(client.getOffice().getId())) {
-									throw new RuntimeException();
+									throw new SmsRuntimeException("error.msg.no.office",
+											"Office not found for the id");
 								}
 							} else {
-								throw new RuntimeException();
+								throw new SmsRuntimeException("error.msg.no.id.attribute",
+										"Office Id attribute is notfound");
 							}
 						}
 					}
 					String message = this.smsCampaignWritePlatformCommandHandler
 							.compileSmsTemplate(smsCampaign.getMessage(), smsCampaign.getCampaignName(), smsParams);
 					Object mobileNo = smsParams.get("mobileNo");
-					if (mobileNo != null) {
+					if (this.smsCampaignValidator.isValidNotificationOrSms(client, smsCampaign, mobileNo)) {
+						String mobileNumber = null;
+                    	if(mobileNo != null){
+                    		mobileNumber = mobileNo.toString();
+                    	}
 						SmsMessage smsMessage = SmsMessage.pendingSms(null, null, client, null, message,
-								mobileNo.toString(), smsCampaign);
+								mobileNumber, smsCampaign, smsCampaign.isNotification());
 						this.smsMessageRepository.save(smsMessage);
 						Collection<SmsMessage> messages = new ArrayList<>();
 						messages.add(smsMessage);
