@@ -306,7 +306,7 @@ public class LoanReadPlatformServiceImpl implements LoanReadPlatformService {
             String sqlQueryCriteria = searchParameters.getSqlSearch();
             if (StringUtils.isNotBlank(sqlQueryCriteria)) {
                 SQLInjectionValidator.validateSQLInput(sqlQueryCriteria);
-                sqlQueryCriteria = sqlQueryCriteria.replaceAll("accountNo", "l.account_no");
+                sqlQueryCriteria = sqlQueryCriteria.replace("accountNo", "l.account_no");
                 this.columnValidator.validateSqlInjection(sqlBuilder.toString(), sqlQueryCriteria);
                 sqlBuilder.append(" and (").append(sqlQueryCriteria).append(")");
             }
@@ -1530,7 +1530,7 @@ public class LoanReadPlatformServiceImpl implements LoanReadPlatformService {
     @Override
     public Collection<DisbursementData> retrieveLoanDisbursementDetails(final Long loanId) {
         final LoanDisbursementDetailMapper rm = new LoanDisbursementDetailMapper();
-        final String sql = "select " + rm.schema() + " where dd.loan_id=? group by dd.id order by dd.expected_disburse_date";
+        final String sql = "select " + rm.schema() + " where dd.loan_id=? group by dd.id, lc.amount_waived_derived order by dd.expected_disburse_date";
         return this.jdbcTemplate.query(sql, rm, new Object[] { loanId });
     }
 
@@ -1562,7 +1562,7 @@ public class LoanReadPlatformServiceImpl implements LoanReadPlatformService {
     @Override
     public DisbursementData retrieveLoanDisbursementDetail(Long loanId, Long disbursementId) {
         final LoanDisbursementDetailMapper rm = new LoanDisbursementDetailMapper();
-        final String sql = "select " + rm.schema() + " where dd.loan_id=? and dd.id=?";
+        final String sql = "select " + rm.schema() + " where dd.loan_id=? and dd.id=? group by dd.id, lc.amount_waived_derived";
         return this.jdbcTemplate.queryForObject(sql, rm, new Object[] { loanId, disbursementId });
     }
 
@@ -2197,5 +2197,24 @@ public class LoanReadPlatformServiceImpl implements LoanReadPlatformService {
         }
 
     }
-    
+
+	@Override
+	public Long retrieveLoanIdByAccountNumber(String loanAccountNumber) {
+		try {
+			return this.jdbcTemplate.queryForObject("select l.id from m_loan l where l.account_no = ?",
+					new Object[] { loanAccountNumber }, Long.class);
+
+		} catch (final EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
+	public String retrieveAccountNumberByAccountId(Long accountId) {
+		try {
+			final String sql = "select loan.account_no from m_loan loan where loan.id = ?";
+			return this.jdbcTemplate.queryForObject(sql, new Object[] { accountId }, String.class);
+		} catch (final EmptyResultDataAccessException e) {
+			throw new LoanNotFoundException(accountId);
+		}
+	}
 }

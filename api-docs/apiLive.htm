@@ -122,49 +122,50 @@
 				<div id="toc-menu-client" class="flybar-menu">
 					<div class="tocMatrix">
 						<table class=matrixHeading>
-							<tr class="matrixHeadingBG">
-								<td colspan=2 valign="top"><div class="matrixHeadingVerbs">
-										<table>
-											<tr>
-												<td>RESOURCES</td>
-											</tr>
-										</table>
-									</div></td>
-								<td><table>
-										<tr>
-											<td><div class="matrixHeadingVerbs">POST</div></td>
-										</tr>
-										<tr>
-											<td><div class=matrixHeadingCommands>create/complex
-													update</div></td>
-										</tr>
-									</table></td>
-								<td><table>
-										<tr>
-											<td><div class="matrixHeadingVerbs">GET</div></td>
-										</tr>
-										<tr>
-											<td><div class=matrixHeadingCommands>read</div></td>
-										</tr>
-									</table></td>
-								<td><table>
-										<tr>
-											<td><div class="matrixHeadingVerbs">PUT</div></td>
-										</tr>
-										<tr>
-											<td><div class=matrixHeadingCommands>update</div></td>
-										</tr>
-									</table></td>
-								<td><table>
-										<tr>
-											<td><div class="matrixHeadingVerbs">DELETE</div></td>
-										</tr>
-										<tr>
-											<td><div class=matrixHeadingCommands>delete</div></td>
-										</tr>
-									</table></td>
-							</tr>
-							<tr>
+                            <tr class="matrixHeadingBG">
+                                <td colspan=2 valign="top"><div class="matrixHeadingVerbs">
+                                    <table>
+                                        <tr>
+                                            <td>RESOURCES</td>
+                                        </tr>
+                                    </table>
+                                </div></td>
+                                <td><table>
+                                    <tr>
+                                        <td><div class="matrixHeadingVerbs">POST</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class=matrixHeadingCommands>create/complex
+                                            update</div></td>
+                                    </tr>
+                                </table></td>
+                                <td><table>
+                                    <tr>
+                                        <td><div class="matrixHeadingVerbs">GET</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class=matrixHeadingCommands>read</div></td>
+                                    </tr>
+                                </table></td>
+                                <td><table>
+                                    <tr>
+                                        <td><div class="matrixHeadingVerbs">PUT</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class=matrixHeadingCommands>update</div></td>
+                                    </tr>
+                                </table></td>
+                                <td><table>
+                                    <tr>
+                                        <td><div class="matrixHeadingVerbs">DELETE</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class=matrixHeadingCommands>delete</div></td>
+                                    </tr>
+                                </table></td>
+                            </tr>
+
+                            <tr>
 								<td><a href="#clients">Client</a></td>
 								<td>clients</td>
 								<td><a href="#clients_create">Create a Client</a></td>
@@ -319,7 +320,7 @@
                             <tr>
                                 <td><a href="#entity_field_list">Entity Field Configuration</a></td>
                                 <td>fieldconfiguration/{entity}</td>
-                                td></td>
+                                <td></td>
                                 <td><a href="#entity_field_list">List all configuration for a entity</a></td>
                                 <td></td>
                                 <td></td>
@@ -455,7 +456,7 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td><a href="#client_transactions">Client Transactions</td>
+                                <td><a href="#client_transactions">Client Transactions</a></td>
 								<td>clients/{clientId}/transactions</td>
 								<td><a href="#list_clientTransactions">List Client Transactions</a></td>
 								<td></td>
@@ -1970,7 +1971,7 @@
 							</tr>
 							<tr>
 								<td></td>
-								<td>provisioningentries/{entryId}</td>P
+								<td>provisioningentries/{entryId}</td>
 								<td></td>
 								<td><a href="#provisioningentry_retrieve">Retrieve Provisioning Entry</a></td>
 								<td><a href="#provisioningentry_recreate">Recreates Provisionin Entry</a></td>
@@ -3602,6 +3603,80 @@
 								<td></td>
 							</tr>
 							<tr>
+								<td></td>
+								<td>self/clients/{clientId}/images</td>
+								<td><a href="#self_client_images_upload">Upload client image (Data URI)</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/clients/{clientId}/images</td>
+								<td><a href="#self_client_images_upload_multi_part">Upload client image (Multi-part Form data)</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/clients/{clientId}/images</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><a href="#self_client_image_delete">Delete client image</a></td>
+							</tr>
+							<tr>
+								<td><a href="#self_loanproducts">Loan Product</a></td>
+								<td>self/loanproducts?clientId={clientId}</td>
+								<td></td>
+								<td><a href="#self_loanproducts_list">List Loan Products</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/loanproducts/{productId}?clientId={clientId}</td>
+								<td></td>
+								<td><a href="#self_loanproducts_retrieve">Retrieve a Loan
+										Product</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#self_savingsproducts">Savings Product</a></td>
+								<td>self/savingsproducts?clientId={clientId}</td>
+								<td></td>
+								<td><a href="#self_savingsproducts_list">List Savings products</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td></td>
+								<td>self/savingsproducts/{productId}?clientId={clientId}</td>
+								<td></td>
+								<td><a href="#self_savingsproducts_retrieve">Retrieve a savings product</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#self_shareproducts_list">Share Product</a></td>
+								<td>self/shareproducts?clientId={clientId}</td>
+								<td></td>
+								<td><a href="#self_shareproducts_list">List Share products</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/shareproducts/{productId}?clientId={clientId}</td>
+								<td></td>
+								<td><a href="#self_shareproducts_retrieve">Retrieve a share product</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
 								<td><a href="#selfloantemplate">Loans</a></td>
 								<td>self/loans/template?templateType=individual</td>
 								<td></td>
@@ -3667,10 +3742,26 @@
 							</tr>
 							<tr>
 								<td><a href="#selfsavings">Savings</a></td>
+								<td>self/savingsaccounts/template?clientId={clientId}&productId={productId}</td>
+								<td></td>
+								<td><a href="#selfsavings_template">Retrieve Savings Application Template</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/savingsaccounts</td>
+								<td><a href="#selfsavingssubmission">Submit new Savings Application</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
 								<td>self/savingsaccounts/{accountId}</td>
 								<td></td>
 								<td><a href="#selfsavings">Retrieve a Savings Account</a></td>
-								<td></td>
+								<td><a href="#selfsavings_update">Update Savings Account</a></td>
 								<td></td>
 							</tr>
 							<tr>
@@ -3697,6 +3788,30 @@
 								<td></td>
 								<td></td>
 							</tr>
+							<tr>
+								<td><a href="#selfshareaccount_template">Share Accounts</a></td>
+								<td>self/shareaccounts/template?clientId=?productId=?</td>
+								<td></td>
+								<td><a href="#selfshareaccount_template">Share Accounts Template</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td></td>
+								<td>self/shareaccounts</td>
+								<td><a href="#selfshareaccount_create">Submit New Share Application</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/shareaccounts/{accountId}</td>
+								<td></td>
+								<td><a href="#selfshareaccount_retrieve">Retrieve a Share Application/Account</a></td>
+								<td></td>
+							</tr>				
 							<tr>
 								<td><a href="#selftransfertemplate">Own Account Transfers</a></td>
 								<td>self/accounttransfers/template</td>
@@ -3742,6 +3857,79 @@
 								<td>self/accounttransfers?type="tpt"</td>
 								<td><a href="#selftpttransfer">Third Party Account Transfer</a></td>
 								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#self_guarantors_list">Guarantor and Obligee details</a></td>
+								<td>self/loans/{loanId}/guarantors</td>
+								<td></td>
+								<td><a href="#self_guarantors_list">Guarantors list</a></td>
+                                <td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/clients/{clientId}/obligeedetails</td>
+								<td></td>
+								<td><a href="#self_obligee_list">Obligee list</a></td>
+								</td>
+								</td>
+							</tr>
+							
+							<tr>
+								<td><a href="#self_service_user_reports">Run Report</a></td>
+								<td>self/runreports/{reportName}</td>
+								<td></td>
+								<td><a href="#self_service_user_reports">Run a Report</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#active_surveys">Surveys</a></td>
+								<td>self/surveys?isActive=true</td>
+								<td></td>
+								<td><a href="#active_surveys">Retrieve Active Surveys</a></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/surveys/scorecards/{surveyId}</td>
+								<td><a href="#submit_survey">Take Survey</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/surveys/scorecards/clients/{clientId}</td>
+								<td></td>
+								<td><a href="#survey_score">Survey Scorecards</a></td>
+                                <td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><a href="#linkaccountstopocket">Link/Delink accounts to pocket</a></td>
+								<td>self/pockets?command=linkAccounts</td>
+								<td><a href="#linkaccountstopocket">Link accounts to pocket</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+							    <td></td>
+								<td>self/pockets?command=delinkAccounts</td>
+								<td><a href="#delinkaccountstopocket">Delink accounts from pocket</a></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>self/pockets</td>
+								<td></td>
+								<td><a href="#retrievepocketaccounts">Retrieve accounts linked to pocket</a></td>
 								<td></td>
 								<td></td>
 							</tr>
@@ -3809,7 +3997,7 @@
 							href="https://addons.mozilla.org/en-US/firefox/addon/restclient/"
 							target="_blank">RESTClient</a> for FireFox
 					</p>
-					The REST plugins will allow you to
+					The REST plugins will allow you to:
 					<ul>
 						<li class=normalli>Select the "Verb" (e.g. POST)</li>
 						<li class=normalli>Enter the resource name (e.g. offices)</li>
@@ -4105,19 +4293,19 @@ function executeAjaxRequest(url, verbType, jsonData, authKey, successFunction, e
 						one-time passwords(OTP). OTPs are sent via SMS & email.
 					</p>
 					<p>
-						By default, two-factor authentication is disabled by default.
+						Two-factor authentication is disabled by default.
 						More information on how to enable TFA can be found <a href="#authentication_overview">here</a>.
 					</p>
 					<p>
 						Two-factor authentication workflow:
 						<ol class="normalli">
-							<li class="normalli">User authticates via BasicAuth / oAauth</li>
-							<li>Client requests a list of supported OTP delivery methods for the authenticated user(<a href="#twofactor_deliverymethods">Get Delivery Methods</a>)</li>
-							<li>User selects an OTP delivery method and client sends a request for OTP(<a href="#twofactor_request">Request OTP</a>)</li>
-							<li>User receives an OTP and the client sends it for verification(<a href="#twofactor_validate">Validate OTP</a>)</li>
+							<li class="normalli">User authticates via BasicAuth / oAauth.</li>
+							<li>Client requests a list of supported OTP delivery methods for the authenticated user(<a href="#twofactor_deliverymethods">Get Delivery Methods</a>).</li>
+							<li>User selects an OTP delivery method and client sends a request for OTP(<a href="#twofactor_request">Request OTP</a>).</li>
+							<li>User receives an OTP and the client sends it for verification(<a href="#twofactor_validate">Validate OTP</a>).</li>
 							<li>If the OTP is valid, an access token is returned</li>
 							<li>The access token is sent in following requestes to the server as a header <i>Fineract-Platform-TFA-Token</i></li>
-                            <li>On session end, the access token should be invalidated<a href="#twofactor_invalidate">Invalidate Access Token</a>)</li>
+                            <li>On session end, the access token should be invalidated<a href="#twofactor_invalidate">Invalidate Access Token</a>).</li>
 						</ol>
 					</p>
 					<p>
@@ -4134,7 +4322,7 @@ function executeAjaxRequest(url, verbType, jsonData, authKey, successFunction, e
 			<div class="method-section">
 				<div class="method-description">
 					<h4>Get Delivery Methods</h4>
-					<p>Returns a list of possible OTP delivery methods for the current user</p>
+					<p>Returns a list of possible OTP delivery methods for the current user.</p>
 					<p>Requires first-factor authenticated user.</p>
 				</div>
 				<div class="method-example">
@@ -4589,6 +4777,7 @@ Successful transaction response:
 						<li><a href="#clients_activate">Activate a Pending Client</a>
 						<li><a href="#loans_approve">Approve a Pending Loan</a>
 						<li><a href="#loans_disburse">Disburse a Loan</a>
+						<li><a href="#loans_transaction_repayment">Repayment for a Loan</a>
 					</ul>
 				</div>
 			</div>
@@ -4660,7 +4849,7 @@ Successful transaction response:
 					</p>
 
 					<p>
-					While creating an <a href="#users_create">user</a>, user can be tagged as self service user. Also you can associate
+					While creating a <a href="#users_create">user</a>, user can be tagged as self service user. Also you can associate
 					clients that this user has access to. Data scope is restricted to these linked clients.
 					</p>
 					<p>
@@ -5203,12 +5392,12 @@ GET https://DomainName/api/v1/clients/template
 				<div class="method-description">
 					<h4>Create a Client</h4>
 					<p>
-						<b>Note:</b>1. You can enter either:<br>
+						<b>Note:</b><br>1. You can enter either:<br>
 						firstname/middlename/lastname - for a person (middlename is
 						optional) OR<br> fullname - for a business or organisation
 						(or person known by one name).<br>
-                               &nbsp; &nbsp; &nbsp;     2.If address is enable(enable-address=true), then additional field <br>
-                        called address has to be passed
+                               2. If address is enable(enable-address=true), then additional field <br>
+                        called address has to be passed.
 
 					</p>
 					<table class=matrixHeading>
@@ -5681,7 +5870,7 @@ Request Body:
 	<div class="method-section">
 	    <div class="method-description">
 	        <h4>Propose a Client Transfer</h4>
-	        <p>Allows you to propose the transfer of a <i>Client</i> to a different <i>Office</i>.</p>
+	        <p>Allows you to propose the transfer of a <i>Client</i> to a different <i>Office</i> on a specific date, if loan or savings transaction not present from proposed transfer date to current date.</p>
 	    </div>
 		<div class="method-example">
 	        <code class="method-declaration">POST https://Domain Name/api/v1/clients/{clientId}?command=proposeTransfer</code>
@@ -5689,6 +5878,7 @@ Request Body:
 Content-Type: application/json
 Request Body:
 {
+  "transferDate":"28 August 2018",
   "destinationOfficeId":"2",
   "note":"Client Relocating to Bangalore"
 }
@@ -5711,7 +5901,7 @@ Request Body:
 	        <p>Allows you to withdraw the proposed transfer of a <i>Client</i> to a different <i>Office</i>.</p>
 	        <p>Withdrawal can happen only if the destination Branch (to which the transfer was
 	        <a href="#clients_propose_transfer">proposed</a>) has not already
-	         <a href="#clients_accept_transfer">accepted</a> the transfer proposal </p>
+	         <a href="#clients_accept_transfer">accepted</a> the transfer proposal.</p>
 	    </div>
 		<div class="method-example">
 	        <code class="method-declaration">POST https://Domain Name/api/v1/clients/{clientId}?command=withdrawTransfer</code>
@@ -5727,7 +5917,6 @@ Request Body:
    "clientId": 2,
    "resourceId": 2
 }
-
 
 	        </code>
 	    </div>
@@ -5765,7 +5954,7 @@ Request Body:
 	        <h4>Accept a Client Transfer</h4>
 	        <p>Allows the Destination Branch to accept the <a href="#clients_propose_transfer">proposed</a> Client Transfer.</p>
 	        <p>The destination branch may also choose to link this client to a group (in which case, any existing active JLG loan of the client is rescheduled to match the meeting frequency of the group) and loan Officer at the time of accepting
-	        the transfer</p>
+	        the transfer.</p>
 	    </div>
 		<div class="method-example">
 	        <code class="method-declaration">POST https://Domain Name/api/v1/clients/{clientId}?command=acceptTransfer</code>
@@ -6214,7 +6403,7 @@ GET https://DomainName/api/v1/clients/{clientId}/accounts
                     <h3>Entity Field Configuration </h3>
                     <p>Entity Field configuration API is a generic and extensible <br>
                         wherein various entities and subentities can be related.<br>
-                        Also it gives the user an ability to enable/disable fields,<br> add regular expression for validation</p>
+                        It gives the user an ability to enable/disable fields,<br> add regular expression for validation.</p>
                     <table class=matrixHeading>
                         <tr class="matrixHeadingBG">
                             <td><div class="fineractHeading2">Field Descriptions</div></td>
@@ -6344,7 +6533,7 @@ GET https://DomainName/api/v1/clients/{clientId}/accounts
                         </tr>
                         <tr>
                             <td class=fielddesc>Address module has the ability to store<br>
-                            multiple types of address of clients.addressTypeId is basically a code whose value<br>
+                            multiple types of address of clients.addressTypeId is basically a code whose<br> value
                             are used to store the different types of addresses.
                                 </br> </td>
                         </tr>
@@ -6524,7 +6713,7 @@ GET https://DomainName/api/v1/clients/{clientId}/accounts
             <div class="method-section">
                 <div class="method-description">
                     <h4>update an address for a Client</h4>
-                    <p>All the address fields can be updated by using update client address API</p>
+                    <p>All the address fields can be updated by using update client address API.</p>
                     <table class=matrixHeading>
                         <tr class="matrixHeadingBG">
                             <td><div class="fineractHeading2">Mandatory Fields</div></td>
@@ -6561,7 +6750,7 @@ GET https://DomainName/api/v1/clients/{clientId}/accounts
 				<div class="method-description">
 					<h3>Client Identifiers</h3>
 					<p>Client Identifiers refer to documents that are
-					used to uniquely identify a customer <br/>
+					used to uniquely identify a customer. <br/>
 					Ex: Drivers License, Passport, Ration card etc
 					</p>
 					<table class=matrixHeading>
@@ -6811,17 +7000,17 @@ No Request Body:
 				<div class="method-description">
 					<h3>Images</h3>
 					<p>The current API provides support for the addition of a single
-					image for entities like Client (URL pattern <i>/clients</i>) and Staff (URL pattern <i>/staff</i>)<br/>
-					Allowed formats: JPEG (.jpg or .jpeg), GIF (.gif) and PNG (.png)
+					image for entities like Client (URL pattern <i>/clients</i>) and Staff (URL pattern <i>/staff.</i>)<br/>
+					Allowed formats: JPEG (.jpg or .jpeg), GIF (.gif) and PNG (.png).
 					</p>
-					<p> The API supports two different Approaches for manipulating Images
+					<p> The API supports two different Approaches for manipulating Images.
 					 <ul>
 					 	<li><a href="http://en.wikipedia.org/wiki/Data_URI_scheme" target="_blank"> Data URI's: </a>
 					  For easier manipulation by Javascript clients etc in supported Browsers.
 					 	</li>
 					 	<li><a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2">
 						Multi-part form data:</a>
-					  Images can be uploaded using Multi part forms and downloaded as regular binary files
+					  Images can be uploaded using Multi part forms and downloaded as regular binary files.
 					 	</li>
 					 <br/>
 				</div>
@@ -6832,7 +7021,7 @@ No Request Body:
 			<div class="method-section">
 				<div class="method-description">
 					<h4>Get Entity Image (DATA URI)</h4>
-					<p>Optional arguments are identical to those of <a href="#client_images_retrieve_binary">Get Image associated with an Entity (Binary file)</a></p>
+					<p>Optional arguments are identical to those of <a href="#client_images_retrieve_binary">Get Image associated with an Entity (Binary file).</a></p>
 					<p>Example Requests:</p>
 					<div class=apiClick>clients/1/images</div>
 					<div class=apiClick>staff/1/images</div>
@@ -6858,7 +7047,7 @@ gAEAOg13B6R/SAgAAAAASUVORK5CYII=
 				class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
-					<h4>Get Image associated with an Entity (Binary file)</h4>
+					<h4>Get Image associated with an Entity (Binary file).</h4>
 					<h5>Optional Arguments</h5>
 					<dl class="argument-list">
 						<dt>output</dt>
@@ -6947,7 +7136,7 @@ P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC
 						name "file". <br/> <br/>
 						If you are using a HTML form, a snippet like
 						<small> &lt;input type="file" name="file"&gt;&lt;/input&gt; </small>
-						can be used for uploading the image file
+						can be used for uploading the image file.
 					</p>
 				</div>
 				<div class="method-example">
@@ -7015,7 +7204,7 @@ P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC
 						name "file". <br/> <br/>
 						If you are using a HTML form, a snippet like
 						<small> &lt;input type="file" name="file"&gt;&lt;/input&gt; </small>
-						can be used for uploading the image file
+						can be used for uploading the image file.
 					</p>
 				</div>
 				<div class="method-example">
@@ -7778,7 +7967,7 @@ Request Body:
 			<div class="method-section">
 				<div class="method-description">
 					<h4>Delete a Center</h4>
-					<p>A Center can be deleted if it is in <i>pending</i> state and has no association - groups, loans or savings</p>
+					<p>A Center can be deleted if it is in <i>pending</i> state and has no association - groups, loans or savings.</p>
 				</div>
 				<div class="method-example">
 					<code class="method-declaration">
@@ -43435,7 +43624,7 @@ Request Body:
 				</div>
 			</div>
 
-			<a id="client_transaction" name="client_transaction" class="old-syle-anchor">&nbsp;</a>
+			<a id="client_transactions" name="client_transactions" class="old-syle-anchor">&nbsp;</a>
 			<div class="method-section">
 				<div class="method-description">
 					<h3>Client Transaction</h3>
@@ -46695,6 +46884,100 @@ GET https://DomainName/api/v1/self/loans/{loanId}/charges/{chargeId}
 				</div>
 			</div>
 
+			
+	<a id="selfsavingssubmission" name="selfsavingssubmission" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Submit new savings application</h2>
+	        <br/>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Mandatory Fields</div></td></tr>
+	            <tr class=alt><td>clientId, productId, submittedOnDate</td></tr>
+	        </table>
+	        <br/>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Optional Fields</div></td></tr>
+	            <tr class=alt><td>accountNo, externalId, fieldOfficerId</td></tr>
+	        </table>
+	        <br/>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Inherited from Product (if not provided)</div></td></tr>
+	            <tr class=alt><td>nominalAnnualInterestRate, interestCompoundingPeriodType, interestCalculationType, interestCalculationDaysInYearType, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyType, withdrawalFeeForTransfers, allowOverdraft, overdraftLimit, withHoldTax</td>
+	       		</tr>
+	        </table>
+            <br/>
+	    </div>
+	    <div class="method-example">
+	    	<p>Minimal request: accountNo auto generated, remaining details inherited from savings product.</p>
+	        <code class="method-declaration">POST https://Domain Name/api/v1/self/savingsaccounts</code>
+	        <code class="method-request">POST self/savingsaccount
+Content-Type: application/json
+Request Body:
+{  
+	"productId":3,
+	"clientId":"14",
+	"locale":"en",
+	"dateFormat":"dd MMMM yyyy",
+	"submittedOnDate":"09 July 2018"
+}
+			</code>
+			 <code class="method-response">
+{  
+	"officeId":1,
+	"clientId":14,
+	"savingsId":10,
+	"resourceId":10
+}
+	        </code>
+			
+			<p>Full request:Below details override details from savings product (except currency).</p>
+			<code class="method-request">POST self/savingsaccount
+Content-Type: application/json
+Request Body:
+{  
+	"productId":1,
+	"nominalAnnualInterestRate":9.5,
+	"minRequiredOpeningBalance":1000,
+	"lockinPeriodFrequency":1,
+	"withdrawalFeeForTransfers":true,
+	"allowOverdraft":true,
+	"overdraftLimit":"10000",
+	"nominalAnnualInterestRateOverdraft":"5",
+	"minOverdraftForInterestCalculation":"1000",
+	"enforceMinRequiredBalance":false,
+	"withHoldTax":false,
+	"interestCompoundingPeriodType":1,
+	"interestPostingPeriodType":4,
+	"interestCalculationType":1,
+	"interestCalculationDaysInYearType":365,
+	"lockinPeriodFrequencyType":1,
+	"fieldOfficerId":1,
+	"externalId":"126",
+	"submittedOnDate":"11 July 2018",
+	"locale":"en",
+	"dateFormat":"dd MMMM yyyy",
+	"monthDayFormat":"dd MMM",
+	"charges":[  
+		{  
+		"chargeId":3,
+		"amount":2
+		}
+	],
+	"clientId":"14"
+}
+			</code>
+	        <code class="method-response">
+{  
+	"officeId":1,
+	"clientId":14,
+	"savingsId":9,
+	"resourceId":9
+}
+	        </code>
+	    </div>
+	</div>
+
+	
 	<a id="selfsavings" name="selfsavings" class="old-syle-anchor">&nbsp;</a>
 	<div class="method-section">
 	    <div class="method-description">
@@ -46783,6 +47066,364 @@ GET https://DomainName/api/v1/self/loans/{loanId}/charges/{chargeId}
   }
 }
 	        </code>
+	    </div>
+	</div>
+	
+	<a id="selfsavings_update" name="selfsavings_update" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Modify a savings application</h2>
+	        <p>Savings application can only be modified when in 'Submitted and pending approval' state. Once the application is approved, the details cannot be changed using this method. Specific api endpoints will be created to allow change of interest detail such as rate, compounding period, posting period etc</p>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">PUT https://Domain Name/api/v1/self/savingsaccounts/{accountsId}</code>
+	        <code class="method-request">PUT self/savingsaccounts/1
+Content-Type: application/json
+No Request Body:
+{
+	"productId":1,
+	"clientId":14
+}
+	        </code>
+	        <code class="method-response">
+{
+    "officeId": 1,
+    "clientId": 14,
+    "savingsId": 11,
+    "resourceId": 11,
+    "changes": {
+        "productId": 1
+    }
+}
+	        </code>
+	    </div>
+	</div>
+
+	<a id="selfsavings_template" name="selfsavings_template" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Retrieve Savings Account Template:</h2>
+	        <h4>Arguments</h4>
+	        <dl class="argument-list">
+	            <dt>clientId</dt>
+	            <dd>Integer <span>mandatory</span></dd>
+	            <dt>productId</dt>
+	            <dd>Integer <span>optional</span></dd>
+	            <dd>If entered, productId, productName and selectedProduct fields are returned.</dd>
+	        </dl>
+	        <p>Example Requests: </p>
+	        <div class=apiClick>self/savingsaccounts/template?clientId=14</div>
+	        <br><br>
+	        <div class=apiClick>self/savingsaccounts/template?clientId=14&productId=2</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://Domain Name/api/v1/self/savingsaccounts/template?clientId={clientId}</code>
+			<code class="method-response">
+{
+    "clientId": 14,
+    "clientName": "Bheem",
+    "withdrawalFeeForTransfers": false,
+    "allowOverdraft": false,
+    "enforceMinRequiredBalance": false,
+    "withHoldTax": false,
+    "isDormancyTrackingActive": false,
+    "productOptions": [
+        {
+            "id": 1,
+            "name": "Voluntary savings",
+            "withdrawalFeeForTransfers": false,
+            "allowOverdraft": false,
+            "enforceMinRequiredBalance": false,
+            "withHoldTax": false
+        },
+        {
+            "id": 2,
+            "name": "Savings",
+            "withdrawalFeeForTransfers": false,
+            "allowOverdraft": false,
+            "enforceMinRequiredBalance": false,
+            "withHoldTax": false
+        },
+        {
+            "id": 3,
+            "name": "Savings Product",
+            "withdrawalFeeForTransfers": false,
+            "allowOverdraft": false,
+            "enforceMinRequiredBalance": false,
+            "withHoldTax": false
+        }
+    ],
+    "chargeOptions": [
+        {
+            "id": 3,
+            "name": "Saving Accounts Processing Fee",
+            "active": true,
+            "penalty": false,
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "amount": 2,
+            "chargeTimeType": {
+                "id": 3,
+                "code": "chargeTimeType.savingsActivation",
+                "value": "Savings Activation"
+            },
+            "chargeAppliesTo": {
+                "id": 2,
+                "code": "chargeAppliesTo.savings",
+                "value": "Savings"
+            },
+            "chargeCalculationType": {
+                "id": 1,
+                "code": "chargeCalculationType.flat",
+                "value": "Flat"
+            },
+            "chargePaymentMode": {
+                "id": 0,
+                "code": "chargepaymentmode.regular",
+                "value": "Regular"
+            }
+        }
+    ]
+}
+			</code>
+	    </div>
+
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://Domain Name/api/v1/self/savingsaccounts/template?clientId={clientId}&productId={productId}</code>
+			<code class="method-response">
+{
+    "clientId": 14,
+    "clientName": "Bheem",
+    "savingsProductId": 2,
+    "savingsProductName": "Savings",
+    "timeline": {},
+    "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+    },
+    "nominalAnnualInterestRate": 5,
+    "interestCompoundingPeriodType": {
+        "id": 1,
+        "code": "savings.interest.period.savingsCompoundingInterestPeriodType.daily",
+        "value": "Daily"
+    },
+    "interestPostingPeriodType": {
+        "id": 4,
+        "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.monthly",
+        "value": "Monthly"
+    },
+    "interestCalculationType": {
+        "id": 1,
+        "code": "savingsInterestCalculationType.dailybalance",
+        "value": "Daily Balance"
+    },
+    "interestCalculationDaysInYearType": {
+        "id": 365,
+        "code": "savingsInterestCalculationDaysInYearType.days365",
+        "value": "365 Days"
+    },
+    "minRequiredOpeningBalance": 1000,
+    "withdrawalFeeForTransfers": false,
+    "allowOverdraft": false,
+    "enforceMinRequiredBalance": false,
+    "withHoldTax": false,
+    "isDormancyTrackingActive": false,
+    "charges": [],
+    "productOptions": [
+        {
+            "id": 1,
+            "name": "Voluntary savings",
+            "withdrawalFeeForTransfers": false,
+            "allowOverdraft": false,
+            "enforceMinRequiredBalance": false,
+            "withHoldTax": false
+        },
+        {
+            "id": 2,
+            "name": "Savings",
+            "withdrawalFeeForTransfers": false,
+            "allowOverdraft": false,
+            "enforceMinRequiredBalance": false,
+            "withHoldTax": false
+        },
+        {
+            "id": 3,
+            "name": "Savings Product",
+            "withdrawalFeeForTransfers": false,
+            "allowOverdraft": false,
+            "enforceMinRequiredBalance": false,
+            "withHoldTax": false
+        }
+    ],
+    "fieldOfficerOptions": [
+        {
+            "id": 1,
+            "firstname": "Aliya",
+            "lastname": "A",
+            "displayName": "A, Aliya",
+            "officeId": 1,
+            "officeName": "Head Office",
+            "isLoanOfficer": true,
+            "isActive": true
+        }
+    ],
+    "interestCompoundingPeriodTypeOptions": [
+        {
+            "id": 1,
+            "code": "savings.interest.period.savingsCompoundingInterestPeriodType.daily",
+            "value": "Daily"
+        },
+        {
+            "id": 4,
+            "code": "savings.interest.period.savingsCompoundingInterestPeriodType.monthly",
+            "value": "Monthly"
+        },
+        {
+            "id": 5,
+            "code": "savings.interest.period.savingsCompoundingInterestPeriodType.quarterly",
+            "value": "Quarterly"
+        },
+        {
+            "id": 6,
+            "code": "savings.interest.period.savingsCompoundingInterestPeriodType.biannual",
+            "value": "Semi-Annual"
+        },
+        {
+            "id": 7,
+            "code": "savings.interest.period.savingsCompoundingInterestPeriodType.annual",
+            "value": "Annually"
+        }
+    ],
+    "interestPostingPeriodTypeOptions": [
+        {
+            "id": 4,
+            "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.monthly",
+            "value": "Monthly"
+        },
+        {
+            "id": 5,
+            "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.quarterly",
+            "value": "Quarterly"
+        },
+        {
+            "id": 6,
+            "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.biannual",
+            "value": "BiAnnual"
+        },
+        {
+            "id": 7,
+            "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.annual",
+            "value": "Annually"
+        }
+    ],
+    "interestCalculationTypeOptions": [
+        {
+            "id": 1,
+            "code": "savingsInterestCalculationType.dailybalance",
+            "value": "Daily Balance"
+        },
+        {
+            "id": 2,
+            "code": "savingsInterestCalculationType.averagedailybalance",
+            "value": "Average Daily Balance"
+        }
+    ],
+    "interestCalculationDaysInYearTypeOptions": [
+        {
+            "id": 360,
+            "code": "savingsInterestCalculationDaysInYearType.days360",
+            "value": "360 Days"
+        },
+        {
+            "id": 365,
+            "code": "savingsInterestCalculationDaysInYearType.days365",
+            "value": "365 Days"
+        }
+    ],
+    "lockinPeriodFrequencyTypeOptions": [
+        {
+            "id": 0,
+            "code": "savings.lockin.savingsPeriodFrequencyType.days",
+            "value": "Days"
+        },
+        {
+            "id": 1,
+            "code": "savings.lockin.savingsPeriodFrequencyType.weeks",
+            "value": "Weeks"
+        },
+        {
+            "id": 2,
+            "code": "savings.lockin.savingsPeriodFrequencyType.months",
+            "value": "Months"
+        },
+        {
+            "id": 3,
+            "code": "savings.lockin.savingsPeriodFrequencyType.years",
+            "value": "Years"
+        }
+    ],
+    "withdrawalFeeTypeOptions": [
+        {
+            "id": 1,
+            "code": "savingsWithdrawalFeesType.flat",
+            "value": "Flat"
+        },
+        {
+            "id": 2,
+            "code": "savingsWithdrawalFeesType.percent.of.amount",
+            "value": "% of Amount"
+        }
+    ],
+    "chargeOptions": [
+        {
+            "id": 3,
+            "name": "Saving Accounts Processing Fee",
+            "active": true,
+            "penalty": false,
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "amount": 2,
+            "chargeTimeType": {
+                "id": 3,
+                "code": "chargeTimeType.savingsActivation",
+                "value": "Savings Activation"
+            },
+            "chargeAppliesTo": {
+                "id": 2,
+                "code": "chargeAppliesTo.savings",
+                "value": "Savings"
+            },
+            "chargeCalculationType": {
+                "id": 1,
+                "code": "chargeCalculationType.flat",
+                "value": "Flat"
+            },
+            "chargePaymentMode": {
+                "id": 0,
+                "code": "chargepaymentmode.regular",
+                "value": "Regular"
+            }
+        }
+    ]
+}
+			</code>
 	    </div>
 	</div>
 
@@ -47485,6 +48126,2691 @@ No Request Body:
   "resourceId": 1
 }
 	        </code>
+	    </div>
+	</div>
+	
+	<a id="selfshareaccount_template" name="selfshareaccount_template" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Retrieve Share Account Template:</h2>
+	            <p>This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+	                <ul>
+	                <li class=normalli>Field Defaults</li>
+	                <li class=normalli>Allowed Value Lists</li>
+	                </ul>
+	            </p>
+	        <h4>Arguments</h4>
+	        <dl class="argument-list">
+	            <dt>clientId</dt>
+	            <dd>Integer <span>mandatory</span></dd>
+	            <dt>productId</dt>
+	            <dd>Integer <span>optional</span></dd>
+	            <dd>If entered, productId, productName and selectedProduct fields are returned.</dd>
+	        </dl>
+	        <p>Example Requests: </p>
+	        <div class=apiClick>self/shareaccounts/template?clientId=14</div>
+	        <br><br>
+	        <div class=apiClick>self/shareaccounts/template?clientId=14&productId=3</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://Domain Name/api/v1/self/shareaccounts/template?clientId={clientId}</code>
+			<code class="method-response">
+{
+    "clientId": 14,
+    "productOptions": [
+        {
+            "id": 3,
+            "name": "SP",
+            "shortName": "SP",
+            "totalShares": 1000
+        },
+        {
+            "id": 4,
+            "name": "Product1",
+            "shortName": "test",
+            "totalShares": 1000
+        }
+    ],
+    "chargeOptions": [
+        {
+            "id": 2,
+            "name": "Activation fee",
+            "active": true,
+            "penalty": false,
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "amount": 2,
+            "chargeTimeType": {
+                "id": 14,
+                "code": "chargeTimeType.sharespurchase",
+                "value": "Share Purchase"
+            },
+            "chargeAppliesTo": {
+                "id": 4,
+                "code": "chargeAppliesTo.shares",
+                "value": "Shares"
+            },
+            "chargeCalculationType": {
+                "id": 1,
+                "code": "chargeCalculationType.flat",
+                "value": "Flat"
+            },
+            "chargePaymentMode": {
+                "id": 0,
+                "code": "chargepaymentmode.regular",
+                "value": "Regular"
+            }
+        }
+    ]
+}
+			</code>
+	    </div>
+
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://Domain Name/api/v1/self/shareaccounts/template?clientId={clientId}&productId={productId}</code>
+			<code class="method-response">
+{
+    "clientId": 14,
+    "productOptions": [
+        {
+            "id": 3,
+            "name": "SP",
+            "shortName": "SP",
+            "description": "SP1",
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "inMultiplesOf": 1,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "totalShares": 1000,
+            "totalSharesIssued": 900,
+            "unitPrice": 1,
+            "shareCapital": 900,
+            "minimumShares": 8,
+            "nominalShares": 500,
+            "maximumShares": 500,
+            "marketPrice": [],
+            "charges": [],
+            "allowDividendCalculationForInactiveClients": false,
+            "lockinPeriod": 50,
+            "lockPeriodTypeEnum": {
+                "id": 0,
+                "code": "shares.lockin.sharePeriodFrequencyType.days",
+                "value": "Days"
+            },
+            "minimumActivePeriod": 10,
+            "minimumActivePeriodForDividendsTypeEnum": {
+                "id": 0,
+                "code": "shares.minimumactive.sharePeriodFrequencyType.days",
+                "value": "Days"
+            },
+            "accountingRule": {
+                "id": 2,
+                "code": "accountingRuleType.cash",
+                "value": "CASH BASED"
+            },
+            "accountingMappings": {
+                "shareReferenceId": {
+                    "id": 32,
+                    "name": "Cash In Hand",
+                    "glCode": "20301"
+                },
+                "incomeFromFeeAccountId": {
+                    "id": 40,
+                    "name": "Other Operating Income",
+                    "glCode": "30105"
+                },
+                "shareEquityId": {
+                    "id": 56,
+                    "name": "Share Equity",
+                    "glCode": "00098"
+                },
+                "shareSuspenseId": {
+                    "id": 2,
+                    "name": "Overpayment Liability",
+                    "glCode": "10200"
+                }
+            },
+            "currencyOptions": [
+                {
+                    "code": "USD",
+                    "name": "US Dollar",
+                    "decimalPlaces": 2,
+                    "displaySymbol": "$",
+                    "nameCode": "currency.USD",
+                    "displayLabel": "US Dollar ($)"
+                }
+            ],
+            "chargeOptions": [
+                {
+                    "id": 2,
+                    "name": "Activation fee",
+                    "active": true,
+                    "penalty": false,
+                    "currency": {
+                        "code": "USD",
+                        "name": "US Dollar",
+                        "decimalPlaces": 2,
+                        "displaySymbol": "$",
+                        "nameCode": "currency.USD",
+                        "displayLabel": "US Dollar ($)"
+                    },
+                    "amount": 2,
+                    "chargeTimeType": {
+                        "id": 14,
+                        "code": "chargeTimeType.sharespurchase",
+                        "value": "Share Purchase"
+                    },
+                    "chargeAppliesTo": {
+                        "id": 4,
+                        "code": "chargeAppliesTo.shares",
+                        "value": "Shares"
+                    },
+                    "chargeCalculationType": {
+                        "id": 1,
+                        "code": "chargeCalculationType.flat",
+                        "value": "Flat"
+                    },
+                    "chargePaymentMode": {
+                        "id": 0,
+                        "code": "chargepaymentmode.regular",
+                        "value": "Regular"
+                    }
+                }
+            ],
+            "minimumActivePeriodFrequencyTypeOptions": [
+                {
+                    "id": 0,
+                    "code": "shares.lockin.sharePeriodFrequencyType.days",
+                    "value": "Days"
+                }
+            ],
+            "lockinPeriodFrequencyTypeOptions": [
+                {
+                    "id": 0,
+                    "code": "shares.lockin.sharePeriodFrequencyType.days",
+                    "value": "Days"
+                },
+                {
+                    "id": 1,
+                    "code": "shares.lockin.sharePeriodFrequencyType.weeks",
+                    "value": "Weeks"
+                },
+                {
+                    "id": 2,
+                    "code": "shares.lockin.sharePeriodFrequencyType.months",
+                    "value": "Months"
+                },
+                {
+                    "id": 3,
+                    "code": "shares.lockin.sharePeriodFrequencyType.years",
+                    "value": "Years"
+                }
+            ],
+            "accountingMappingOptions": {
+                "liabilityAccountOptions": [
+                    {
+                        "id": 30,
+                        "name": "Recurring Deposits",
+                        "parentId": 1,
+                        "glCode": "10104",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 2,
+                            "code": "accountType.liability",
+                            "value": "LIABILITY"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Recurring Deposits",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 2,
+                        "name": "Overpayment Liability",
+                        "glCode": "10200",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 2,
+                            "code": "accountType.liability",
+                            "value": "LIABILITY"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "Overpayment Liability",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 55,
+                        "name": "Liability Transfer (Temp)",
+                        "glCode": "220004-Temp",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 2,
+                            "code": "accountType.liability",
+                            "value": "LIABILITY"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "description": "Temporary Liability account to track Account Transfers",
+                        "nameDecorated": "Liability Transfer (Temp)",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    }
+                ],
+                "assetAccountOptions": [
+                    {
+                        "id": 31,
+                        "name": "Furniture and Fixtures",
+                        "parentId": 8,
+                        "glCode": "20101",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 1,
+                            "code": "accountType.asset",
+                            "value": "ASSET"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Furniture and Fixtures",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 32,
+                        "name": "Cash In Hand",
+                        "parentId": 10,
+                        "glCode": "20301",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 1,
+                            "code": "accountType.asset",
+                            "value": "ASSET"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Cash In Hand",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 33,
+                        "name": "Petty Cash",
+                        "parentId": 10,
+                        "glCode": "20302",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 1,
+                            "code": "accountType.asset",
+                            "value": "ASSET"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Petty Cash",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 34,
+                        "name": "Loans to Customers",
+                        "parentId": 12,
+                        "glCode": "20501",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 1,
+                            "code": "accountType.asset",
+                            "value": "ASSET"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Loans to Customers",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 35,
+                        "name": "Current Account Overdrafts",
+                        "parentId": 12,
+                        "glCode": "20502",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 1,
+                            "code": "accountType.asset",
+                            "value": "ASSET"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Current Account Overdrafts",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 17,
+                        "name": "Suspense Account",
+                        "glCode": "9999",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 1,
+                            "code": "accountType.asset",
+                            "value": "ASSET"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "Suspense Account",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    }
+                ],
+                "incomeAccountOptions": [
+                    {
+                        "id": 54,
+                        "name": "Loan Recovery (Temp)",
+                        "glCode": "220002-Temp",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 4,
+                            "code": "accountType.income",
+                            "value": "INCOME"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "description": "Temporary account to track income from Loan recovery",
+                        "nameDecorated": "Loan Recovery (Temp)",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 36,
+                        "name": "Fees and Charges",
+                        "parentId": 18,
+                        "glCode": "30101",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 4,
+                            "code": "accountType.income",
+                            "value": "INCOME"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Fees and Charges",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 37,
+                        "name": "Penalties",
+                        "parentId": 18,
+                        "glCode": "30102",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 4,
+                            "code": "accountType.income",
+                            "value": "INCOME"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Penalties",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 38,
+                        "name": "Interest Received from Borrowers",
+                        "parentId": 18,
+                        "glCode": "30103",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 4,
+                            "code": "accountType.income",
+                            "value": "INCOME"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Interest Received from Borrowers",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 39,
+                        "name": "Insurance Charges",
+                        "parentId": 18,
+                        "glCode": "30104",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 4,
+                            "code": "accountType.income",
+                            "value": "INCOME"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Insurance Charges",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    },
+                    {
+                        "id": 40,
+                        "name": "Other Operating Income",
+                        "parentId": 18,
+                        "glCode": "30105",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 4,
+                            "code": "accountType.income",
+                            "value": "INCOME"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Other Operating Income",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    }
+                ],
+                "equityAccountOptions": [
+                    {
+                        "id": 56,
+                        "name": "Share Equity",
+                        "parentId": 25,
+                        "glCode": "00098",
+                        "disabled": false,
+                        "manualEntriesAllowed": true,
+                        "type": {
+                            "id": 3,
+                            "code": "accountType.equity",
+                            "value": "EQUITY"
+                        },
+                        "usage": {
+                            "id": 1,
+                            "code": "accountUsage.detail",
+                            "value": "DETAIL"
+                        },
+                        "nameDecorated": "....Share Equity",
+                        "tagId": {
+                            "id": 0,
+                            "active": false,
+                            "mandatory": false
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "chargeOptions": [
+        {
+            "id": 2,
+            "name": "Activation fee",
+            "active": true,
+            "penalty": false,
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "amount": 2,
+            "chargeTimeType": {
+                "id": 14,
+                "code": "chargeTimeType.sharespurchase",
+                "value": "Share Purchase"
+            },
+            "chargeAppliesTo": {
+                "id": 4,
+                "code": "chargeAppliesTo.shares",
+                "value": "Shares"
+            },
+            "chargeCalculationType": {
+                "id": 1,
+                "code": "chargeCalculationType.flat",
+                "value": "Flat"
+            },
+            "chargePaymentMode": {
+                "id": 0,
+                "code": "chargepaymentmode.regular",
+                "value": "Regular"
+            }
+        }
+    ]
+}
+			</code>
+	    </div>
+</div>
+
+<a id="selfshareaccount_create" name="selfshareaccount_create" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Submit new share application</h2>
+	        <br/>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Mandatory Fields</div></td></tr>
+	            <tr class=alt><td>clientId, productId, submittedDate, savingsAccountId, requestedShares, applicationDate</td></tr>
+	        </table>
+	        <br/>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Optional Fields</div></td></tr>
+	            <tr class=alt><td>accountNo, externalId</td></tr>
+	        </table>
+	        <br/>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Inherited from Product (if not provided)</div></td></tr>
+	            <tr class=alt><td> minimumActivePeriod, minimumActivePeriodFrequencyType, lockinPeriodFrequency, lockinPeriodFrequencyType</td>
+	       		</tr>
+	        </table>
+	    </div>
+	    <div class="method-example">
+	    	<p>Minimal request: accountNo auto generated, remaining details inherited from Share product.</p>
+	        <code class="method-declaration">POST https://Domain Name/api/v1/self/shareaccounts</code>
+	        <code class="method-request">POST Share Account
+Content-Type: application/json
+Request Body:
+{  
+   "productId":3,
+   "unitPrice":1,
+   "requestedShares":500,
+   "submittedDate":"31 July 2018",
+   "savingsAccountId":2,
+   "applicationDate":"31 July 2018",
+   "locale":"en",
+   "dateFormat":"dd MMMM yyyy",
+   "charges":[  
+      {  
+         "chargeId":2,
+         "amount":2
+      }
+   ],
+   "clientId":"14"
+}
+			</code>
+	        <code class="method-response">
+{
+    "resourceId": 12
+}
+	        </code>
+	    </div>
+</div>
+
+<a id="selfshareaccount_retrieve" name="selfshareaccount_retrieve" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Retrieve a share application/account:</h2>
+
+	        <p>Example Requests : </p>
+	        <div class=apiClick>self/shareaccounts/12</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://DomainName/api/v1/self/shareaccounts/{accountId}</code>
+	        <code class="method-response">
+{
+    "id": 12,
+    "accountNo": "000000012",
+    "savingsAccountNumber": "000000002",
+    "clientId": 14,
+    "clientName": "Bheem",
+    "productId": 3,
+    "productName": "SP",
+    "status": {
+        "id": 100,
+        "code": "shareAccountStatusType.submitted.and.pending.approval",
+        "value": "Submitted and pending approval",
+        "submittedAndPendingApproval": true,
+        "approved": false,
+        "rejected": false,
+        "active": false,
+        "closed": false
+    },
+    "timeline": {
+        "submittedOnDate": [
+            2018,
+            7,
+            31
+        ],
+        "submittedByUsername": "self",
+        "submittedByFirstname": "self",
+        "submittedByLastname": "self"
+    },
+    "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+    },
+    "summary": {
+        "id": 12,
+        "accountNo": "000000012",
+        "totalApprovedShares": 0,
+        "totalPendingForApprovalShares": 500,
+        "productId": 3,
+        "productName": "SP",
+        "status": {
+            "id": 100,
+            "code": "shareAccountStatusType.submitted.and.pending.approval",
+            "value": "Submitted and pending approval",
+            "submittedAndPendingApproval": true,
+            "approved": false,
+            "rejected": false,
+            "active": false,
+            "closed": false
+        },
+        "currency": {
+            "code": "USD",
+            "name": "US Dollar",
+            "decimalPlaces": 2,
+            "inMultiplesOf": 1,
+            "displaySymbol": "$",
+            "nameCode": "currency.USD",
+            "displayLabel": "US Dollar ($)"
+        },
+        "timeline": {
+            "submittedOnDate": [
+                2018,
+                7,
+                31
+            ],
+            "submittedByUsername": "self",
+            "submittedByFirstname": "self",
+            "submittedByLastname": "self"
+        }
+    },
+    "purchasedShares": [
+        {
+            "id": 13,
+            "accountId": 12,
+            "purchasedDate": [
+                2018,
+                7,
+                31
+            ],
+            "numberOfShares": 500,
+            "purchasedPrice": 1,
+            "status": {
+                "id": 100,
+                "code": "purchasedSharesStatusType.applied",
+                "value": "Pending Approval"
+            },
+            "type": {
+                "id": 500,
+                "code": "purchasedSharesType.purchased",
+                "value": "Purchase"
+            },
+            "amount": 502,
+            "chargeAmount": 2,
+            "amountPaid": 500
+        }
+    ],
+    "savingsAccountId": 2,
+    "currentMarketPrice": 1,
+    "lockPeriodTypeEnum": {
+        "id": 4,
+        "code": "sharePeriodFrequencyType.invalid",
+        "value": "Invalid"
+    },
+    "minimumActivePeriodTypeEnum": {
+        "id": 4,
+        "code": "sharePeriodFrequencyType.invalid",
+        "value": "Invalid"
+    },
+    "allowDividendCalculationForInactiveClients": false,
+    "charges": [
+        {
+            "id": 9,
+            "chargeId": 2,
+            "accountId": 12,
+            "name": "Activation fee",
+            "chargeTimeType": {
+                "id": 14,
+                "code": "chargeTimeType.sharespurchase",
+                "value": "Share Purchase"
+            },
+            "chargeCalculationType": {
+                "id": 1,
+                "code": "chargeCalculationType.flat",
+                "value": "Flat"
+            },
+            "percentage": 0,
+            "amountPercentageAppliedTo": 0,
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "amount": 2,
+            "amountPaid": 0,
+            "amountWaived": 0,
+            "amountWrittenOff": 0,
+            "amountOutstanding": 2,
+            "amountOrPercentage": 2,
+            "isActive": true
+        }
+    ],
+    "dividends": []
+}
+	        </code>
+	    </div>
+</div>
+
+<a id="self_guarantors_list" name="self_guarantors_list"
+				class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+		<div class="method-description">
+			<h4>List Guarantors</h4>
+			<p>Example Requests:</p>
+			<div class=apiClick>self/loans/33/guarantors</div>
+				<br>
+			</div>
+			<div class="method-example">
+				<code class="method-declaration">
+GET https://DomainName/api/v1/self/loans/{loanId}/guarantors
+				</code>
+			<code class="method-response">
+[  
+   {  
+      "id":6,
+      "loanId":33,
+      "guarantorType":{  
+         "id":1,
+         "code":"guarantor.existing.customer",
+         "value":"CUSTOMER"
+      },
+      "firstname":"Abhishek v",
+      "lastname":"M",
+      "entityId":12,
+      "officeName":"Head Office",
+      "joinedDate":[  
+         2014,
+         7,
+         5
+      ],
+      "guarantorFundingDetails":[  
+         {  
+            "id":7,
+            "status":{  
+               "id":100,
+               "code":"guarantorFundStatusType.active",
+               "value":"ACTIVE"
+            },
+            "savingsAccount":{  
+               "id":28,
+               "accountNo":"000000028"
+            },
+            "amount":2000,
+            "amountReleased":0,
+            "amountRemaining":2000,
+            "amountTransfered":0,
+            "guarantorTransactions":[  
+               {  
+                  "id":6,
+                  "onHoldTransactionData":{  
+                     "id":6,
+                     "amount":2000,
+                     "transactionType":{  
+                        "id":1,
+                        "code":"deposutAccountOnHoldTransactionType.hold",
+                        "value":"hold"
+                     },
+                     "transactionDate":[  
+                        2018,
+                        10,
+                        10
+                     ],
+                     "reversed":false,
+                     "savingsId":0,
+                     "loanId":0
+                  },
+                  "reversed":false
+               }
+            ]
+         }
+      ],
+      "status":true
+   },
+   {  
+      "id":7,
+      "loanId":33,
+      "clientRelationshipType":{  
+         "id":6,
+         "name":"Parent",
+         "active":false,
+         "mandatory":false
+      },
+      "guarantorType":{  
+         "id":1,
+         "code":"guarantor.existing.customer",
+         "value":"CUSTOMER"
+      },
+      "firstname":"Bheem",
+      "lastname":"Test",
+      "entityId":14,
+      "officeName":"Head Office",
+      "joinedDate":[  
+         2013,
+         7,
+         3
+      ],
+      "guarantorFundingDetails":[  
+         {  
+            "id":8,
+            "status":{  
+               "id":100,
+               "code":"guarantorFundStatusType.active",
+               "value":"ACTIVE"
+            },
+            "savingsAccount":{  
+               "id":37,
+               "accountNo":"000000037"
+            },
+            "amount":1000,
+            "amountReleased":0,
+            "amountRemaining":1000,
+            "amountTransfered":0,
+            "guarantorTransactions":[  
+               {  
+                  "id":7,
+                  "onHoldTransactionData":{  
+                     "id":7,
+                     "amount":1000,
+                     "transactionType":{  
+                        "id":1,
+                        "code":"deposutAccountOnHoldTransactionType.hold",
+                        "value":"hold"
+                     },
+                     "transactionDate":[  
+                        2018,
+                        10,
+                        10
+                     ],
+                     "reversed":false,
+                     "savingsId":0,
+                     "loanId":0
+                  },
+                  "reversed":false
+               }
+            ]
+         }
+      ],
+      "status":true
+   }
+]
+			</code>
+		</div>
+	</div>
+	<a id="self_obligee_list" name="self_obligee_list"
+				class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+		<div class="method-description">
+			<h4>Obligee List</h4>
+			<p>Obligee list provides list of clients and other details, to whom the user has agreed to be a guarantor.</p>
+			
+			<table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Field Descriptions</div></td></tr>
+
+				<tr class=alt><td>clientId</td></tr>
+				<tr><td class=fielddesc>The client id of the self service user.</td></tr>
+
+				<tr class=alt><td>firstName, lastName, displayName</td></tr>
+				<tr><td class=fielddesc>The first name, last name and display name of the obligee</td></tr>
+				
+				<tr class=alt><td>accountNumber, loanAmount</td></tr>
+				<tr><td class=fielddesc>The loan account number and principal amount of the obligee </td></tr>
+				
+				<tr class=alt><td>guaranteeAmount, amountReleased, amountTransferred</td></tr>
+				<tr><td class=fielddesc>Guranteed amount, released and transferred amount of the client</td></tr>
+			</table>
+					
+			<p>Example Requests:</p>
+			<div class=apiClick>self/clients/14/obligeedetails</div>
+				<br>
+			</div>
+			<div class="method-example">
+				<code class="method-declaration">
+GET https://DomainName/api/v1/self/clients/{clientId}/obligeedetails
+				</code>
+			<code class="method-response">		
+			[  
+   {  
+      "firstName":"App",
+      "lastName":"Test",
+      "displayName":"App Test",
+      "accountNumber":"000000005",
+      "loanAmount":50000,
+      "guaranteeAmount":10000,
+      "amountReleased":0,
+      "amountTransferred":0
+   },
+   {  
+      "firstName":"App",
+      "lastName":"Test",
+      "displayName":"App Test",
+      "accountNumber":"000000005",
+      "loanAmount":50000,
+      "guaranteeAmount":5000,
+      "amountReleased":0,
+      "amountTransferred":0
+   },
+   {  
+      "firstName":"App",
+      "lastName":"Test",
+      "displayName":"App Test",
+      "accountNumber":"000000006",
+      "loanAmount":50000,
+      "guaranteeAmount":10000,
+      "amountReleased":0,
+      "amountTransferred":0
+   },
+   {  
+      "firstName":"Abhishek v",
+      "lastName":"M",
+      "displayName":"Abhishek v M",
+      "accountNumber":"000000032",
+      "loanAmount":10000,
+      "guaranteeAmount":1000,
+      "amountReleased":1000,
+      "amountTransferred":0
+   },
+   {  
+      "firstName":"Abhishek v",
+      "lastName":"M",
+      "displayName":"Abhishek v M",
+      "accountNumber":"000000033",
+      "loanAmount":10000,
+      "guaranteeAmount":1000,
+      "amountReleased":0,
+      "amountTransferred":0
+   }
+]
+			</code>
+		</div>
+	</div>
+
+	<a id="self_client_images_upload" name="self_client_images_upload" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Upload client image (Data URI)</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+POST https://DomainName/api/v1/self/clients/{clientId}/images
+					</code>
+					<code class="method-request">
+POST self/clients/14/images
+Content-Type: text/plain
+Request Body:
+data:image/png;base64,iVBORw0KGgoAA
+AANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAAM0l
+EQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6
+P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC
+					</code>
+					<code class="method-response">
+{
+  "resourceId": 14,
+  "changes": {},
+  "resourceIdentifier": "14"
+}
+					</code>
+				</div>
+			</div>
+			
+				<a id="self_client_images_upload_multi_part" name="self_client_images_upload_multi_part" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Upload client image (Multi-part Form data)</h4>
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="fineractHeading2">Mandatory Fields</div></td>
+						</tr>
+						<tr class=alt>
+							<td>file
+							</td>
+						</tr>
+					</table>
+					<p>
+						The form should contain a required named body part with the
+						name "file". <br/> <br/>
+						If you are using a HTML form, a snippet like
+						<small> &lt;input type="file" name="file"&gt;&lt;/input&gt; </small>
+						can be used for uploading the image file
+					</p>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+POST https://DomainName/api/v1/self/clients/{clientId}/images
+					</code>
+					<code class="method-request">
+POST self/clients/14/images
+Content-Type: multipart/form-data
+Request Body: <i>Not shown</i>
+					</code>
+					<code class="method-response">
+{
+  "resourceId": 14,
+  "changes": {},
+  "resourceIdentifier": "14"
+}
+					</code>
+				</div>
+			</div>
+		<a id="self_client_image_delete" name="self_client_image_delete" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Delete an client's Image</h4>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+DELETE https://DomainName/api/v1/self/clients/{clientId}/images
+					</code>
+					<code class="method-request">
+DELETE self/clients/14/images
+Content-Type: application/json
+No Request Body:
+					</code>
+					<code class="method-response">
+{
+  "resourceId": 14,
+  "changes": {},
+  "resourceIdentifier": "14"
+}					</code>
+				</div>
+			</div>
+			
+<a id="self_loanproducts" name="self_loanproducts" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h3>Loan Products</h3>
+					
+					<table class=matrixHeading>
+						<tr class="matrixHeadingBG">
+							<td><div class="fineractHeading2">Field Descriptions</div></td>
+						</tr>
+						<tr class=alt>
+							<td>name</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Name associated with loan product on system.</td>
+						</tr>
+						<tr class=alt>
+							<td>shortName</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Short name associated with a loan product. <br>
+								An abbreviated version of the name, used in reports or menus where space is limited, such as Collection Sheets.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>description</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>For providing helpful description of product offering.</td>
+						</tr>
+						<tr class=alt>
+							<td>fundId</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>For associating a loan product with a given fund by default.</td>
+						</tr>
+						<tr class=alt>
+							<td>includeInBorrowerCycle</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>It is a flag, Used to denote whether the loans should include in loan cycle counter or not.</td>
+						</tr>
+						<tr class=alt>
+							<td>useBorrowerCycle</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>It is a flag, Used to denote whether the loans should depend on <br>borrower loan cycle counter or not.</td>
+						</tr>
+						<tr class=alt>
+							<td>currencyCode</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>A three letter ISO code of currency.</td>
+						</tr>
+						<tr class=alt>
+							<td>digitsAfterDecimal</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Override the currency default value for digitsAfterDecimal.</td>
+						</tr>
+						<tr class=alt>
+							<td>inMultiplesOf</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Override the default value for rounding currency to multiples of value provided.</td>
+						</tr>
+						<tr class=alt>
+							<td>installmentAmountInMultiplesOf</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Override the default value for rounding instalment amount to multiples of value provided.</td>
+						</tr>
+
+						<tr class=alt>
+							<td>principal</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>The loan amount to be disbursed to through loan.</td>
+						</tr>
+						<tr class=alt>
+							<td>numberOfRepayments</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Number of installments to repay.<br>
+								Used like: <b>numberOfRepayments</b> Every <i>repaymentEvery</i>
+								<i>repaymentFrequencyType</i><br> e.g. <b>10</b> (repayments) Every 12 Weeks
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>repaymentEvery</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Used like: numberOfRepayments Every
+								<b>repaymentEvery</b> repaymentFrequencyType<br> e.g. 10
+								(repayments) Every <b>12</b> Weeks
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>repaymentFrequencyType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Used like: <i>numberOfRepayments</i> Every
+								repaymentEvery <b>repaymentFrequencyType</b><br> e.g. 10
+								(repayments) Every 12 <b>Weeks</b> <br>
+								<span>Example Values:</span> 0=Days, 1=Weeks, 2=Months
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>interestRatePerPeriod</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Interest Rate.<br> Used like:
+								<b>interestRatePerPeriod</b> % interestRateFrequencyType - interestType<br>
+								e.g. <b>12.0000</b>% Per year - Declining Balance
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>interestRateFrequencyType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Used like: interestRatePerPeriod%
+								interestRateFrequencyType - interestType<br> e.g. 12.0000%
+								<b>Per year</b> - Declining Balance <br>
+							<span>Example Values:</span> 2=Per month, 3=Per year
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>amortizationType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc><span>Example Values:</span> 0=Equal
+								principle payments, 1=Equal installments</td>
+						</tr>
+						<tr class=alt>
+							<td>interestType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Used like: interestRatePerPeriod%
+								interestRateFrequencyType - interestType<br> e.g. 12.0000%
+								Per year - <b>Declining Balance</b> <br>
+							<span>Example Values:</span> 0=Declining Balance, 1=Flat
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>interestCalculationPeriodType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc><span>Example Values:</span> 0=Daily, 1=Same as repayment period</td>
+						</tr>
+						<tr class=alt>
+							<td>allowPartialPeriodInterestCalcualtion</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>This value will be supported along with interestCalculationPeriodType as Same as repayment period to calculate interest for partial periods.
+							<span>Example:</span> Interest charged from is 5th of April , Principal is 10000 and interest is 1% per month then the interest will be (10000 * 1%)* (25/30) , it calculates for the month first then calculates exact periods between start date and end date(can be a decimal)
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>inArrearsTolerance</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>The amount that can be 'waived' at end
+								of all loan payments because it is too small to worry about.<br>
+								This is also the tolerance amount assessed when determining if a
+								loan is in arrears.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>principalVariationsForBorrowerCycle,interestRateVariationsForBorrowerCycle,<br>numberOfRepaymentVariationsForBorrowerCycle</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Variations for loan, based on borrower cycle number
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>minimumDaysBetweenDisbursalAndFirstRepayment</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>The minimum number of days allowed between a Loan disbursal and its first repayment.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>principalThresholdForLastInstalment</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Field represents percentage of current instalment principal amount for comparing against principal outstanding to add another repayment instalment.  If the outstanding principal amount is less then calculated amount, remaining outstanding amount will be added to current instalment. Default value for multi disburse loan is 50% and non-multi disburse loan is 0%
+						</tr>
+						<tr class=alt>
+							<td>canDefineInstallmentAmount</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>if provided as true, then fixed instalment amount can be provided from loan account.
+							</td>
+						</tr>
+
+
+
+<tr class=alt>
+	<td>transactionProcessingStrategyId</td>
+</tr>
+<tr>
+	<td class=fielddesc>
+An enumeration that indicates the type of transaction processing strategy to be used. This relates to functionality that is also known as <b>Payment Application Logic</b>.
+
+<p>A number of out of the box approaches exist, some are custom to specific MFIs, some are more general and indicate the order in which payments are processed.</p>
+
+<p>Refer to the <a href="#paymentapplicationlogic">Payment Application Logic / Transaction Processing Strategy<a> section in the appendix for more detailed overview of each available <b>payment application logic</b> provided out of the box.</p>
+
+<i>List of current approaches</i>:<br/>
+<ul>
+	<li>1 = Mifos style (Similar to Old Mifos)</li>
+	<li>2 = Heavensfamily (Custom MFI approach)</li>
+	<li>3 = Creocore (Custom MFI approach)</li>
+	<li>4 = RBI (India)</li>
+	<li>5 = Principal Interest Penalties Fees Order</li>
+	<li>6 = Interest Principal Penalties Fees Order</li>
+    <li>7 = Early Payment Strategy</li>
+</ul>
+	</td>
+</tr>
+						<tr class=alt>
+							<td>graceOnPrincipalPayment</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional: Integer - represents the number of repayment periods that grace should apply to the principal component of a repayment period.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>graceOnInterestPayment</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional: Integer - represents the number of repayment periods that grace should apply to the interest component of a repayment period. Interest is still calculated but offset to later repayment periods.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>graceOnInterestCharged</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional: Integer - represents the number of repayment periods that should be interest-free.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>graceOnArrearsAgeing</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional: Integer -  Used in Arrears calculation to only take into account loans that are more than graceOnArrearsAgeing days overdue.
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>overdueDaysForNPA</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional: Integer - represents the maximum number of days a Loan may
+							be overdue before being classified as a NPA (non performing asset)
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>accountMovesOutOfNPAOnlyOnArrearsCompletion</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Optional: Boolean - if provided as true,  Loan Account moves out of NPA state only when all arrears are cleared
+							</td>
+						</tr>
+						<tr class=alt>
+							<td>accountingRule</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies if accounting is enabled for the particular
+								product and the type of the accounting rule to be used
+								<span>Example Values:</span>1=NONE, 2=CASH_BASED, 3=ACCRUAL_PERIODIC, 4=ACCRUAL_UPFRONT</td>
+						</tr>
+						<tr class=alt>
+							<td>isInterestRecalculationEnabled</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>It is a flag, Used to denote whether interest recalculation is enabled or disabled for the particular product</td>
+						</tr>
+						<tr class=alt>
+							<td>daysInYearType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies the number of days in a year. <br>
+							<span>Example Values:</span>1=ACTUAL(Actual number of days in year), 360=360 DAYS, 364=364 DAYS(52 WEEKS), 365=365 DAYS</td>
+						</tr>
+						<tr class=alt>
+							<td>daysInMonthType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies the number of days in a month. <br>
+							<span>Example Values:</span>1=ACTUAL(Actual number of days in month), 30=30 DAYS</td>
+						</tr>
+						<tr class=alt>
+							<td>interestRecalculationCompoundingMethod</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies which amount portion should be added to principal for interest recalculation. <br>
+							<span>Example Values:</span>0=NONE(Only on principal), 1=INTEREST(Principal+Interest), 2=FEE(Principal+Fee), 3=FEE And INTEREST (Principal+Fee+Interest)</td>
+						</tr>
+						<tr class=alt>
+							<td>rescheduleStrategyMethod</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies what action should perform on loan repayment schedule for advance payments. <br>
+							<span>Example Values:</span>1=Reschedule next repayments, 2=Reduce number of installments, 3=Reduce EMI amount</td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies effective date from which the compounding of interest or fee amounts will be considered in recalculation on late payment.<br>
+							<span>Example Values:</span>1=Same as repayment period, 2=Daily, 3=Weekly, 4=Monthly</td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyInterval</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies compounding frequency interval for interest recalculation.<br>
+						</tr>
+						<tr class=alt>
+							<td>recalculationCompoundingFrequencyDate</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies compounding frequency start date for interest recalculation.<br>
+						</tr>
+
+						<tr class=alt>
+							<td>recalculationRestFrequencyType</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies effective date from which the late or advanced payment amounts will be considered in recalculation.<br>
+							<span>Example Values:</span>1=Same as repayment period, 2=Daily, 3=Weekly, 4=Monthly</td>
+						</tr>
+						<tr class=alt>
+							<td>recalculationRestFrequencyInterval</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies rest frequency interval for interest recalculation.<br>
+						</tr>
+						<tr class=alt>
+							<td>recalculationRestFrequencyDate</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies rest frequency start date for interest recalculation.<br>
+						</tr>
+						<tr class=alt>
+							<td>preClosureInterestCalculationStrategy</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies applicable days for interest calculation on pre closure of a loan.<br>
+							<span>Example Values:</span>1=Calculate till pre closure date, 2=Calculate till rest frequency date</td>
+						</tr>
+						<tr class=alt>
+							<td>isArrearsBasedOnOriginalSchedule</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>If Specified as true, arrears will be identified based on original schedule.<br>
+						</tr>
+						<tr class=alt>
+							<td>allowAttributeOverrides</td>
+						</tr>
+						<tr>
+							<td class=fielddesc>Specifies if select attributes may be overridden for individual loan accounts.<br>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<a id="self_loanproducts_list" name="self_loanproducts_list"
+				class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>List Loan Products</h4>
+					<p>Example Requests:</p>
+					<div class=apiClick>self/loanproducts?clientId=1</div>
+					<br>
+					<br>
+					<div class=apiClick>self/loanproducts?fields=name,description&clientId=1</div>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/self/loanproducts?clientId={clientId}
+					</code>
+					<code class="method-response">
+[  
+   {  
+      "name":"Personal loan",
+      "description":"Loan",
+      "useBorrowerCycle":false,
+      "status":"loanProduct.active",
+      "allowVariableInstallments":false,
+      "minimumGap":0,
+      "maximumGap":0,
+      "daysInMonthType":{  
+         "code":"DaysInMonthType.actual",
+         "value":"Actual"
+      },
+      "daysInYearType":{  
+         "code":"DaysInYearType.actual",
+         "value":"Actual"
+      },
+      "isInterestRecalculationEnabled":false,
+      "canDefineInstallmentAmount":false,
+      "installmentAmountInMultiplesOf":1,
+      "principalVariationsForBorrowerCycle":[  
+
+      ],
+      "interestRateVariationsForBorrowerCycle":[  
+
+      ],
+      "numberOfRepaymentVariationsForBorrowerCycle":[  
+
+      ],
+      "multiDisburseLoan":false,
+      "maxTrancheCount":0,
+      "principalThresholdForLastInstallment":0,
+      "holdGuaranteeFunds":false,
+      "accountMovesOutOfNPAOnlyOnArrearsCompletion":false,
+      "allowAttributeOverrides":{  
+         "graceOnPrincipalAndInterestPayment":true,
+         "graceOnArrearsAgeing":true
+      },
+      "syncExpectedWithDisbursementDate":false
+   }
+]
+					</code>
+				</div>
+			</div>			
+			
+			<a id="self_loanproducts_retrieve" name="self_loanproducts_retrieve"
+				class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Retrieve a Loan Product</h4>
+					<p>Example Requests:</p>
+					<div class=apiClick>self/loanproducts/1?clientId=1</div>
+					<br>
+					<br>
+					<div class=apiClick>self/loanproducts/1?fields=name,description&clientId=1</div>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/self/loanproducts/{productId}?clientId={clientId}
+					</code>
+					<code class="method-response">
+{
+  "id": 11,
+  "name": "advanced accounting",
+  "shortName": "ad11",
+  "includeInBorrowerCycle": true,
+  "useBorrowerCycle": true,
+  "status": "loanProduct.active",
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 2,
+    "inMultiplesOf": 0,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "principal": 10000.000000,
+  "minPrincipal": 2000.000000,
+  "maxPrincipal": 15000.000000,
+  "numberOfRepayments": 7,
+  "repaymentEvery": 7,
+  "repaymentFrequencyType": {
+    "id": 0,
+    "code": "repaymentFrequency.periodFrequencyType.days",
+    "value": "Days"
+  },
+  "interestRatePerPeriod": 5.000000,
+  "interestRateFrequencyType": {
+    "id": 2,
+    "code": "interestRateFrequency.periodFrequencyType.months",
+    "value": "Per month"
+  },
+  "annualInterestRate": 60.000000,
+  "amortizationType": {
+    "id": 1,
+    "code": "amortizationType.equal.installments",
+    "value": "Equal installments"
+  },
+  "interestType": {
+    "id": 0,
+    "code": "interestType.declining.balance",
+    "value": "Declining Balance"
+  },
+  "interestCalculationPeriodType": {
+    "id": 1,
+    "code": "interestCalculationPeriodType.same.as.repayment.period",
+    "value": "Same as repayment period"
+  },
+  "transactionProcessingStrategyId": 1,
+  "transactionProcessingStrategyName": "Mifos style",
+  "charges": [],
+  "principalVariationsForBorrowerCycle": [
+    {
+      "id": 21,
+      "borrowerCycleNumber": 1,
+      "paramType": {
+        "id": 1,
+        "code": "LoanProductParamType.principal",
+        "value": "principal"
+      },
+      "valueConditionType": {
+        "id": 2,
+        "code": "LoanProductValueConditionType.equal",
+        "value": "equals"
+      },
+      "minValue": 2000.000000,
+      "maxValue": 20000.000000,
+      "defaultValue": 15000.000000
+    },
+    {
+      "id": 20,
+      "borrowerCycleNumber": 1,
+      "paramType": {
+        "id": 1,
+        "code": "LoanProductParamType.principal",
+        "value": "principal"
+      },
+      "valueConditionType": {
+        "id": 3,
+        "code": "LoanProductValueConditionType.greterthan",
+        "value": "greter than"
+      },
+      "minValue": 3000.000000,
+      "maxValue": 25000.000000,
+      "defaultValue": 20000.000000
+    }
+  ],
+  "interestRateVariationsForBorrowerCycle": [],
+  "numberOfRepaymentVariationsForBorrowerCycle": [],
+  "accountingRule": {
+    "id": 2,
+    "code": "accountingRuleType.cash",
+    "value": "CASH BASED"
+  },
+  "accountingMappings": {
+    "fundSourceAccount": {
+      "id": 1,
+      "name": "fund source",
+      "glCode": "01"
+    },
+    "loanPortfolioAccount": {
+      "id": 2,
+      "name": "Loan portfolio",
+      "glCode": "02"
+    },
+    "transfersInSuspenseAccount": {
+      "id": 3,
+      "name": "transfers",
+      "glCode": "03"
+    },
+    "interestOnLoanAccount": {
+      "id": 4,
+      "name": "income from interest",
+      "glCode": "04"
+    },
+    "incomeFromFeeAccount": {
+      "id": 8,
+      "name": "income from fees 2",
+      "glCode": "10"
+    },
+    "incomeFromPenaltyAccount": {
+      "id": 9,
+      "name": "income from penalities 2",
+      "glCode": "11"
+    },
+    "writeOffAccount": {
+      "id": 10,
+      "name": "loans written off 2",
+      "glCode": "12"
+    },
+    "overpaymentLiabilityAccount": {
+      "id": 11,
+      "name": "over payment",
+      "glCode": "13"
+    }
+  },
+  "paymentChannelToFundSourceMappings": [
+    {
+      "paymentType": {
+        "id": 10,
+        "name": "check"
+      },
+      "fundSourceAccount": {
+        "id": 1,
+        "name": "fund source",
+        "glCode": "01"
+      }
+    }
+  ],
+  "feeToIncomeAccountMappings": [
+    {
+      "charge": {
+        "id": 1,
+        "name": "flat install",
+        "active": false,
+        "penalty": false
+      },
+      "incomeAccount": {
+        "id": 8,
+        "name": "income from fees 2",
+        "glCode": "10"
+      }
+    },
+    {
+      "charge": {
+        "id": 2,
+        "name": "install per",
+        "active": false,
+        "penalty": false
+      },
+      "incomeAccount": {
+        "id": 4,
+        "name": "income from interest",
+        "glCode": "04"
+      }
+    },
+    {
+      "charge": {
+        "id": 5,
+        "name": "des charge",
+        "active": false,
+        "penalty": false
+      },
+      "incomeAccount": {
+        "id": 9,
+        "name": "income from penalities 2",
+        "glCode": "11"
+      }
+    },
+    "multiDisburseLoan":true,"maxTrancheCount":3,"outstandingLoanBalance":36000.000000,
+    "overdueDaysForNPA":2,
+	"principalThresholdForLastInstalment":50
+  ]
+}
+					</code>
+				</div>
+			</div>
+			
+<a id="self_savingsproducts" name="self_savingsproducts" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h3>Savings Product:</h3>
+	        <p>An MFIs savings product offerings are modeled using this API.</p>
+	        <table class=matrixHeading>
+	            <tr class="matrixHeadingBG"><td><div class="fineractHeading2">Field Descriptions</div></td></tr>
+
+				<tr class=alt><td>name</td></tr>
+	            <tr><td class=fielddesc>The name of the product offering.</td></tr>
+
+	            <tr class=alt><td>shortName</td></tr>
+	            <tr><td class=fielddesc>Shortname associated with a saving product. <br>
+	            	An abbreviated version of the name, used in reports or menus where space is limited.
+	            </td></tr>
+
+	            <tr class=alt><td>description</td></tr>
+	            <tr><td class=fielddesc>A description of the product offering.</td></tr>
+
+				<tr class=alt><td>currencyCode</td></tr>
+	            <tr><td class=fielddesc>Three letter ISO code representing currency.</td></tr>
+
+	            <tr class=alt><td>digitsAfterDecimal</td></tr>
+	            <tr><td class=fielddesc>Override the currency default value for digitsAfterDecimal.</td></tr>
+
+	            <tr class=alt><td>inMultiplesOf</td></tr>
+	            <tr><td class=fielddesc>Override the default value for rounding currency to multiples of provided value.</td></tr>
+
+				<tr class=alt><td>nominalAnnualInterestRate</td></tr>
+	            <tr><td class=fielddesc>The default interest rate set when creating savings accounts of this type of product. e.g. <b>5</b>% Per year - It number here is always expressed as the Nominal APR.</td></tr>
+
+				<tr class=alt><td>interestCompoundingPeriodType</td></tr>
+	            <tr><td class=fielddesc>The period at which interest rate is compounded. 1=Daily, 4=Monthly (at end of month)</td></tr>
+
+	            <tr class=alt><td>interestPostingPeriodType</td></tr>
+	            <tr><td class=fielddesc>The period at which interest rate is posted or credited to savings account. 4=Monthly (at end of month), 5=Quarterly (at end of quarter, 31st Mar, 30th Jun, 30th Sep, 31st Dec)</td></tr>
+
+	            <tr class=alt><td>interestCalculationType</td></tr>
+	            <tr><td class=fielddesc>The interest calculation method used: 1=Daily Balance or 2=Average Daily Balance</td></tr>
+
+				<tr class=alt><td>interestCalculationDaysInYearType</td></tr>
+	            <tr><td class=fielddesc>The setting for number of days in year to use: 360=360 Days, 365=365 Days</td></tr>
+
+				<tr class=alt><td>minRequiredOpeningBalance</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, sets the minimum deposit amount required to open a savings account e.g. <b>2,000</b></td></tr>
+
+	            <tr class=alt><td>lockinPeriodFrequency</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, used along with <i>lockinPeriodFrequencyType</i> to indicate the length of time that the savings account is 'locked in' and withdrawals are not allowed. e.g. <b>6</b> Months</td></tr>
+
+	            <tr class=alt><td>lockinPeriodFrequencyType</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, used along with <i>lockinPeriodFrequency</i> to indicate the length of time that the savings account is 'locked in' and withdrawals are not allowed. 0=Days, 1=Weeks, 2=Months, 3=Years
+	            e.g. 6 <b>Months</b></td></tr>
+
+	            <tr class=alt><td>withdrawalFeeForTransfers</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: Used along with <i>withdrawalFeeAmount</i> to indicate whether the withdrawal fee should be applied on the account for account transfers .</td></tr>
+
+				<tr class=alt><td>accountingRule</td></tr>
+	            <tr>
+					<td class=fielddesc>Specifies if accounting is enabled for the particular
+					product and the type of the accounting rule to be used
+					<span>Example Values:</span>1=NONE,2=CASH_BASED</td>
+				</tr>
+
+				<tr class=alt><td>allowOverdraft</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, depending on the value mark the savings account as overdraft account </td></tr>
+
+				<tr class=alt><td>overdraftLimit</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, sets the maximum allowed overdraft amount for a  savings account e.g. <b>5,000</b> else set the limit as zero</td></tr>
+
+				<tr class=alt><td>minBalanceForInterestCalculation</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, balance must be greater than provided value for calculation of interest  e.g. <b>5,000</b> </td></tr>
+
+	            <tr class=alt><td>enforceMinRequiredBalance</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If set to <span>true</span>, validates that the account balance does not
+	            fall below <span>minRequiredBalance</span> </td></tr>
+
+				<tr class=alt><td>minRequiredBalance</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, sets an indicator of the minimum required balance of the  savings account e.g. <b>5,000</b> else set the limit as zero. Note that <span>enforceMinRequiredBalance</span> determines if the minimum required balance is enforced</td></tr>
+
+				<tr class=alt><td>withHoldTax</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If provided, sets an indicator for applying withhold tax on interest posting for savings account </td></tr>
+
+				<tr class=alt><td>taxGroupId</td></tr>
+	            <tr><td class=fielddesc><b>Optional</b>: If withhold tax set as true, with hold tax will be applied as per the tax group provided </td></tr>
+
+
+	        </table>
+	    </div>
+	</div>
+	
+	   <a id="self_savingsproducts_list" name="self_savingsproducts_list" class="old-syle-anchor">&nbsp;</a>
+    <div class="method-section">
+        <div class="method-description">
+            <h4>List Savings Products</h4>
+            <p>Example Requests:</p>
+            <div class=apiClick>self/savingsproducts?clientId=1</div>
+        </div>
+        <div class="method-example">
+            <code class="method-declaration">GET https://domainname/api/v1/self/savingsproducts?clientid={clientid}</code>
+            <code class="method-response">
+[
+  {
+    "id": 1,
+    "name": "Savings product",
+    "shortName": "sa1",
+    "description": "savings",
+    "currency": {
+      "code": "USD",
+      "name": "US Dollar",
+      "decimalPlaces": 2,
+      "displaySymbol": "$",
+      "nameCode": "currency.USD",
+      "displayLabel": "US Dollar ($)"
+    },
+    "nominalAnnualInterestRate": 5.000000,
+    "interestCompoundingPeriodType": {
+      "id": 1,
+      "code": "savings.interest.period.savingsCompoundingInterestPeriodType.daily",
+      "value": "Daily"
+    },
+    "interestPostingPeriodType": {
+      "id": 4,
+      "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.monthly",
+      "value": "Monthly"
+    },
+    "interestCalculationType": {
+      "id": 1,
+      "code": "savingsInterestCalculationType.dailybalance",
+      "value": "Daily Balance"
+    },
+    "interestCalculationDaysInYearType": {
+      "id": 365,
+      "code": "savingsInterestCalculationDaysInYearType.days365",
+      "value": "365 Days"
+    },
+    "withdrawalFeeForTransfers": false,
+    "accountingRule": {
+      "id": 2,
+      "code": "accountingRuleType.cash",
+      "value": "CASH BASED"
+    }
+  }
+]			</code>
+        </div>
+    </div>
+	
+	  <a id="self_savingsproducts_retrieve" name="self_savingsproducts_retrieve" class="old-syle-anchor">&nbsp;</a>
+    <div class="method-section">
+        <div class="method-description">
+            <h4>Retrieve a Savings Product</h4>
+            <p>Example Requests: </p>
+            <div class=apiClick>self/savingsproducts/1?clientId=1</div>
+            <br><br>
+            <div class=apiClick>self/savingsproducts/1?fields=name,description&clientId=1</div>
+        </div>
+        <div class="method-example">
+			<code class="method-declaration">GET https://DomainName/api/v1/self/savingsproducts/{productId}&clientId={clientId}</code>
+			<code class="method-response">
+{
+  "id": 1,
+  "name": "savings product",
+  "shortName": "sa1",
+  "description": "savings",
+  "currency": {
+    "code": "USD",
+    "name": "US Dollar",
+    "decimalPlaces": 2,
+    "displaySymbol": "$",
+    "nameCode": "currency.USD",
+    "displayLabel": "US Dollar ($)"
+  },
+  "nominalAnnualInterestRate": 5.000000,
+  "interestCompoundingPeriodType": {
+    "id": 1,
+    "code": "savings.interest.period.savingsCompoundingInterestPeriodType.daily",
+    "value": "Daily"
+  },
+  "interestPostingPeriodType": {
+    "id": 4,
+    "code": "savings.interest.posting.period.savingsPostingInterestPeriodType.monthly",
+    "value": "Monthly"
+  },
+  "interestCalculationType": {
+    "id": 1,
+    "code": "savingsInterestCalculationType.dailybalance",
+    "value": "Daily Balance"
+  },
+  "interestCalculationDaysInYearType": {
+    "id": 365,
+    "code": "savingsInterestCalculationDaysInYearType.days365",
+    "value": "365 Days"
+  },
+  "withdrawalFeeForTransfers": false,
+  "accountingRule": {
+    "id": 2,
+    "code": "accountingRuleType.cash",
+    "value": "CASH BASED"
+  },
+  "accountingMappings": {
+    "savingsReferenceAccount": {
+      "id": 12,
+      "name": "savings ref",
+      "glCode": "20"
+    },
+    "incomeFromFeeAccount": {
+      "id": 16,
+      "name": "income from savings fee",
+      "glCode": "24"
+    },
+    "incomeFromPenaltyAccount": {
+      "id": 17,
+      "name": "income from sav penalites",
+      "glCode": "25"
+    },
+    "interestOnSavingsAccount": {
+      "id": 15,
+      "name": "interest on savings",
+      "glCode": "23"
+    },
+    "savingsControlAccount": {
+      "id": 13,
+      "name": "savings ref tool kit",
+      "glCode": "21"
+    },
+    "transfersInSuspenseAccount": {
+      "id": 14,
+      "name": "saving transfers",
+      "glCode": "22"
+    }
+  },
+  "paymentChannelToFundSourceMappings": [
+    {
+      "paymentType": {
+        "id": 10,
+        "name": "check"
+      },
+      "fundSourceAccount": {
+        "id": 12,
+        "name": "savings ref",
+        "glCode": "20"
+      }
+    }
+  ],
+  "feeToIncomeAccountMappings": [
+    {
+      "charge": {
+        "id": 11,
+        "name": "sav charge",
+        "active": false,
+        "penalty": false
+      },
+      "incomeAccount": {
+        "id": 16,
+        "name": "income from savings fee",
+        "glCode": "24"
+      }
+    }
+  ],
+  "penaltyToIncomeAccountMappings": [
+    {
+      "charge": {
+        "id": 12,
+        "name": "sav 2",
+        "active": false,
+        "penalty": true
+      },
+      "incomeAccount": {
+        "id": 17,
+        "name": "income from sav penalites",
+        "glCode": "25"
+      }
+    }
+  ],
+  "charges": []
+}
+			</code>
+        </div>
+    </div>
+	
+	<a id="self_shareproducts_list" name="self_shareproducts_list" class="old-syle-anchor">&nbsp;</a>
+    <div class="method-section">
+        <div class="method-description">
+            <h4>List Share Products</h4>
+            <p>Example Requests:</p>
+            <div class=apiClick>self/products/share?clientId=1</div>
+        </div>
+        <div class="method-example">
+
+            <code class="method-declaration">GET https://DomainName/api/v1/self/products/share?clientId={clientId}</code>
+            <code class="method-response">
+
+{
+    "totalFilteredRecords": 2,
+    "pageItems": [
+        {
+            "id": 1,
+            "name": "Share P1",
+            "shortName": "shar",
+            "description": "Share",
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "inMultiplesOf": 1,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "totalShares": 1000,
+            "totalSharesIssued": 450,
+            "unitPrice": 5,
+            "shareCapital": 2250,
+            "minimumShares": 2,
+            "nominalShares": 5,
+            "maximumShares": 8,
+            "allowDividendCalculationForInactiveClients": false,
+            "lockinPeriod": 1,
+            "lockPeriodTypeEnum": {
+                "id": 1,
+                "code": "shares.lockin.sharePeriodFrequencyType.weeks",
+                "value": "Weeks"
+            },
+            "minimumActivePeriod": 10,
+            "minimumActivePeriodForDividendsTypeEnum": {
+                "id": 0,
+                "code": "shares.minimumactive.sharePeriodFrequencyType.days",
+                "value": "Days"
+            },
+            "accountingRule": {
+                "id": 1,
+                "code": "accountingRuleType.none",
+                "value": "NONE"
+            }
+        },
+        {
+            "id": 2,
+            "name": "ShareP2",
+            "shortName": "comp",
+            "description": "Company shares",
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "inMultiplesOf": 1,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "totalShares": 500,
+            "totalSharesIssued": 200,
+            "unitPrice": 2,
+            "shareCapital": 400,
+            "nominalShares": 5,
+            "allowDividendCalculationForInactiveClients": false,
+            "lockinPeriod": 1,
+            "lockPeriodTypeEnum": {
+                "id": 0,
+                "code": "shares.lockin.sharePeriodFrequencyType.days",
+                "value": "Days"
+            },
+            "minimumActivePeriod": 10,
+            "minimumActivePeriodForDividendsTypeEnum": {
+                "id": 0,
+                "code": "shares.minimumactive.sharePeriodFrequencyType.days",
+                "value": "Days"
+            },
+            "accountingRule": {
+                "id": 2,
+                "code": "accountingRuleType.cash",
+                "value": "CASH BASED"
+            }
+        }
+    ]
+}
+</code>
+       </div>
+</div>
+
+ <a id="self_shareproducts_retrieve" name="self_shareproducts_retrieve" class="old-syle-anchor">&nbsp;</a>
+    <div class="method-section">
+        <div class="method-description">
+            <h4>Retrieve a Share Product</h4>
+            <p>Example Requests: </p>
+            <div class=apiClick>self/products/share/2?clientId=1</div>
+            <br><br>
+            <div class=apiClick>self/products/share/2?clientId=1&template=true</div>
+        </div>
+        <div class="method-example">
+			<code class="method-declaration">GET https://DomainName/api/v1/self/products/share/{productId}?clientId={clientId}</code>
+			<code class="method-response">
+{
+    "id": 2,
+    "name": "ShareP2",
+    "shortName": "comp",
+    "description": "Company shares",
+    "currency": {
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "inMultiplesOf": 1,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+    },
+    "totalShares": 500,
+    "totalSharesIssued": 200,
+    "unitPrice": 2,
+    "shareCapital": 400,
+    "nominalShares": 5,
+    "marketPrice": [
+        {
+            "id": 2,
+            "fromDate": "May 27, 2018",
+            "shareValue": 1
+        }
+    ],
+    "charges": [
+        {
+            "id": 1,
+            "name": "Activation",
+            "active": true,
+            "penalty": false,
+            "currency": {
+                "code": "USD",
+                "name": "US Dollar",
+                "decimalPlaces": 2,
+                "displaySymbol": "$",
+                "nameCode": "currency.USD",
+                "displayLabel": "US Dollar ($)"
+            },
+            "amount": 1,
+            "chargeTimeType": {
+                "id": 13,
+                "code": "chargeTimeType.activation",
+                "value": "Share Account Activate"
+            },
+            "chargeAppliesTo": {
+                "id": 4,
+                "code": "chargeAppliesTo.shares",
+                "value": "Shares"
+            },
+            "chargeCalculationType": {
+                "id": 1,
+                "code": "chargeCalculationType.flat",
+                "value": "Flat"
+            },
+            "chargePaymentMode": {
+                "id": 0,
+                "code": "chargepaymentmode.regular",
+                "value": "Regular"
+            }
+        }
+    ],
+    "allowDividendCalculationForInactiveClients": false,
+    "lockinPeriod": 1,
+    "lockPeriodTypeEnum": {
+        "id": 0,
+        "code": "shares.lockin.sharePeriodFrequencyType.days",
+        "value": "Days"
+    },
+    "minimumActivePeriod": 10,
+    "minimumActivePeriodForDividendsTypeEnum": {
+        "id": 0,
+        "code": "shares.minimumactive.sharePeriodFrequencyType.days",
+        "value": "Days"
+    },
+    "accountingRule": {
+        "id": 2,
+        "code": "accountingRuleType.cash",
+        "value": "CASH BASED"
+    },
+    "accountingMappings": {
+        "shareReferenceId": {
+            "id": 1,
+            "name": "GLAsset",
+            "glCode": "GL1"
+        },
+        "incomeFromFeeAccountId": {
+            "id": 4,
+            "name": "GLIncome",
+            "glCode": "GL4"
+        },
+        "shareEquityId": {
+            "id": 3,
+            "name": "GLEquity",
+            "glCode": "GL3"
+        },
+        "shareSuspenseId": {
+            "id": 2,
+            "name": "GL2Liabilities",
+            "glCode": "GL2"
+        }
+    }
+}
+			</code>
+        </div>
+</div>
+	
+<a id="active_surveys" name="active_surveys" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Retrieve Active Surveys</h2>
+
+	        <p>Example Requests : </p>
+	        <div class=apiClick>self/surveys?isActive=true</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://domainname/api/v1/self/surveys?isActive=true</code>
+	        <code class="method-response">
+[  
+   {  
+      "id":1,
+      "componentDatas":[  
+
+      ],
+      "questionDatas":[  
+         {  
+            "id":1,
+            "responseDatas":[  
+               {  
+                  "id":2,
+                  "text":"Own",
+                  "value":1,
+                  "sequenceNo":1
+               },
+               {  
+                  "id":1,
+                  "text":"Rent",
+                  "value":0,
+                  "sequenceNo":2
+               }
+            ],
+            "componentKey":Test,
+            "key":"t1",
+            "text":"Type of house",
+            "description":Test,
+            "sequenceNo":1
+         }
+      ],
+      "key":"test",
+      "name":"test",
+      "description":"test",
+      "countryCode":"in",
+      "validFrom":1540233000000,
+      "validTo":4695906600000
+   }
+]
+	        </code>
+	    </div>
+</div>
+
+<a id="submit_survey" name="submit_survey" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Submit Survey</h2>
+
+	        <p>Example Requests : </p>
+	        <div class=apiClick>self/surveys/scorecards/1</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">POST https://domainname/api/v1/self/surveys/scorecards/{surveyId}</code>
+			<code class="method-request">
+{  
+   "userId":3,
+   "clientId":"1",
+   "surveyId":1,
+   "scorecardValues":[  
+      {  
+         "questionId":1,
+         "responseId":2,
+         "value":1,
+         "createdOn":1540291482379
+      }
+   ],
+   "surveyName":"",
+   "username":"",
+   "id":0
+}
+			</code>
+	    </div>
+</div>
+
+<a id="survey_score" name="survey_score" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Retrieve Survey records</h2>
+
+	        <p>Example Requests : </p>
+	        <div class=apiClick>self/surveys/scorecards/clients/1</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">GET https://domainname/api/v1/self/surveys/scorecards/clients/{clientId}</code>
+	        <code class="method-response">
+[  
+   {  
+      "id":8,
+      "userId":,
+      "username":"mifos",
+      "clientId":3,
+      "surveyId":1,
+      "surveyName":"test",
+      "scorecardValues":[  
+         {  
+            "questionId":1,
+            "responseId":2,
+            "value":1,
+            "createdOn":1540233000000
+         }
+      ]
+   }
+]	        </code>
+	    </div>
+</div>
+
+	<a id="self_service_user_reports" name="self_service_user_reports" class="old-syle-anchor">&nbsp;</a>
+			<div class="method-section">
+				<div class="method-description">
+					<h4>Running a Report</h4>
+					<p>This resource allows you to run and receive output from pre-defined Apache Fineract reports. </p>
+                                        <p>
+                                                The default output is a JSON formatted "Generic Resultset". The Generic Resultset contains
+						Column Heading as well as Data information. However, you can
+						export to CSV format by simply adding "&exportCSV=true" to the end
+						of your URL.</p>
+					<p>If Pentaho reports have been pre-defined, they can also be
+						run through this resource. Pentaho reports can return HTML, PDF or
+						CSV formats.</p>
+					<p>The Apache Fineract reference application uses a
+						JQuery plugin called stretchyreporting which, itself, uses this
+						reports resource to provide a pretty flexible reporting User
+						Interface (UI).</p>
+					<h5>Arguments</h5>
+					<dl class="argument-list">
+						<dt>R_'parameter names' ...</dt>
+						<dd>
+							optional, <span>No defaults</span>
+						</dd>
+						<dd>The number and names of the parameters depend on the
+							specific report and how it has been configured. R_officeId is an
+							example parameter name.</dd>
+						<dd>Note: the prefix R_ stands for Reporting</dd>
+						<dt>genericResultSet</dt>
+						<dd>
+							<span>optional, defaults to true</span>
+						</dd>
+						<dd>If 'true' an optimised JSON format is returned suitable for tabular display of data.
+						<dd>If 'false' a simple JSON format is returned.
+						<dt>parameterType</dt>
+						<dd>
+							optional, <span>The only valid value is 'true'. If any
+								other value is provided the argument will be ignored</span>
+						</dd>
+						<dd>Determines whether the request looks in the list of
+							reports or the list of parameters for its data. Doesn't apply to
+							Pentaho reports.</dd>
+						<dt>exportCSV</dt>
+						<dd>
+							optional, <span>The only valid value is 'true'. If any
+								other value is provided the argument will be ignored</span>
+						</dd>
+						<dd>Output will be delivered as a CSV file instead of JSON.
+							Doesn't apply to Pentaho reports.</dd>
+						<dt>output-type</dt>
+						<dd>
+							optional, <span>Defaults to HTML.</span>
+						</dd>
+						<dd>Valid Values are HTML, XLS, XSLX, CSV and PDF for html, Excel, Excel 2007+,
+							CSV and PDF formats respectively.</dd>
+						<dd>Only applies to Pentaho reports.</dd>
+						<dt>locale</dt>
+						<dd>
+							optional
+						</dd>
+						<dd>Any valid locale Ex: en_US, en_IN, fr_FR etc</dd>
+						<dd>Only applies to Pentaho reports.</dd>
+					</dl>
+					<p>Example Requests:</p>
+					<div class=apiClick>self/runreports/Client%20Details?R_officeId=1</div>
+					<br>
+					<br>
+					<div class=apiClick>self/runreports/Client%20Details?R_officeId=1&exportCSV=true</div>
+					<br>
+					<br>
+				</div>
+				<div class="method-example">
+					<code class="method-declaration">
+GET https://DomainName/api/v1/self/runreports/{reportName}
+					</code>
+					<code class="method-response">
+{
+    "columnHeaders": [
+        {
+            "columnName": "Office/Branch",
+            "columnType": "VARCHAR",
+            "isColumnNullable": false,
+            "isColumnPrimaryKey": false,
+            "columnValues": []
+        },
+        {
+            "columnName": "Client Account No.",
+            "columnType": "VARCHAR",
+            "isColumnNullable": false,
+            "isColumnPrimaryKey": false,
+            "columnValues": []
+        },
+        {
+            "columnName": "Name",
+            "columnType": "VARCHAR",
+            "isColumnNullable": false,
+            "isColumnPrimaryKey": false,
+            "columnValues": []
+        },
+        {
+            "columnName": "Joined",
+            "columnType": "DATE",
+            "isColumnNullable": false,
+            "isColumnPrimaryKey": false,
+            "columnValues": []
+        },
+        {
+            "columnName": "External Id",
+            "columnType": "VARCHAR",
+            "isColumnNullable": false,
+            "isColumnPrimaryKey": false,
+            "columnValues": []
+        }
+    ],
+    "data": [
+        {
+            "row": [
+                "Head Office",
+                "000000001",
+                "John Doe",
+                "2017-03-04",
+                "786YYH7"
+            ]
+        }
+    ]
+}
+					</code>
+				</div>
+			</div>
+			
+    <a id="linkaccountstopocket" name="linkaccountstopocket" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Link/delink accounts to/from pocket</h2>
+	        <p>Pockets behave as favourites. An user can link his/her Loan, Savings and Share accounts to pocket for faster access. In a similar way linked accounts can be delinked from the pocket.</p>
+	         <h2>Link accounts to pocket</h2>
+			<p>Example Requests:</p>
+	        <div class=apiClick>self/pockets?command=linkAccounts</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">POST https://DomainName/api/v1/self/pockets?command=linkAccounts</code>
+			  <code class="method-request">POST self/pockets?command=linkAccounts
+Content-Type: application/json
+Request Body:
+
+{  
+   "accountsDetail":[  
+      {  
+         "accountId":"11",
+         "accountType":"LOAN"
+      },
+      {  
+         "accountId":"2",
+         "accountType":"SAVINGS"
+      }
+   ]
+}
+			</code>
+			<code class="method-response">
+{
+    "resourceId": 6
+}
+			</code>
+	    </div>
+	</div>
+	
+	 <a id="delinkaccountstopocket" name="delinkaccountstopocket" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Delink accounts from pocket</h2>
+			<p>Example Requests:</p>
+	        <div class=apiClick>self/pockets?command=delinkAccounts</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">POST https://DomainName/api/v1/self/pockets?command=delinkAccounts</code>
+			  <code class="method-request">POST self/pockets?command=delinkAccounts
+Content-Type: application/json
+Request Body:
+
+{  "pocketAccountMappingIds" :[8,9]
+}
+			</code>
+			<code class="method-response">
+{
+    "resourceId":10
+}
+			</code>
+	    </div>
+	</div>
+
+	 <a id="retrievepocketaccounts" name="retrievepocketaccounts" class="old-syle-anchor">&nbsp;</a>
+	<div class="method-section">
+	    <div class="method-description">
+	        <h2>Retrieve accounts linked to pocket</h2>
+			<p>All linked loan </p>
+			<p>Example Requests:</p>
+	        <div class=apiClick>self/pockets</div>
+	    </div>
+	    <div class="method-example">
+	        <code class="method-declaration">POST https://DomainName/api/v1/self/pockets</code>
+			<code class="method-response">
+{
+    "loanAccounts": [
+        {
+            "pocketId": 6,
+            "accountId": 11,
+            "accountType": 2,
+            "accountNumber": "000000011",
+            "id": 10
+        }
+    ],
+    "savingsAccounts": [
+        {
+            "pocketId": 6,
+            "accountId": 2,
+            "accountType": 3,
+            "accountNumber": "000000002",
+            "id": 11
+        }
+    ],
+    "shareAccounts": []
+}
+			</code>
 	    </div>
 	</div>
 			<!-- end of Customer Self Service APIs-->

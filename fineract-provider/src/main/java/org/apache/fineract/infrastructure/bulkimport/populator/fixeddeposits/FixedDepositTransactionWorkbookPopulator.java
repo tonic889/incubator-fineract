@@ -158,7 +158,7 @@ public class FixedDepositTransactionWorkbookPopulator extends AbstractWorkbookPo
         //Account Number Named  after Clients
         for(int j = 0; j < clientsWithActiveSavings.size(); j++) {
             Name name = savingsTransactionWorkbook.createName();
-            name.setNameName("Account_" + clientsWithActiveSavings.get(j).replaceAll(" ", "_") + "_" + clientIdsWithActiveSavings.get(j) + "_");
+            name.setNameName("Account_" + clientsWithActiveSavings.get(j).replace(" ", "_") + "_" + clientIdsWithActiveSavings.get(j) + "_");
             name.setRefersToFormula(TemplatePopulateImportConstants.FIXED_DEPOSIT_TRANSACTION_SHEET_NAME+"!$Q$" + clientNameToBeginEndIndexes.get(clientsWithActiveSavings.get(j))[0] + ":$Q$" + clientNameToBeginEndIndexes.get(clientsWithActiveSavings.get(j))[1]);
         }
 
@@ -179,7 +179,7 @@ public class FixedDepositTransactionWorkbookPopulator extends AbstractWorkbookPo
         for(SavingsAccountData savingsAccount : savingsAccounts) {
             row = savingsTransactionSheet.createRow(rowIndex++);
             writeString(TransactionConstants.LOOKUP_CLIENT_NAME_COL, row, savingsAccount.getClientName()  + "(" + savingsAccount.getClientId() + ")");
-            writeLong(TransactionConstants.LOOKUP_ACCOUNT_NO_COL, row, Long.parseLong(savingsAccount.getAccountNo()));
+            writeString(TransactionConstants.LOOKUP_ACCOUNT_NO_COL, row, savingsAccount.getAccountNo());
             writeString(TransactionConstants.LOOKUP_PRODUCT_COL, row, savingsAccount.getSavingsProductName());
             if(savingsAccount.getMinRequiredOpeningBalance() != null)
                 writeBigDecimal(TransactionConstants.LOOKUP_OPENING_BALANCE_COL, row, savingsAccount.getMinRequiredOpeningBalance());

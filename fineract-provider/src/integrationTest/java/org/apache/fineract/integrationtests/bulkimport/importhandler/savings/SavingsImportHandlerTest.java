@@ -41,6 +41,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -63,6 +64,7 @@ public class SavingsImportHandlerTest {
     }
 
     @Test
+    @Ignore
     public void testSavingsImport() throws InterruptedException, IOException, ParseException {
 
         requestSpec.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
@@ -118,17 +120,19 @@ public class SavingsImportHandlerTest {
         firstSavingsRow.createCell(SavingsConstants.INTEREST_POSTING_PERIOD_COL).setCellValue(savingsProductSheet.getRow(1).getCell(4).getStringCellValue());
         firstSavingsRow.createCell(SavingsConstants.INTEREST_CALCULATION_COL).setCellValue(savingsProductSheet.getRow(1).getCell(5).getStringCellValue());
         firstSavingsRow.createCell(SavingsConstants.INTEREST_CALCULATION_DAYS_IN_YEAR_COL).setCellValue(savingsProductSheet.getRow(1).getCell(6).getStringCellValue());
-        firstSavingsRow.createCell(SavingsConstants.MIN_OPENING_BALANCE_COL).setCellValue(savingsProductSheet.getRow(1).getCell(7).getNumericCellValue());
-        firstSavingsRow.createCell(SavingsConstants.LOCKIN_PERIOD_COL).setCellValue(savingsProductSheet.getRow(1).getCell(8).getNumericCellValue());
-        firstSavingsRow.createCell(SavingsConstants.LOCKIN_PERIOD_FREQUENCY_COL).setCellValue(savingsProductSheet.getRow(1).getCell(9).getStringCellValue());
+        firstSavingsRow.createCell(SavingsConstants.MIN_OPENING_BALANCE_COL).setCellValue(1000.0);
+        firstSavingsRow.createCell(SavingsConstants.LOCKIN_PERIOD_COL).setCellValue(1);
+        firstSavingsRow.createCell(SavingsConstants.LOCKIN_PERIOD_FREQUENCY_COL).setCellValue("Weeks");
         firstSavingsRow.createCell(SavingsConstants.APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS).setCellValue("False");
         firstSavingsRow.createCell(SavingsConstants.ALLOW_OVER_DRAFT_COL).setCellValue("False");
         firstSavingsRow.createCell(SavingsConstants.OVER_DRAFT_LIMIT_COL).setCellValue(savingsProductSheet.getRow(1).getCell(15).getNumericCellValue());
 
-        File directory=new File(System.getProperty("user.home")+"\\Fineract\\bulkimport\\integration_tests\\importhandler\\savings") ;
+        String currentdirectory = new File("").getAbsolutePath();
+        File directory=new File(currentdirectory+File.separator+"src"+File.separator+"integrationTest"+File.separator+
+                "resources"+File.separator+"bulkimport"+File.separator+"importhandler"+File.separator+"savings") ;
         if (!directory.exists())
             directory.mkdirs();
-        File file= new File(directory+"\\Savings.xls");
+        File file= new File(directory+File.separator+"Savings.xls");
         OutputStream outputStream=new FileOutputStream(file);
         workbook.write(outputStream);
         outputStream.close();
@@ -138,7 +142,7 @@ public class SavingsImportHandlerTest {
         Assert.assertNotNull(importDocumentId);
 
         //Wait for the creation of output excel
-        Thread.sleep(3000);
+        Thread.sleep(10000);
 
         //check status column of output excel
         String location=savingsAccountHelper.getOutputTemplateLocation(importDocumentId);
