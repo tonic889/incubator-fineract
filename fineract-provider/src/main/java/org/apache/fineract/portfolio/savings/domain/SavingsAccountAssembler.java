@@ -43,10 +43,10 @@ import static org.apache.fineract.portfolio.savings.SavingsApiConstants.submitte
 import static org.apache.fineract.portfolio.savings.SavingsApiConstants.withHoldTaxParamName;
 import static org.apache.fineract.portfolio.savings.SavingsApiConstants.withdrawalFeeForTransfersParamName;
 
+import com.google.gson.JsonElement;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Set;
-
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.exception.UnsupportedParameterException;
 import org.apache.fineract.infrastructure.core.serialization.FromJsonHelper;
@@ -73,8 +73,6 @@ import org.apache.fineract.useradministration.domain.AppUser;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.google.gson.JsonElement;
 
 @Service
 public class SavingsAccountAssembler {
@@ -120,8 +118,8 @@ public class SavingsAccountAssembler {
         final String externalId = this.fromApiJsonHelper.extractStringNamed(externalIdParamName, element);
         final Long productId = this.fromApiJsonHelper.extractLongNamed(productIdParamName, element);
 
-        final SavingsProduct product = this.savingProductRepository.findOne(productId);
-        if (product == null) { throw new SavingsProductNotFoundException(productId); }
+        final SavingsProduct product = this.savingProductRepository.findById(productId)
+                .orElseThrow(() -> new SavingsProductNotFoundException(productId));
 
         Client client = null;
         Group group = null;
@@ -330,7 +328,7 @@ public class SavingsAccountAssembler {
             if (!group.hasClientAsMember(client)) { throw new ClientNotInGroupException(client.getId(), group.getId()); }
             accountType = AccountType.JLG;
         }
-        final SavingsProduct product = this.savingProductRepository.findOne(productId) ;
+        final SavingsProduct product = this.savingProductRepository.findById(productId).get();
         final Set<SavingsAccountCharge> charges = this.savingsAccountChargeAssembler.fromSavingsProduct(product);
         final SavingsAccount account = SavingsAccount.createNewApplicationForSubmittal(client, group, product, null, null, null,
                 accountType, appliedonDate, appliedBy, product.nominalAnnualInterestRate(), product.interestCompoundingPeriodType(),

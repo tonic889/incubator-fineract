@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
  * <code>findOne</code> repository method and throwing an appropriate not found
  * exception.
  * </p>
- * 
+ *
  * <p>
  * This is to avoid need for checking and throwing in multiple areas of code
  * base where {@link InterestRateChartRepository} is required.
@@ -47,9 +47,8 @@ public class InterestRateChartRepositoryWrapper {
     }
 
     public InterestRateChart findOneWithNotFoundDetection(final Long intrestRateChartId) {
-        final InterestRateChart interestRateChart = this.repository.findOne(intrestRateChartId);
-        if (interestRateChart == null) { throw new InterestRateChartNotFoundException(intrestRateChartId); }
-        return interestRateChart;
+        return this.repository.findById(intrestRateChartId)
+                .orElseThrow(() -> new InterestRateChartNotFoundException(intrestRateChartId));
     }
 
     public void save(final InterestRateChart interestRateChart) {

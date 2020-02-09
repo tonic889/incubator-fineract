@@ -18,27 +18,39 @@
  */
 package org.apache.fineract.interoperation.service;
 
+import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
-import org.apache.fineract.interoperation.data.InteropIdentifierResponseData;
+import org.apache.fineract.interoperation.data.InteropAccountData;
+import org.apache.fineract.interoperation.data.InteropIdentifierAccountResponseData;
+import org.apache.fineract.interoperation.data.InteropIdentifiersResponseData;
 import org.apache.fineract.interoperation.data.InteropQuoteResponseData;
 import org.apache.fineract.interoperation.data.InteropTransactionRequestResponseData;
+import org.apache.fineract.interoperation.data.InteropTransactionsData;
 import org.apache.fineract.interoperation.data.InteropTransferResponseData;
 import org.apache.fineract.interoperation.domain.InteropIdentifierType;
-
-import javax.validation.constraints.NotNull;
 
 public interface InteropService {
 
     @NotNull
-    InteropIdentifierResponseData getAccountByIdentifier(@NotNull InteropIdentifierType idType, @NotNull String idValue, String subIdOrType);
+    InteropIdentifiersResponseData getAccountIdentifiers(@NotNull String accountId);
 
     @NotNull
-    InteropIdentifierResponseData registerAccountIdentifier(@NotNull InteropIdentifierType idType, @NotNull String idValue,
-                                                            String subIdOrType, @NotNull JsonCommand command);
+    InteropAccountData getAccountDetails(@NotNull String accountId);
 
     @NotNull
-    InteropIdentifierResponseData deleteAccountIdentifier(@NotNull InteropIdentifierType idType, @NotNull String idValue,
-                                                          String subIdOrType);
+    InteropTransactionsData getAccountTransactions(@NotNull String accountId, boolean debit, boolean credit, LocalDateTime transactionsFrom, LocalDateTime transactionsTo);
+
+    @NotNull
+    InteropIdentifierAccountResponseData getAccountByIdentifier(@NotNull InteropIdentifierType idType, @NotNull String idValue, String subIdOrType);
+
+    @NotNull
+    InteropIdentifierAccountResponseData registerAccountIdentifier(@NotNull InteropIdentifierType idType, @NotNull String idValue,
+                                                                   String subIdOrType, @NotNull JsonCommand command);
+
+    @NotNull
+    InteropIdentifierAccountResponseData deleteAccountIdentifier(@NotNull InteropIdentifierType idType, @NotNull String idValue,
+                                                                 String subIdOrType);
 
     InteropTransactionRequestResponseData getTransactionRequest(@NotNull String transactionCode, @NotNull String requestCode);
 

@@ -24,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResultBuilder;
@@ -104,7 +103,7 @@ public class CurrencyWritePlatformServiceJpaRepositoryImpl implements CurrencyWr
         changes.put("currencies", allowedCurrencyCodes.toArray(new String[allowedCurrencyCodes.size()]));
 
         this.organisationCurrencyRepository.deleteAll();
-        this.organisationCurrencyRepository.save(allowedCurrencies);
+        this.organisationCurrencyRepository.saveAll(allowedCurrencies);
 
         return new CommandProcessingResultBuilder() //
                 .withCommandId(command.commandId()) //

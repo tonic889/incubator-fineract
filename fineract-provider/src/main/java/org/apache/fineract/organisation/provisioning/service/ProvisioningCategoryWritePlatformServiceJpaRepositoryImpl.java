@@ -19,9 +19,7 @@
 package org.apache.fineract.organisation.provisioning.service;
 
 import java.util.Map;
-
 import javax.persistence.PersistenceException;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
@@ -50,7 +48,7 @@ public class ProvisioningCategoryWritePlatformServiceJpaRepositoryImpl implement
 
     private final ProvisioningCategoryDefinitionJsonDeserializer fromApiJsonDeserializer;
     private final JdbcTemplate jdbcTemplate;
-    
+
     @Autowired
     public ProvisioningCategoryWritePlatformServiceJpaRepositoryImpl(final ProvisioningCategoryRepository provisioningCategoryRepository,
             final ProvisioningCategoryDefinitionJsonDeserializer fromApiJsonDeserializer, final RoutingDataSource dataSource) {
@@ -71,9 +69,9 @@ public class ProvisioningCategoryWritePlatformServiceJpaRepositoryImpl implement
             handleDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch (final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleDataIntegrityIssues(command, throwable, dve);
+            return CommandProcessingResult.empty();
         }
     }
 
@@ -95,8 +93,8 @@ public class ProvisioningCategoryWritePlatformServiceJpaRepositoryImpl implement
     public CommandProcessingResult updateProvisioningCategory(final Long categoryId, JsonCommand command) {
         try {
             this.fromApiJsonDeserializer.validateForUpdate(command.json());
-            final ProvisioningCategory provisioningCategoryForUpdate = this.provisioningCategoryRepository.findOne(categoryId);
-            if (provisioningCategoryForUpdate == null) { throw new ProvisioningCategoryNotFoundException(categoryId); }
+            final ProvisioningCategory provisioningCategoryForUpdate = this.provisioningCategoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new ProvisioningCategoryNotFoundException(categoryId));
             final Map<String, Object> changes = provisioningCategoryForUpdate.update(command);
             if (!changes.isEmpty()) {
                 this.provisioningCategoryRepository.save(provisioningCategoryForUpdate);
@@ -106,9 +104,9 @@ public class ProvisioningCategoryWritePlatformServiceJpaRepositoryImpl implement
             handleDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch (final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleDataIntegrityIssues(command, throwable, dve);
+            return CommandProcessingResult.empty();
         }
     }
 

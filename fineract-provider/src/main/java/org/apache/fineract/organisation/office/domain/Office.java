@@ -18,12 +18,12 @@
  */
 package org.apache.fineract.organisation.office.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +34,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.domain.AbstractPersistableCustom;
@@ -45,7 +44,7 @@ import org.joda.time.LocalDate;
 @Entity
 @Table(name = "m_office", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }, name = "name_org"),
         @UniqueConstraint(columnNames = { "external_id" }, name = "externalid_org") })
-public class Office extends AbstractPersistableCustom<Long> {
+public class Office extends AbstractPersistableCustom<Long> implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -206,9 +205,9 @@ public class Office extends AbstractPersistableCustom<Long> {
     }
 
     public Office getParent() {
-    	return this.parent;
+        return this.parent;
     }
-    
+
     public boolean hasParentOf(final Office office) {
         boolean isParent = false;
         if (this.parent != null) {
@@ -242,7 +241,7 @@ public class Office extends AbstractPersistableCustom<Long> {
 
         return match;
     }
-    
+
     public void loadLazyCollections() {
         this.children.size() ;
     }

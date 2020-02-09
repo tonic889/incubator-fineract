@@ -20,7 +20,6 @@ package org.apache.fineract.portfolio.savings.domain;
 
 import java.util.Date;
 import java.util.List;
-
 import org.apache.fineract.portfolio.charge.exception.SavingsAccountChargeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,9 +41,8 @@ public class SavingsAccountChargeRepositoryWrapper {
     }
 
     public SavingsAccountCharge findOneWithNotFoundDetection(final Long id) {
-        final SavingsAccountCharge savingsAccountCharge = this.repository.findOne(id);
-        if (savingsAccountCharge == null) { throw new SavingsAccountChargeNotFoundException(id); }
-        return savingsAccountCharge;
+        return this.repository.findById(id)
+                .orElseThrow(() -> new SavingsAccountChargeNotFoundException(id));
     }
 
     public SavingsAccountCharge findOneWithNotFoundDetection(final Long id, final Long savingsAccountId) {
@@ -62,7 +60,7 @@ public class SavingsAccountChargeRepositoryWrapper {
     }
 
     public void save(final Iterable<SavingsAccountCharge> savingsAccountCharges) {
-        this.repository.save(savingsAccountCharges);
+        this.repository.saveAll(savingsAccountCharges);
     }
 
     public void saveAndFlush(final SavingsAccountCharge savingsAccountCharge) {

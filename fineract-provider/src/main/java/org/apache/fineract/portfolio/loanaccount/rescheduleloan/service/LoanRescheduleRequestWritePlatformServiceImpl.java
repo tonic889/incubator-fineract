@@ -29,7 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.fineract.accounting.journalentry.service.JournalEntryWritePlatformService;
 import org.apache.fineract.infrastructure.codes.domain.CodeValue;
 import org.apache.fineract.infrastructure.codes.domain.CodeValueRepositoryWrapper;
@@ -117,8 +116,8 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
 
     /**
      * LoanRescheduleRequestWritePlatformServiceImpl constructor
-     * 
-     * 
+     *
+     *
      **/
     @Autowired
     public LoanRescheduleRequestWritePlatformServiceImpl(final CodeValueRepositoryWrapper codeValueRepositoryWrapper,
@@ -159,7 +158,7 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
     /**
      * create a new instance of the LoanRescheduleRequest object from the
      * JsonCommand object and persist
-     * 
+     *
      * @return CommandProcessingResult object
      **/
     @Override
@@ -321,7 +320,7 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
             LoanTermVariations parent = null;
             parent = createLoanTermVariations(termType, loan, rescheduleFromDate, dueDate, loanRescheduleRequestToTermVariationMappings,
                     isActive, isSpecificToInstallment, BigDecimal.valueOf(graceOnPrincipal), parent);
-            
+
             BigDecimal extraTermsBasedOnGracePeriods = BigDecimal.valueOf(graceOnPrincipal);
             createLoanTermVariations(LoanTermVariationType.EXTEND_REPAYMENT_PERIOD.getValue(), loan, rescheduleFromDate, dueDate,
                     loanRescheduleRequestToTermVariationMappings, isActive, isSpecificToInstallment, extraTermsBasedOnGracePeriods, parent);
@@ -360,9 +359,8 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
         try {
             final Long loanRescheduleRequestId = jsonCommand.entityId();
 
-            final LoanRescheduleRequest loanRescheduleRequest = this.loanRescheduleRequestRepository.findOne(loanRescheduleRequestId);
-
-            if (loanRescheduleRequest == null) { throw new LoanRescheduleRequestNotFoundException(loanRescheduleRequestId); }
+            final LoanRescheduleRequest loanRescheduleRequest = this.loanRescheduleRequestRepository.findById(loanRescheduleRequestId)
+                    .orElseThrow(() -> new LoanRescheduleRequestNotFoundException(loanRescheduleRequestId));
 
             // validate the request in the JsonCommand object passed as
             // parameter
@@ -473,7 +471,7 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
 
             // update the loan object
             saveAndFlushLoanWithDataIntegrityViolationChecks(loan);
-            
+
             if (changedTransactionDetail != null) {
                 for (final Map.Entry<Long, LoanTransaction> mapEntry : changedTransactionDetail.getNewTransactionMappings().entrySet()) {
                     this.loanTransactionRepository.save(mapEntry.getValue());
@@ -484,7 +482,7 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
                 }
             }
             postJournalEntries(loan, existingTransactionIds, existingReversedTransactionIds);
-            
+
             this.loanAccountDomainService.recalculateAccruals(loan, true);
 
             return new CommandProcessingResultBuilder().withCommandId(jsonCommand.commandId()).withEntityId(loanRescheduleRequestId)
@@ -537,9 +535,8 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
         try {
             final Long loanRescheduleRequestId = jsonCommand.entityId();
 
-            final LoanRescheduleRequest loanRescheduleRequest = loanRescheduleRequestRepository.findOne(loanRescheduleRequestId);
-
-            if (loanRescheduleRequest == null) { throw new LoanRescheduleRequestNotFoundException(loanRescheduleRequestId); }
+            final LoanRescheduleRequest loanRescheduleRequest = loanRescheduleRequestRepository.findById(loanRescheduleRequestId)
+                    .orElseThrow(() -> new LoanRescheduleRequestNotFoundException(loanRescheduleRequestId));
 
             // validate the request in the JsonCommand object passed as
             // parameter
@@ -585,7 +582,7 @@ public class LoanRescheduleRequestWritePlatformServiceImpl implements LoanResche
      *
      * @param dve
      *            data integrity violation exception
-     * 
+     *
      **/
     private void handleDataIntegrityViolation(final DataIntegrityViolationException dve) {
 

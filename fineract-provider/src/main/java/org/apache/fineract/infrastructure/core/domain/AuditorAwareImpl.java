@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.infrastructure.core.domain;
 
+import java.util.Optional;
 import org.apache.fineract.useradministration.domain.AppUser;
 import org.apache.fineract.useradministration.domain.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,13 @@ public class AuditorAwareImpl implements AuditorAware<AppUser> {
     private AppUserRepository userRepository;
 
     @Override
-    public AppUser getCurrentAuditor() {
-
-        AppUser currentUser = null;
+    public Optional<AppUser> getCurrentAuditor() {
+        Optional<AppUser> currentUser;
         final SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext != null) {
             final Authentication authentication = securityContext.getAuthentication();
             if (authentication != null) {
-                currentUser = (AppUser) authentication.getPrincipal();
+                currentUser = Optional.ofNullable((AppUser) authentication.getPrincipal());
             } else {
                 currentUser = retrieveSuperUser();
             }
@@ -49,7 +49,7 @@ public class AuditorAwareImpl implements AuditorAware<AppUser> {
         return currentUser;
     }
 
-    private AppUser retrieveSuperUser() {
-        return this.userRepository.findOne(Long.valueOf("1"));
+    private Optional<AppUser> retrieveSuperUser() {
+        return this.userRepository.findById(Long.valueOf("1"));
     }
 }

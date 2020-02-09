@@ -18,12 +18,12 @@
  */
 package org.apache.fineract.useradministration.domain;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,14 +32,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.domain.AbstractPersistableCustom;
 import org.apache.fineract.useradministration.data.RoleData;
 
 @Entity
 @Table(name = "m_role", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }, name = "unq_name") })
-public class Role extends AbstractPersistableCustom<Long> {
+public class Role extends AbstractPersistableCustom<Long> implements Serializable {
 
     @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
@@ -130,9 +129,9 @@ public class Role extends AbstractPersistableCustom<Long> {
     }
 
     public String getName() {
-    	return this.name;
+        return this.name;
     }
-    
+
     public void disableRole() {
         this.disabled = true;
     }

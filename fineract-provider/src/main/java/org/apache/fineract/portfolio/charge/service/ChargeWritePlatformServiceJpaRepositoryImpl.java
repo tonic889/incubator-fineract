@@ -20,10 +20,8 @@ package org.apache.fineract.portfolio.charge.service;
 
 import java.util.Collection;
 import java.util.Map;
-
 import javax.persistence.PersistenceException;
 import javax.sql.DataSource;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.fineract.accounting.glaccount.domain.GLAccount;
 import org.apache.fineract.accounting.glaccount.domain.GLAccountRepositoryWrapper;
@@ -124,7 +122,7 @@ public class ChargeWritePlatformServiceJpaRepositoryImpl implements ChargeWriteP
         }catch(final PersistenceException dve) {
             Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
             handleDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            return CommandProcessingResult.empty();
         }
     }
 
@@ -136,8 +134,8 @@ public class ChargeWritePlatformServiceJpaRepositoryImpl implements ChargeWriteP
         try {
             this.fromApiJsonDeserializer.validateForUpdate(command.json());
 
-            final Charge chargeForUpdate = this.chargeRepository.findOne(chargeId);
-            if (chargeForUpdate == null) { throw new ChargeNotFoundException(chargeId); }
+            final Charge chargeForUpdate = this.chargeRepository.findById(chargeId)
+                    .orElseThrow(() -> new ChargeNotFoundException(chargeId));
 
             final Map<String, Object> changes = chargeForUpdate.update(command);
 
@@ -192,9 +190,9 @@ public class ChargeWritePlatformServiceJpaRepositoryImpl implements ChargeWriteP
             handleDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch(final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
             handleDataIntegrityIssues(command, throwable, dve);
-         	return CommandProcessingResult.empty();
+             return CommandProcessingResult.empty();
         }
     }
 
@@ -203,8 +201,9 @@ public class ChargeWritePlatformServiceJpaRepositoryImpl implements ChargeWriteP
     @CacheEvict(value = "charges", key = "T(org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil).getTenant().getTenantIdentifier().concat('ch')")
     public CommandProcessingResult deleteCharge(final Long chargeId) {
 
-        final Charge chargeForDelete = this.chargeRepository.findOne(chargeId);
-        if (chargeForDelete == null || chargeForDelete.isDeleted()) { throw new ChargeNotFoundException(chargeId); }
+        final Charge chargeForDelete = this.chargeRepository.findById(chargeId)
+                .orElseThrow(() -> new ChargeNotFoundException(chargeId));
+        if (chargeForDelete.isDeleted()) { throw new ChargeNotFoundException(chargeId); }
 
         final Collection<LoanProduct> loanProducts = this.loanProductRepository.retrieveLoanProductsByChargeId(chargeId);
         final Boolean isChargeExistWithLoans = isAnyLoansAssociateWithThisCharge(chargeId);

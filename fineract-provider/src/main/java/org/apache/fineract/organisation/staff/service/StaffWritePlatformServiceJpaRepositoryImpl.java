@@ -19,9 +19,7 @@
 package org.apache.fineract.organisation.staff.service;
 
 import java.util.Map;
-
 import javax.persistence.PersistenceException;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
@@ -80,9 +78,9 @@ public class StaffWritePlatformServiceJpaRepositoryImpl implements StaffWritePla
             handleStaffDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch (final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleStaffDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleStaffDataIntegrityIssues(command, throwable, dve);
+            return CommandProcessingResult.empty();
         }
     }
 
@@ -93,9 +91,8 @@ public class StaffWritePlatformServiceJpaRepositoryImpl implements StaffWritePla
         try {
             this.fromApiJsonDeserializer.validateForUpdate(command.json(), staffId);
 
-            final Staff staffForUpdate = this.staffRepository.findOne(staffId);
-            if (staffForUpdate == null) { throw new StaffNotFoundException(staffId); }
-
+            final Staff staffForUpdate = this.staffRepository.findById(staffId)
+                    .orElseThrow(() -> new StaffNotFoundException(staffId));
             final Map<String, Object> changesOnly = staffForUpdate.update(command);
 
             if (changesOnly.containsKey("officeId")) {
@@ -114,9 +111,9 @@ public class StaffWritePlatformServiceJpaRepositoryImpl implements StaffWritePla
             handleStaffDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch (final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleStaffDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleStaffDataIntegrityIssues(command, throwable, dve);
+            return CommandProcessingResult.empty();
         }
     }
 

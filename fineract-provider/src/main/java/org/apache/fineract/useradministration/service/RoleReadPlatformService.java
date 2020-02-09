@@ -18,15 +18,16 @@
  */
 package org.apache.fineract.useradministration.service;
 
-import org.apache.fineract.useradministration.data.RoleData;
-
 import java.util.Collection;
+import org.apache.fineract.useradministration.data.RoleData;
 
 public interface RoleReadPlatformService {
 
     Collection<RoleData> retrieveAll();
 
     Collection<RoleData> retrieveAllActiveRoles();
+
+    Collection<RoleData> retrieveAllSelfServiceRoles();
 
     RoleData retrieveOne(Long roleId);
 

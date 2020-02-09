@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
  * {@link Meeting} is returned when using <code>findOne</code> repository method
  * and throwing an appropriate not found exception.
  * </p>
- * 
+ *
  * <p>
  * This is to avoid need for checking and throwing in multiple areas of code
  * base where {@link MeetingRepository} is required.
@@ -45,9 +45,8 @@ public class MeetingRepositoryWrapper {
     }
 
     public Meeting findOneWithNotFoundDetection(final Long meetingId) {
-        final Meeting meeting = this.repository.findOne(meetingId);
-        if (meeting == null) { throw new MeetingNotFoundException(meetingId); }
-        return meeting;
+        return this.repository.findById(meetingId)
+                .orElseThrow(() -> new MeetingNotFoundException(meetingId));
     }
 
     public void save(final Meeting meeting) {

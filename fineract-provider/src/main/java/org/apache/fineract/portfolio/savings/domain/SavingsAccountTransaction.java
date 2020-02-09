@@ -27,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,13 +37,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.apache.fineract.infrastructure.core.domain.AbstractPersistableCustom;
 import org.apache.fineract.infrastructure.core.domain.LocalDateInterval;
 import org.apache.fineract.organisation.monetary.data.CurrencyData;
 import org.apache.fineract.organisation.monetary.domain.MonetaryCurrency;
 import org.apache.fineract.organisation.monetary.domain.Money;
 import org.apache.fineract.organisation.office.domain.Office;
+import org.apache.fineract.portfolio.note.domain.Note;
 import org.apache.fineract.portfolio.paymentdetail.domain.PaymentDetail;
 import org.apache.fineract.portfolio.savings.SavingsAccountTransactionType;
 import org.apache.fineract.portfolio.savings.data.SavingsAccountTransactionEnumData;
@@ -111,19 +110,23 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
     @Column(name = "created_date", nullable = false)
     private Date createdDate;
 
-	@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "appuser_id", nullable = true)
     private AppUser appUser;
-    
+
     @Column(name = "is_manual", length = 1, nullable = true)
     private boolean isManualTransaction;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
     @JoinColumn(name = "savings_transaction_id", referencedColumnName = "id", nullable = false)
     private List<SavingsAccountTransactionTaxDetails> taxDetails = new ArrayList<>();
-    
+
     @Column(name = "release_id_of_hold_amount", length = 20)
     private Long releaseIdOfHoldAmountTransaction;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "savings_account_transaction_id", referencedColumnName = "id")
+    private List<Note> notes = new ArrayList<>();
 
     protected SavingsAccountTransaction() {
         this.dateOf = null;
@@ -292,7 +295,7 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
         this.appUser = appUser;
         this.isManualTransaction = isManualTransaction;
     }
-    
+
     public static SavingsAccountTransaction holdAmount(final SavingsAccount savingsAccount, final Office office,
             final PaymentDetail paymentDetail, final LocalDate date, final Money amount, Date createdDate, final AppUser appUser) {
         final boolean isReversed = false;
@@ -352,10 +355,10 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
         return SavingsAccountTransactionType.fromInt(this.typeOf).isInterestPosting() && isNotReversed();
     }
 
-	public boolean isInterestPosting() {
-		return SavingsAccountTransactionType.fromInt(this.typeOf).isInterestPosting()
-				|| SavingsAccountTransactionType.fromInt(this.typeOf).isOverDraftInterestPosting();
-	}
+    public boolean isInterestPosting() {
+        return SavingsAccountTransactionType.fromInt(this.typeOf).isInterestPosting()
+                || SavingsAccountTransactionType.fromInt(this.typeOf).isOverDraftInterestPosting();
+    }
     public boolean isWithdrawalFeeAndNotReversed() {
         return SavingsAccountTransactionType.fromInt(this.typeOf).isWithdrawalFee() && isNotReversed();
     }
@@ -432,12 +435,8 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
         return new LocalDate(this.dateOf);
     }
 
-    private LocalDate getEndOfBalanceLocalDate() {
-        LocalDate endDate = null;
-        if (this.balanceEndDate != null) {
-            endDate = new LocalDate(this.balanceEndDate);
-        }
-        return endDate;
+    public LocalDate getEndOfBalanceLocalDate() {
+        return balanceEndDate == null ? null : new LocalDate(balanceEndDate);
     }
 
     public boolean isAcceptableForDailyBalance(final LocalDateInterval interestPeriodInterval) {
@@ -509,11 +508,11 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
     public boolean isAfter(final LocalDate transactionDate) {
         return getTransactionLocalDate().isAfter(transactionDate);
     }
-    
+
     public boolean isManualTransaction() {
         return this.isManualTransaction;
     }
-    
+
     public void setPostInterestAsOn(boolean isManualTransaction) {
         this.isManualTransaction = isManualTransaction;
     }
@@ -658,11 +657,11 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
     public boolean isWaiveCharge() {
         return SavingsAccountTransactionType.fromInt(this.typeOf).isWaiveCharge();
     }
-    
+
     public boolean isAmountOnHold() {
         return SavingsAccountTransactionType.fromInt(this.typeOf).isAmountOnHold();
     }
-    
+
     public boolean isAmountRelease() {
         return SavingsAccountTransactionType.fromInt(this.typeOf).isAmountRelease();
     }
@@ -756,6 +755,10 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
         return this.taxDetails;
     }
 
+    public List<Note> getNotes() {
+        return notes;
+    }
+
     public void updateAmount(final Money amount) {
         this.amount = amount.getAmount();
     }
@@ -777,22 +780,18 @@ public final class SavingsAccountTransaction extends AbstractPersistableCustom<L
     }
 
     public PaymentDetail getPaymentDetail() {
-    	return this.paymentDetail ;
+        return this.paymentDetail ;
     }
-    
+
     public void updateReleaseId(Long releaseId) {
         this.releaseIdOfHoldAmountTransaction = releaseId;
     }
-    
+
     public Long getReleaseIdOfHoldAmountTransaction() {
         return this.releaseIdOfHoldAmountTransaction;
     }
-    
-	public boolean isAmountOnHoldNotReleased() {
-		return (isAmountOnHold() && getReleaseIdOfHoldAmountTransaction() == null);
-	}
-	
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+
+    public boolean isAmountOnHoldNotReleased() {
+        return (isAmountOnHold() && getReleaseIdOfHoldAmountTransaction() == null);
+    }
 }

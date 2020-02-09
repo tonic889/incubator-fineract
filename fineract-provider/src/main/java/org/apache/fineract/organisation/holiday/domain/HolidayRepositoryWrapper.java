@@ -20,7 +20,6 @@ package org.apache.fineract.organisation.holiday.domain;
 
 import java.util.Date;
 import java.util.List;
-
 import org.apache.fineract.organisation.holiday.exception.HolidayNotFoundException;
 import org.apache.fineract.organisation.holiday.service.HolidayUtil;
 import org.joda.time.LocalDate;
@@ -44,9 +43,8 @@ public class HolidayRepositoryWrapper {
     }
 
     public Holiday findOneWithNotFoundDetection(final Long id) {
-        final Holiday holiday = this.repository.findOne(id);
-        if (holiday == null) { throw new HolidayNotFoundException(id); }
-        return holiday;
+        return this.repository.findById(id)
+                .orElseThrow(() -> new HolidayNotFoundException(id));
     }
 
     public void save(final Holiday holiday) {
@@ -54,7 +52,7 @@ public class HolidayRepositoryWrapper {
     }
 
     public void save(final Iterable<Holiday> holidays) {
-        this.repository.save(holidays);
+        this.repository.saveAll(holidays);
     }
 
     public void saveAndFlush(final Holiday holiday) {

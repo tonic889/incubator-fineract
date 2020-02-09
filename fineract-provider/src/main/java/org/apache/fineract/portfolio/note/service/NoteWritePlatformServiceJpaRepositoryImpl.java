@@ -19,7 +19,6 @@
 package org.apache.fineract.portfolio.note.service;
 
 import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
@@ -34,7 +33,6 @@ import org.apache.fineract.portfolio.loanaccount.domain.Loan;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanRepositoryWrapper;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanTransaction;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanTransactionRepository;
-import org.apache.fineract.portfolio.loanaccount.exception.LoanNotFoundException;
 import org.apache.fineract.portfolio.loanaccount.exception.LoanTransactionNotFoundException;
 import org.apache.fineract.portfolio.note.domain.Note;
 import org.apache.fineract.portfolio.note.domain.NoteRepository;
@@ -99,8 +97,7 @@ public class NoteWritePlatformServiceJpaRepositoryImpl implements NoteWritePlatf
 
         final Long resourceId = command.getGroupId();
 
-        final Group group = this.groupRepository.findOne(resourceId);
-        if (group == null) { throw new GroupNotFoundException(resourceId); }
+        final Group group = this.groupRepository.findById(resourceId).orElseThrow(() -> new GroupNotFoundException(resourceId));
         final Note newNote = Note.groupNoteFromJson(group, command);
 
         this.noteRepository.save(newNote);
@@ -135,8 +132,8 @@ public class NoteWritePlatformServiceJpaRepositoryImpl implements NoteWritePlatf
 
         final Long resourceId = command.subentityId();
 
-        final LoanTransaction loanTransaction = this.loanTransactionRepository.findOne(resourceId);
-        if (loanTransaction == null) { throw new LoanTransactionNotFoundException(resourceId); }
+        final LoanTransaction loanTransaction = this.loanTransactionRepository
+                .findById(resourceId).orElseThrow(() -> new LoanTransactionNotFoundException(resourceId));
 
         final Loan loan = loanTransaction.getLoan();
 
@@ -261,8 +258,9 @@ public class NoteWritePlatformServiceJpaRepositoryImpl implements NoteWritePlatf
 
         final NoteType type = NoteType.GROUP;
 
-        final Group group = this.groupRepository.findOne(resourceId);
-        if (group == null) { throw new GroupNotFoundException(resourceId); }
+        final Group group = this.groupRepository.findById(resourceId)
+                .orElseThrow(() -> new GroupNotFoundException(resourceId));
+
         final Note noteForUpdate = this.noteRepository.findByGroupIdAndId(resourceId, noteId);
 
         if (noteForUpdate == null) { throw new NoteNotFoundException(noteId, resourceId, type.name().toLowerCase()); }
@@ -309,8 +307,8 @@ public class NoteWritePlatformServiceJpaRepositoryImpl implements NoteWritePlatf
 
         final NoteType type = NoteType.LOAN_TRANSACTION;
 
-        final LoanTransaction loanTransaction = this.loanTransactionRepository.findOne(resourceId);
-        if (loanTransaction == null) { throw new LoanTransactionNotFoundException(resourceId); }
+        final LoanTransaction loanTransaction = this.loanTransactionRepository.findById(resourceId)
+                .orElseThrow(() -> new LoanTransactionNotFoundException(resourceId));
         final Loan loan = loanTransaction.getLoan();
 
         final Note noteForUpdate = this.noteRepository.findByLoanTransactionIdAndId(resourceId, noteId);

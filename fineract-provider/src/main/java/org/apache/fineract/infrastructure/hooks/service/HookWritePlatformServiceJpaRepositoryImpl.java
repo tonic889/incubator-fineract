@@ -28,15 +28,15 @@ import static org.apache.fineract.infrastructure.hooks.api.HookApiConstants.payl
 import static org.apache.fineract.infrastructure.hooks.api.HookApiConstants.templateIdParamName;
 import static org.apache.fineract.infrastructure.hooks.api.HookApiConstants.webTemplateName;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import javax.persistence.PersistenceException;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.ApiParameterError;
@@ -67,10 +67,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import retrofit.RetrofitError;
 
 @Service
@@ -123,10 +119,8 @@ public class HookWritePlatformServiceJpaRepositoryImpl
             if (command.hasParameter(templateIdParamName)) {
                 final Long ugdTemplateId = command
                         .longValueOfParameterNamed(templateIdParamName);
-                ugdTemplate = this.ugdTemplateRepository.findOne(ugdTemplateId);
-                if (ugdTemplate == null) {
-                    throw new TemplateNotFoundException(ugdTemplateId);
-                }
+                ugdTemplate = this.ugdTemplateRepository.findById(ugdTemplateId)
+                        .orElseThrow(() -> new TemplateNotFoundException(ugdTemplateId));
             }
             final Hook hook = Hook.fromJson(command, template, config,
                     allEvents, ugdTemplate);
@@ -142,9 +136,9 @@ public class HookWritePlatformServiceJpaRepositoryImpl
             handleHookDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch (final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleHookDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleHookDataIntegrityIssues(command, throwable, dve);
+            return CommandProcessingResult.empty();
         }
     }
 
@@ -168,8 +162,7 @@ public class HookWritePlatformServiceJpaRepositoryImpl
                 if (changes.containsKey(templateIdParamName)) {
                     final Long ugdTemplateId = command
                             .longValueOfParameterNamed(templateIdParamName);
-                    final Template ugdTemplate = this.ugdTemplateRepository
-                            .findOne(ugdTemplateId);
+                    final Template ugdTemplate = this.ugdTemplateRepository.findById(ugdTemplateId).orElse(null);
                     if (ugdTemplate == null) {
                         changes.remove(templateIdParamName);
                         throw new TemplateNotFoundException(ugdTemplateId);
@@ -210,9 +203,9 @@ public class HookWritePlatformServiceJpaRepositoryImpl
             handleHookDataIntegrityIssues(command, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch (final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleHookDataIntegrityIssues(command, throwable, dve);
-        	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleHookDataIntegrityIssues(command, throwable, dve);
+            return CommandProcessingResult.empty();
         }
     }
 
@@ -236,11 +229,8 @@ public class HookWritePlatformServiceJpaRepositoryImpl
     }
 
     private Hook retrieveHookBy(final Long hookId) {
-        final Hook hook = this.hookRepository.findOne(hookId);
-        if (hook == null) {
-            throw new HookNotFoundException(hookId);
-        }
-        return hook;
+        return this.hookRepository.findById(hookId)
+                .orElseThrow(() -> new HookNotFoundException(hookId));
     }
 
     private HookTemplate retrieveHookTemplateBy(final String templateName) {

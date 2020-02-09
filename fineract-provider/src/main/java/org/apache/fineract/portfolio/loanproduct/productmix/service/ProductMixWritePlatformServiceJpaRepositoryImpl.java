@@ -26,7 +26,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResultBuilder;
@@ -86,7 +85,7 @@ public class ProductMixWritePlatformServiceJpaRepositoryImpl implements ProductM
 
             createNewProductMix(restrictedProductsAsMap, productId, productMixes);
 
-            this.productMixRepository.save(productMixes);
+            this.productMixRepository.saveAll(productMixes);
 
             final Map<String, Object> changes = new LinkedHashMap<>();
             changes.put("restrictedProductsForMix", restrictedProductsAsMap.keySet());
@@ -112,7 +111,7 @@ public class ProductMixWritePlatformServiceJpaRepositoryImpl implements ProductM
             }
         }
         if (!CollectionUtils.isEmpty(mixesToRemove)) {
-            this.productMixRepository.delete(mixesToRemove);
+            this.productMixRepository.deleteAll(mixesToRemove);
         }
         return removedRestrictions;
     }
@@ -142,7 +141,7 @@ public class ProductMixWritePlatformServiceJpaRepositoryImpl implements ProductM
             // updating with empty array means deleting the existed records.
             if (restrictedIds.isEmpty()) {
                 final List<Long> removedRestrictedProductIds = this.productMixRepository.findRestrictedProductIdsByProductId(productId);
-                this.productMixRepository.delete(existedProductMixes);
+                this.productMixRepository.deleteAll(existedProductMixes);
                 changes.put("removedProductsForMix", removedRestrictedProductIds);
                 return new CommandProcessingResultBuilder().with(changes).withProductId(productId).withCommandId(command.commandId())
                         .build();
@@ -156,11 +155,11 @@ public class ProductMixWritePlatformServiceJpaRepositoryImpl implements ProductM
             final Map<Long, LoanProduct> restrictedProductsAsMap = getRestrictedProducts(restrictedIds);
             createNewProductMix(restrictedProductsAsMap, productId, existedProductMixes);
 
-            this.productMixRepository.save(existedProductMixes);
+            this.productMixRepository.saveAll(existedProductMixes);
             changes.put("restrictedProductsForMix", getProductIdsFromCollection(existedProductMixes));
 
             if (!CollectionUtils.isEmpty(productMixesToRemove)) {
-                this.productMixRepository.delete(productMixesToRemove);
+                this.productMixRepository.deleteAll(productMixesToRemove);
                 changes.put("removedProductsForMix", getProductIdsFromCollection(productMixesToRemove));
             }
             return new CommandProcessingResultBuilder().with(changes).withProductId(productId).withCommandId(command.commandId()).build();
@@ -172,10 +171,8 @@ public class ProductMixWritePlatformServiceJpaRepositoryImpl implements ProductM
     }
 
     private LoanProduct findByProductIdIfProvided(final Long productId) {
-
-        final LoanProduct product = this.productRepository.findOne(productId);
-        if (product == null) { throw new LoanProductNotFoundException(productId); }
-        return product;
+        return this.productRepository.findById(productId)
+                .orElseThrow(() -> new LoanProductNotFoundException(productId));
     }
 
     private Map<Long, LoanProduct> getRestrictedProducts(final Set<String> restrictedIds) {
@@ -223,7 +220,7 @@ public class ProductMixWritePlatformServiceJpaRepositoryImpl implements ProductM
 
             final List<ProductMix> existedProductMixes = this.productMixRepository.findByProductId(productId);
             if (CollectionUtils.isEmpty(existedProductMixes)) { throw new ProductMixNotFoundException(productId); }
-            this.productMixRepository.delete(existedProductMixes);
+            this.productMixRepository.deleteAll(existedProductMixes);
             changes.put("removedProductsForMix", getProductIdsFromCollection(existedProductMixes));
             return new CommandProcessingResultBuilder().with(changes).withProductId(productId).build();
         } catch (final DataIntegrityViolationException dve) {

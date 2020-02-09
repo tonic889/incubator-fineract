@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.infrastructure.sms.domain;
 
+import com.google.gson.JsonElement;
 import org.apache.fineract.infrastructure.campaigns.sms.domain.SmsCampaign;
 import org.apache.fineract.infrastructure.campaigns.sms.domain.SmsCampaignRepository;
 import org.apache.fineract.infrastructure.campaigns.sms.exception.SmsCampaignNotFound;
@@ -33,8 +34,6 @@ import org.apache.fineract.portfolio.group.domain.Group;
 import org.apache.fineract.portfolio.group.domain.GroupRepositoryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.google.gson.JsonElement;
 
 @Component
 public class SmsMessageAssembler {
@@ -74,8 +73,8 @@ public class SmsMessageAssembler {
         boolean isNotification = false;
         if (this.fromApiJsonHelper.parameterExists(SmsApiConstants.campaignIdParamName, element)) {
             final Long campaignId = this.fromApiJsonHelper.extractLongNamed(SmsApiConstants.campaignIdParamName, element);
-            smsCampaign = this.smsCampaignRepository.findOne(campaignId);
-            if (smsCampaign == null) { throw new SmsCampaignNotFound(campaignId); }
+            smsCampaign = this.smsCampaignRepository.findById(campaignId)
+                    .orElseThrow(() -> new SmsCampaignNotFound(campaignId));
             isNotification = smsCampaign.isNotification();
         }
 
@@ -99,8 +98,7 @@ public class SmsMessageAssembler {
     }
 
     public SmsMessage assembleFromResourceId(final Long resourceId) {
-        final SmsMessage sms = this.smsMessageRepository.findOne(resourceId);
-        if (sms == null) { throw new SmsNotFoundException(resourceId); }
-        return sms;
+        return this.smsMessageRepository.findById(resourceId)
+                .orElseThrow(() -> new SmsNotFoundException(resourceId));
     }
 }

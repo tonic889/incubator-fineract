@@ -19,6 +19,16 @@
 
 package org.apache.fineract.notification;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.refEq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Optional;
 import org.apache.fineract.notification.domain.Notification;
 import org.apache.fineract.notification.domain.NotificationMapper;
 import org.apache.fineract.notification.service.NotificationGeneratorReadRepositoryWrapper;
@@ -32,12 +42,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import org.springframework.security.core.userdetails.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StorageTest {
@@ -86,8 +91,10 @@ public class StorageTest {
                 getCurrentDateTime()
         );
 
-
-        AppUser appUser = this.appUserRepository.findOne(1L);
+        AppUser appUser = new AppUser(null, new User("J.J.", "", true, true,
+                true, true, Collections.emptyList()),
+                null, "user@com", "John", "", null, false,
+                 false, null);
 
         NotificationMapper notificationMapper = new NotificationMapper(
                 notification,
@@ -96,10 +103,9 @@ public class StorageTest {
                 getCurrentDateTime()
         );
 
-
         when(this.notificationGeneratorWritePlatformService.create(refEq(notification))).thenReturn(1L);
 
-        when(this.appUserRepository.findOne(userId)).thenReturn(appUser);
+        when(this.appUserRepository.findById(userId)).thenReturn(Optional.of(appUser));
 
         when(this.notificationGeneratorReadRepositoryWrapper.findById(1L)).thenReturn(notification);
 

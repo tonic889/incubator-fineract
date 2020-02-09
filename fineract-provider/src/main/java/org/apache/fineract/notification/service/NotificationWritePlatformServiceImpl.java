@@ -18,17 +18,16 @@
  */
 package org.apache.fineract.notification.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.apache.fineract.notification.domain.Notification;
 import org.apache.fineract.notification.domain.NotificationMapper;
 import org.apache.fineract.useradministration.domain.AppUser;
 import org.apache.fineract.useradministration.domain.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class NotificationWritePlatformServiceImpl implements NotificationWritePlatformService {
@@ -65,7 +64,7 @@ public class NotificationWritePlatformServiceImpl implements NotificationWritePl
     }
 
     private Long insertIntoNotificationMapper(Long userId, Long generatedNotificationId) {
-        AppUser appUser = this.appUserRepository.findOne(userId);
+        AppUser appUser = this.appUserRepository.findById(userId).orElse(null);
         NotificationMapper notificationMapper = new NotificationMapper(
                 this.notificationGeneratorReadRepositoryWrapper.findById(generatedNotificationId),
                 appUser,
@@ -108,7 +107,7 @@ public class NotificationWritePlatformServiceImpl implements NotificationWritePl
     private List<Long> insertIntoNotificationMapper(List<Long> userIds, Long generatedNotificationId) {
         List<Long> mappedIds = new ArrayList<>();
         for (Long userId : userIds) {
-            AppUser appUser = this.appUserRepository.findOne(userId);
+            AppUser appUser = this.appUserRepository.findById(userId).get();
             NotificationMapper notificationMapper = new NotificationMapper(
                     this.notificationGeneratorReadRepositoryWrapper.findById(generatedNotificationId),
                     appUser,

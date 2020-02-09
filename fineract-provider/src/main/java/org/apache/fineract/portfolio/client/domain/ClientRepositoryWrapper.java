@@ -20,7 +20,6 @@ package org.apache.fineract.portfolio.client.domain;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.portfolio.client.exception.ClientNotActiveException;
 import org.apache.fineract.portfolio.client.exception.ClientNotFoundException;
@@ -52,16 +51,16 @@ public class ClientRepositoryWrapper {
 
     @Transactional(readOnly=true)
     public Client findOneWithNotFoundDetection(final Long clientId, final boolean loadLazyCollections) {
-        final Client client = this.repository.findOne(clientId);
-        if (client == null) { throw new ClientNotFoundException(clientId); }
+        final Client client = this.repository.findById(clientId)
+                .orElseThrow(() -> new ClientNotFoundException(clientId));
         if(loadLazyCollections) {
             client.loadLazyCollections();
         }
         return client;
     }
-    
+
     public List<Client> findAll(final Collection<Long> clientIds) {
-        return this.repository.findAll(clientIds) ;   
+        return this.repository.findAllById(clientIds) ;
     }
     public void save(final Client client) {
         this.repository.save(client);
@@ -74,7 +73,7 @@ public class ClientRepositoryWrapper {
     public void delete(final Client client) {
         this.repository.delete(client);
     }
-    
+
     public void flush() {
         this.repository.flush();
     }
@@ -85,7 +84,7 @@ public class ClientRepositoryWrapper {
         this.context.validateAccessRights(client.getOffice().getHierarchy());
         return client;
     }
-    
+
     public Client getClientByAccountNumber(String accountNumber){
         Client client = this.repository.getClientByAccountNumber(accountNumber);
         if(client==null){

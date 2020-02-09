@@ -18,28 +18,27 @@
  */
 package org.apache.fineract.integrationtests;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.apache.fineract.integrationtests.common.GlobalConfigurationHelper;
-import org.apache.fineract.integrationtests.common.Utils;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.builder.ResponseSpecBuilder;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.jayway.restassured.specification.ResponseSpecification;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.apache.fineract.integrationtests.common.GlobalConfigurationHelper;
+import org.apache.fineract.integrationtests.common.Utils;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 
 public class GlobalConfigInterestChargedFromDateSameAsDisbursalDateTest {
-    
+
     private ResponseSpecification responseSpec;
     private RequestSpecification requestSpec;
     private GlobalConfigurationHelper globalConfigurationHelper;
-    
+
     @Before
     public void setup() {
         Utils.initializeRESTAssured();
@@ -47,20 +46,26 @@ public class GlobalConfigInterestChargedFromDateSameAsDisbursalDateTest {
         this.requestSpec.header("Authorization", "Basic " + Utils.loginIntoServerAndGetBase64EncodedAuthenticationKey());
         this.responseSpec = new ResponseSpecBuilder().expectStatusCode(200).build();
     }
-    
+
+    @After
+    public void tearDown() {
+        GlobalConfigurationHelper.resetAllDefaultGlobalConfigurations(this.requestSpec, this.responseSpec);
+        GlobalConfigurationHelper.verifyAllDefaultGlobalConfigurations(this.requestSpec, this.responseSpec);
+    }
+
     @SuppressWarnings( {"static-access", "rawtypes", "unchecked"})
     @Test
     public void testInterestChargedFromDateSameAsDisbursalDate(){
         this.globalConfigurationHelper = new GlobalConfigurationHelper(this.requestSpec, this.responseSpec);
-        
+
      // Retrieving All Global Configuration details
         final ArrayList<HashMap> globalConfig = this.globalConfigurationHelper
                         .getAllGlobalConfigurations(this.requestSpec, this.responseSpec);
         Assert.assertNotNull(globalConfig);
-        
+
         String configName = "interest-charged-from-date-same-as-disbursal-date";
         boolean newBooleanValue = true;
-        
+
         for (Integer configIndex = 0; configIndex < (globalConfig.size()); configIndex++) {
                 if (globalConfig.get(configIndex).get("name")
                                 .equals(configName)) {
@@ -73,7 +78,7 @@ public class GlobalConfigInterestChargedFromDateSameAsDisbursalDateTest {
                         break;
                 }
         }
-        
+
     }
 
 }

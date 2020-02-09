@@ -19,7 +19,6 @@
 package org.apache.fineract.commands.service;
 
 import java.util.Map;
-
 import org.apache.fineract.commands.domain.CommandSource;
 import org.apache.fineract.commands.domain.CommandSourceRepository;
 import org.apache.fineract.commands.domain.CommandWrapper;
@@ -76,7 +75,7 @@ public class SynchronousCommandProcessingService implements CommandProcessingSer
     public CommandProcessingResult processAndLogCommand(final CommandWrapper wrapper, final JsonCommand command,
             final boolean isApprovedByChecker) {
 
-        final boolean rollbackTransaction = this.configurationDomainService.isMakerCheckerEnabledForTask(wrapper.taskPermissionName());
+         final boolean rollbackTransaction = this.configurationDomainService.isMakerCheckerEnabledForTask(wrapper.taskPermissionName());
 
         final NewCommandSourceHandler handler = findCommandHandler(wrapper);
 
@@ -86,7 +85,7 @@ public class SynchronousCommandProcessingService implements CommandProcessingSer
 
         CommandSource commandSourceResult = null;
         if (command.commandId() != null) {
-            commandSourceResult = this.commandSourceRepository.findOne(command.commandId());
+            commandSourceResult = this.commandSourceRepository.findById(command.commandId()).orElse(null);
             commandSourceResult.markAsChecked(maker, DateTime.now());
         } else {
             commandSourceResult = CommandSource.fullEntryFrom(wrapper, command, maker);
@@ -212,7 +211,7 @@ public class SynchronousCommandProcessingService implements CommandProcessingSer
 
         final String authToken = ThreadLocalContextUtil.getAuthToken();
         final String tenantIdentifier = ThreadLocalContextUtil.getTenant().getTenantIdentifier();
-        final AppUser appUser = this.context.authenticatedUser(CommandWrapper.wrap(actionName, 
+        final AppUser appUser = this.context.authenticatedUser(CommandWrapper.wrap(actionName,
                 entityName, null, null));
 
         final HookEventSource hookEventSource = new HookEventSource(entityName, actionName);

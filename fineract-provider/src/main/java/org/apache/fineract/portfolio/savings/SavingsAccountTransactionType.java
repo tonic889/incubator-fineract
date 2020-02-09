@@ -113,7 +113,7 @@ public enum SavingsAccountTransactionType {
                 savingsAccountTransactionType = SavingsAccountTransactionType.WITHHOLD_TAX;
             break;
             case 19:
-            	savingsAccountTransactionType = SavingsAccountTransactionType.ESCHEAT;
+                savingsAccountTransactionType = SavingsAccountTransactionType.ESCHEAT;
             break;
             case 20:
                 savingsAccountTransactionType = SavingsAccountTransactionType.AMOUNT_HOLD;
@@ -137,10 +137,10 @@ public enum SavingsAccountTransactionType {
         return this.value.equals(SavingsAccountTransactionType.INTEREST_POSTING.getValue());
     }
 
-	public boolean isOverDraftInterestPosting() {
-		return this.value.equals(SavingsAccountTransactionType.OVERDRAFT_INTEREST.getValue());
-	}
-	
+    public boolean isOverDraftInterestPosting() {
+        return this.value.equals(SavingsAccountTransactionType.OVERDRAFT_INTEREST.getValue());
+    }
+
     public boolean isWithHoldTax() {
         return this.value.equals(SavingsAccountTransactionType.WITHHOLD_TAX.getValue());
     }
@@ -196,7 +196,7 @@ public enum SavingsAccountTransactionType {
     public boolean isEscheat() {
         return this.value.equals(SavingsAccountTransactionType.ESCHEAT.getValue());
     }
-    
+
     public boolean isAmountOnHold() {
         return this.value.equals(SavingsAccountTransactionType.AMOUNT_HOLD.getValue());
     }
@@ -206,10 +206,10 @@ public enum SavingsAccountTransactionType {
     }
 
     public boolean isDebit() {
-        return isWithdrawal() || isWithdrawalFee() || isAnnualFee() || isPayCharge() || isIncomeFromInterest() || isWithHoldTax() || isEscheat() || isAmountOnHold();
+        return isWithdrawal() || isWithdrawalFee() || isAnnualFee() || isPayCharge() || isIncomeFromInterest() || isWithHoldTax() || isEscheat();
     }
 
     public boolean isCredit() {
-        return isDeposit() || isInterestPosting() || isDividendPayout() || isAmountRelease();
+        return isDeposit() || isInterestPosting() || isDividendPayout();
     }
 }

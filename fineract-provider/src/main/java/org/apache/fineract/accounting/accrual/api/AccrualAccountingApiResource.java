@@ -18,13 +18,20 @@
  */
 package org.apache.fineract.accounting.accrual.api;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import io.swagger.annotations.*;
 // import org.apache.fineract.accounting.accrual.swagger.runaccuralPost;
 import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.CommandWrapperBuilder;
@@ -38,7 +45,10 @@ import org.springframework.stereotype.Component;
 @Path("/runaccruals")
 @Component
 @Scope("singleton")
-@Api(value = "Periodic Accrual Accounting", description = "Periodic Accrual is to accrue the loan income till the specific date or till batch job scheduled time.\n\n ")
+@Api(tags = {"Periodic Accrual Accounting"})
+@SwaggerDefinition(tags = {
+        @Tag(name = "Periodic Accrual Accounting", description = "Periodic Accrual is to accrue the loan income till the specific date or till batch job scheduled time.\n")
+})
 public class AccrualAccountingApiResource {
 
     private final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService;

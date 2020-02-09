@@ -26,9 +26,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.sql.DataSource;
-
 import org.apache.fineract.accounting.journalentry.service.JournalEntryWritePlatformService;
 import org.apache.fineract.infrastructure.core.service.DateUtils;
 import org.apache.fineract.infrastructure.core.service.RoutingDataSource;
@@ -274,7 +272,7 @@ public class LoanAccrualWritePlatformServiceImpl implements LoanAccrualWritePlat
                 LoanTransactionType.ACCRUAL.getValue(), accruedTill.toDate(), amount, interestportion, feeportion, penaltyportion,
                 DateUtils.getDateOfTenant());
         @SuppressWarnings("deprecation")
-        final Long transactonId = this.jdbcTemplate.queryForLong("SELECT LAST_INSERT_ID()");
+        final Long transactonId = this.jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
 
         Map<LoanChargeData, BigDecimal> applicableCharges = scheduleAccrualData.getApplicableCharges();
         String chargespaidSql = "INSERT INTO m_loan_charge_paid_by (loan_transaction_id, loan_charge_id, amount,installment_number) VALUES (?,?,?,?)";

@@ -18,12 +18,12 @@
  */
 package org.apache.fineract.accounting.provisioning.service;
 
+import com.google.gson.JsonObject;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.fineract.accounting.glaccount.domain.GLAccount;
 import org.apache.fineract.accounting.glaccount.domain.GLAccountRepository;
 import org.apache.fineract.accounting.journalentry.service.JournalEntryWritePlatformService;
@@ -63,8 +63,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonObject;
-
 @Service
 public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements ProvisioningEntriesWritePlatformService {
 
@@ -79,7 +77,7 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
     private final JournalEntryWritePlatformService journalEntryWritePlatformService;
     private final ProvisioningEntriesDefinitionJsonDeserializer fromApiJsonDeserializer;
     private final FromJsonHelper fromApiJsonHelper;
-    
+
     @Autowired
     public ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl(
             final ProvisioningEntriesReadPlatformService provisioningEntriesReadPlatformService,
@@ -104,8 +102,8 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
 
     @Override
     public CommandProcessingResult createProvisioningJournalEntries(Long provisioningEntryId, JsonCommand command) {
-        ProvisioningEntry requestedEntry = this.provisioningEntryRepository.findOne(provisioningEntryId);
-        if (requestedEntry == null) { throw new ProvisioningEntryNotfoundException(provisioningEntryId); }
+        ProvisioningEntry requestedEntry = this.provisioningEntryRepository.findById(provisioningEntryId)
+                .orElseThrow(() -> new ProvisioningEntryNotfoundException(provisioningEntryId));
 
         ProvisioningEntryData exisProvisioningEntryData = this.provisioningEntriesReadPlatformService
                 .retrieveExistingProvisioningIdDateWithJournals();
@@ -120,11 +118,11 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
                     existingEntryData.getId(), PortfolioProductType.PROVISIONING.getValue());
         }
         if(requestedEntry.getLoanProductProvisioningEntries() == null || requestedEntry.getLoanProductProvisioningEntries().size() == 0) {
-            requestedEntry.setJournalEntryCreated(Boolean.FALSE);    
+            requestedEntry.setJournalEntryCreated(Boolean.FALSE);
         }else {
             requestedEntry.setJournalEntryCreated(Boolean.TRUE);
         }
-        
+
         this.provisioningEntryRepository.save(requestedEntry);
         this.journalEntryWritePlatformService.createProvisioningJournalEntries(requestedEntry);
     }
@@ -156,7 +154,7 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
         Date currentDate  = DateUtils.getLocalDateOfTenant().toDate() ;
         boolean addJournalEntries = true;
         try {
-            Collection<ProvisioningCriteriaData> criteriaCollection = this.provisioningCriteriaReadPlatformService.retrieveAllProvisioningCriterias() ; 
+            Collection<ProvisioningCriteriaData> criteriaCollection = this.provisioningCriteriaReadPlatformService.retrieveAllProvisioningCriterias() ;
             if(criteriaCollection == null || criteriaCollection.size() == 0){
                 return ;
                 //FIXME: Do we need to throw NoProvisioningCriteriaDefinitionFound()?
@@ -171,7 +169,7 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
         Date createdDate = parseDate(command);
         boolean addJournalEntries = isJournalEntriesRequired(command);
         try {
-            Collection<ProvisioningCriteriaData> criteriaCollection = this.provisioningCriteriaReadPlatformService.retrieveAllProvisioningCriterias() ; 
+            Collection<ProvisioningCriteriaData> criteriaCollection = this.provisioningCriteriaReadPlatformService.retrieveAllProvisioningCriterias() ;
             if(criteriaCollection == null || criteriaCollection.size() == 0){
                 throw new NoProvisioningCriteriaDefinitionFound() ;
             }
@@ -205,8 +203,8 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
 
     @Override
     public CommandProcessingResult reCreateProvisioningEntries(Long provisioningEntryId, JsonCommand command) {
-        ProvisioningEntry requestedEntry = this.provisioningEntryRepository.findOne(provisioningEntryId);
-        if (requestedEntry == null) { throw new ProvisioningEntryNotfoundException(provisioningEntryId); }
+        ProvisioningEntry requestedEntry = this.provisioningEntryRepository.findById(provisioningEntryId)
+                .orElseThrow(() -> new ProvisioningEntryNotfoundException(provisioningEntryId));
         requestedEntry.getLoanProductProvisioningEntries().clear();
         this.provisioningEntryRepository.save(requestedEntry);
         Collection<LoanProductProvisioningEntry> entries = generateLoanProvisioningEntry(requestedEntry, requestedEntry.getCreatedDate());
@@ -220,11 +218,11 @@ public class ProvisioningEntriesWritePlatformServiceJpaRepositoryImpl implements
                 .retrieveLoanProductsProvisioningData(date);
         Map<LoanProductProvisioningEntry, LoanProductProvisioningEntry> provisioningEntries = new HashMap<>();
         for (LoanProductProvisioningEntryData data : entries) {
-            LoanProduct loanProduct = this.loanProductRepository.findOne(data.getProductId());
+            LoanProduct loanProduct = this.loanProductRepository.findById(data.getProductId()).get();
             Office office = this.officeRepositoryWrapper.findOneWithNotFoundDetection(data.getOfficeId());
-            ProvisioningCategory provisioningCategory = provisioningCategoryRepository.findOne(data.getCategoryId());
-            GLAccount liabilityAccount = glAccountRepository.findOne(data.getLiablityAccount());
-            GLAccount expenseAccount = glAccountRepository.findOne(data.getExpenseAccount());
+            ProvisioningCategory provisioningCategory = provisioningCategoryRepository.findById(data.getCategoryId()).get();
+            GLAccount liabilityAccount = glAccountRepository.findById(data.getLiablityAccount()).get();
+            GLAccount expenseAccount = glAccountRepository.findById(data.getExpenseAccount()).get();
             MonetaryCurrency currency = loanProduct.getPrincipalAmount().getCurrency();
             Money money = Money.of(currency, data.getOutstandingBalance());
             Money amountToReserve = money.percentageOf(data.getPercentage(), MoneyHelper.getRoundingMode());

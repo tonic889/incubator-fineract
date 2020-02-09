@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
  * <code>findOne</code> repository method and throwing an appropriate not found
  * exception.
  * </p>
- * 
+ *
  * <p>
  * This is to avoid need for checking and throwing in multiple areas of code
  * base where {@link CalendarInstanceRepository} is required.
@@ -46,9 +46,8 @@ public class CalendarInstanceRepositoryWrapper {
     }
 
     public CalendarInstance findOneWithNotFoundDetection(final Long CalendarInstanceId) {
-        final CalendarInstance calendatInstance = this.repository.findOne(CalendarInstanceId);
-        if (calendatInstance == null) { throw new CalendarInstanceNotFoundException(CalendarInstanceId); }
-        return calendatInstance;
+        return this.repository.findById(CalendarInstanceId)
+                .orElseThrow(() -> new CalendarInstanceNotFoundException(CalendarInstanceId));
     }
 
     public void save(final CalendarInstance calendatInstance) {

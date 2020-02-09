@@ -18,12 +18,11 @@
  */
 package org.apache.fineract.notification.service;
 
+import java.util.List;
 import org.apache.fineract.notification.domain.NotificationMapper;
 import org.apache.fineract.notification.domain.NotificationMapperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class NotificationMapperReadRepositoryWrapperImpl implements NotificationMapperReadRepositoryWrapper {
@@ -37,7 +36,7 @@ public class NotificationMapperReadRepositoryWrapperImpl implements Notification
 
     @Override
     public NotificationMapper findById(Long id) {
-        return this.notificationMapperRepository.findOne(id);
+        return this.notificationMapperRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class NotificationMapperReadRepositoryWrapperImpl implements Notification
 
     @Override
     public void delete(Long id) {
-        this.notificationMapperRepository.delete(id);
+        this.notificationMapperRepository.deleteById(id);
     }
 
 }

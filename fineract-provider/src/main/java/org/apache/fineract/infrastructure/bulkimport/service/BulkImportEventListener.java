@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URLConnection;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.fineract.infrastructure.bulkimport.data.BulkImportEvent;
 import org.apache.fineract.infrastructure.bulkimport.data.Count;
 import org.apache.fineract.infrastructure.bulkimport.data.GlobalEntityType;
@@ -74,7 +73,7 @@ public class BulkImportEventListener implements ApplicationListener<BulkImportEv
                 .loadTenantById(tenantIdentifier);
         ThreadLocalContextUtil.setTenant(tenant);
         ImportHandler importHandler = null;
-        final ImportDocument importDocument = this.importRepository.findOne(event.getImportId());
+        final ImportDocument importDocument = this.importRepository.findById(event.getImportId()).orElse(null);
         final GlobalEntityType entityType = GlobalEntityType.fromInt(importDocument.getEntityType());
 
         switch(entityType) {

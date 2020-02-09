@@ -19,7 +19,7 @@
 package org.apache.fineract.infrastructure.core.boot;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 
 /**
@@ -39,15 +39,15 @@ import org.springframework.context.annotation.ImportResource;
  */
 public class WarWebApplicationInitializer extends SpringBootServletInitializer {
 
-	@ImportResource({ "classpath*:META-INF/spring/jndi.xml" })
-	private static class Configuration extends AbstractApplicationConfiguration {
-	}
+    @ImportResource({ "classpath*:META-INF/spring/jndi.xml" })
+    private static class Configuration extends AbstractApplicationConfiguration {
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(
-			SpringApplicationBuilder application) {
-		// let's share Spring Boot Love, so no showBanner(false)
-		return application.sources(Configuration.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(
+            SpringApplicationBuilder application) {
+        // let's share Spring Boot Love, so no showBanner(false)
+        return application.sources(Configuration.class);
+    }
 
 }

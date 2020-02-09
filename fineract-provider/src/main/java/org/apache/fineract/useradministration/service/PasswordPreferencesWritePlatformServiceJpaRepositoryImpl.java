@@ -21,7 +21,6 @@ package org.apache.fineract.useradministration.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResultBuilder;
@@ -80,7 +79,7 @@ public class PasswordPreferencesWritePlatformServiceJpaRepositoryImpl implements
             if (!found) { throw new PasswordValidationPolicyNotFoundException(validationPolicyId); }
 
             if (!changes.isEmpty()) {
-                this.validationRepository.save(validationPolicies);
+                this.validationRepository.saveAll(validationPolicies);
                 this.validationRepository.flush();
             }
 

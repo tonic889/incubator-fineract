@@ -25,32 +25,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class FloatingRateRepositoryWrapper {
 
-	private final FloatingRateRepository floatingRateRepository;
+    private final FloatingRateRepository floatingRateRepository;
 
-	@Autowired
-	public FloatingRateRepositoryWrapper(
-			final FloatingRateRepository floatingRateRepository) {
-		this.floatingRateRepository = floatingRateRepository;
-	}
+    @Autowired
+    public FloatingRateRepositoryWrapper(
+            final FloatingRateRepository floatingRateRepository) {
+        this.floatingRateRepository = floatingRateRepository;
+    }
 
-	public FloatingRate retrieveBaseLendingRate() {
-		return this.floatingRateRepository.retrieveBaseLendingRate();
-	}
+    public FloatingRate retrieveBaseLendingRate() {
+        return this.floatingRateRepository.retrieveBaseLendingRate();
+    }
 
-	public FloatingRate findOneWithNotFoundDetection(final Long id) {
-		final FloatingRate floatingRate = this.floatingRateRepository
-				.findOne(id);
-		if (floatingRate == null) {
-			throw new FloatingRateNotFoundException(id);
-		}
-		return floatingRate;
-	}
+    public FloatingRate findOneWithNotFoundDetection(final Long id) {
+        return this.floatingRateRepository
+                .findById(id).orElseThrow(() -> new FloatingRateNotFoundException(id));
+    }
 
-	public void save(FloatingRate newFloatingRate) {
-		this.floatingRateRepository.save(newFloatingRate);
-	}
+    public void save(FloatingRate newFloatingRate) {
+        this.floatingRateRepository.save(newFloatingRate);
+    }
 
-	public void saveAndFlush(FloatingRate floatingRateForUpdate) {
-		this.floatingRateRepository.saveAndFlush(floatingRateForUpdate);
-	}
+    public void saveAndFlush(FloatingRate floatingRateForUpdate) {
+        this.floatingRateRepository.saveAndFlush(floatingRateForUpdate);
+    }
 }

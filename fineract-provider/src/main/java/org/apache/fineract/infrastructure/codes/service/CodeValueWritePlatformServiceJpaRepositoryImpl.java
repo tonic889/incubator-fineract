@@ -19,7 +19,6 @@
 package org.apache.fineract.infrastructure.codes.service;
 
 import java.util.Map;
-
 import org.apache.fineract.infrastructure.codes.domain.Code;
 import org.apache.fineract.infrastructure.codes.domain.CodeRepository;
 import org.apache.fineract.infrastructure.codes.domain.CodeValue;
@@ -73,10 +72,8 @@ public class CodeValueWritePlatformServiceJpaRepositoryImpl implements CodeValue
             this.fromApiJsonDeserializer.validateForCreate(command.json());
 
             final Long codeId = command.entityId();
-            final Code code = this.codeRepository.findOne(codeId);
-            if (code == null) {
-                throw new CodeNotFoundException(codeId);
-            }
+            final Code code = this.codeRepository.findById(codeId)
+                    .orElseThrow(() -> new CodeNotFoundException(codeId));
             final CodeValue codeValue = CodeValue.fromJson(code, command);
             this.codeValueRepository.save(codeValue);
 
@@ -149,8 +146,8 @@ public class CodeValueWritePlatformServiceJpaRepositoryImpl implements CodeValue
         try {
             this.context.authenticatedUser();
 
-            final Code code = this.codeRepository.findOne(codeId);
-            if (code == null) { throw new CodeNotFoundException(codeId); }
+            final Code code = this.codeRepository.findById(codeId)
+                    .orElseThrow(() -> new CodeNotFoundException(codeId));
 
             final CodeValue codeValueToDelete = this.codeValueRepositoryWrapper.findOneWithNotFoundDetection(codeValueId);
 

@@ -19,7 +19,6 @@
 package org.apache.fineract.infrastructure.survey.service;
 
 import java.util.List;
-
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResultBuilder;
@@ -63,7 +62,7 @@ public class WriteLikelihoodServiceImpl implements WriteLikelihoodService {
 
             this.likelihoodDataValidator.validateForUpdate(command);
 
-            final Likelihood likelihood = this.repository.findOne(likelihoodId);
+            final Likelihood likelihood = this.repository.findById(likelihoodId).orElse(null);
 
             if (!likelihood.update(command).isEmpty()) {
                 this.repository.save(likelihood);
@@ -75,7 +74,7 @@ public class WriteLikelihoodServiceImpl implements WriteLikelihoodService {
                     for (Likelihood aLikelihood : likelihoods) {
                         aLikelihood.disable();
                     }
-                    this.repository.save(likelihoods);
+                    this.repository.saveAll(likelihoods);
                 }
 
             }

@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.fineract.accounting.closure.domain.GLClosure;
 import org.apache.fineract.accounting.closure.domain.GLClosureRepository;
@@ -340,10 +339,10 @@ public class AccountingProcessorHelper {
     /**
      * Convenience method that creates a pair of related Debits and Credits for
      * Accrual Based accounting.
-     * 
+     *
      * The target accounts for debits and credits are switched in case of a
      * reversal
-     * 
+     *
      * @param office
      * @param accountTypeToBeDebited
      *            Enum of the placeholder GLAccount to be debited
@@ -375,10 +374,10 @@ public class AccountingProcessorHelper {
     /**
      * Convenience method that creates a pair of related Debits and Credits for
      * Accrual Based accounting.
-     * 
+     *
      * The target accounts for debits and credits are switched in case of a
      * reversal
-     * 
+     *
      * @param office office
      * @param currencyCode currencyCode
      * @param accountTypeToBeDebited  Enum of the placeholder GLAccount to be debited
@@ -435,10 +434,10 @@ public class AccountingProcessorHelper {
     /**
      * Convenience method that creates a pair of related Debits and Credits for
      * Cash Based accounting.
-     * 
+     *
      * The target accounts for debits and credits are switched in case of a
      * reversal
-     * 
+     *
      * @param office
      * @param accountTypeToBeDebited
      *            Enum of the placeholder GLAccount to be debited
@@ -470,10 +469,10 @@ public class AccountingProcessorHelper {
     /**
      * Convenience method that creates a pair of related Debits and Credits for
      * Cash Based accounting.
-     * 
+     *
      * The target accounts for debits and credits are switched in case of a
      * reversal
-     * 
+     *
      * @param office
      * @param accountTypeToBeDebited
      *            Enum of the placeholder GLAccount to be debited
@@ -562,10 +561,10 @@ public class AccountingProcessorHelper {
     /**
      * Convenience method that creates a pair of related Debits and Credits for
      * Cash Based accounting.
-     * 
+     *
      * The target accounts for debits and credits are switched in case of a
      * reversal
-     * 
+     *
      * @param office
      * @param currencyCode
      * @param accountTypeToBeDebited Enum of the placeholder GLAccount to be debited
@@ -721,10 +720,10 @@ public class AccountingProcessorHelper {
     /**
      * Convenience method that creates a pair of related Debits and Credits for
      * Cash Based accounting.
-     * 
+     *
      * The target accounts for debits and credits are switched in case of a
      * reversal
-     * 
+     *
      * @param office office
      * @param currencyCode currencyCode
      * @param accountTypeToBeDebited Enum of the placeholder GLAccount to be debited
@@ -774,11 +773,11 @@ public class AccountingProcessorHelper {
     }
 
     public LoanTransaction getLoanTransactionById(final long loanTransactionId) {
-        return this.loanTransactionRepository.findOne(loanTransactionId);
+        return this.loanTransactionRepository.findById(loanTransactionId).get();
     }
 
     public SavingsAccountTransaction getSavingsTransactionById(final long savingsTransactionId) {
-        return this.savingsAccountTransactionRepository.findOne(savingsTransactionId);
+        return this.savingsAccountTransactionRepository.findById(savingsTransactionId).get();
     }
 
     private void createCreditJournalEntryOrReversalForLoan(final Office office, final String currencyCode, final int accountMappingTypeId,
@@ -828,7 +827,7 @@ public class AccountingProcessorHelper {
         String modifiedTransactionId = transactionId;
         if (StringUtils.isNumeric(transactionId)) {
             long id = Long.parseLong(transactionId);
-            savingsAccountTransaction = this.savingsAccountTransactionRepository.findOne(id);
+            savingsAccountTransaction = this.savingsAccountTransactionRepository.findById(id).get();
             modifiedTransactionId = SAVINGS_TRANSACTION_IDENTIFIER + transactionId;
         }
         final JournalEntry journalEntry = JournalEntry.createNew(office, paymentDetail, account, currencyCode, modifiedTransactionId,
@@ -848,7 +847,7 @@ public class AccountingProcessorHelper {
         String modifiedTransactionId = transactionId;
         if (StringUtils.isNumeric(transactionId)) {
             long id = Long.parseLong(transactionId);
-            loanTransaction = this.loanTransactionRepository.findOne(id);
+            loanTransaction = this.loanTransactionRepository.findById(id).get();
             modifiedTransactionId = LOAN_TRANSACTION_IDENTIFIER + transactionId;
         }
         final JournalEntry journalEntry = JournalEntry.createNew(office, paymentDetail, account, currencyCode, modifiedTransactionId,
@@ -898,7 +897,7 @@ public class AccountingProcessorHelper {
         String modifiedTransactionId = transactionId;
         if (StringUtils.isNumeric(transactionId)) {
             long id = Long.parseLong(transactionId);
-            loanTransaction = this.loanTransactionRepository.findOne(id);
+            loanTransaction = this.loanTransactionRepository.findById(id).get();
             modifiedTransactionId = LOAN_TRANSACTION_IDENTIFIER + transactionId;
         }
         final JournalEntry journalEntry = JournalEntry.createNew(office, paymentDetail, account, currencyCode, modifiedTransactionId,
@@ -918,7 +917,7 @@ public class AccountingProcessorHelper {
         String modifiedTransactionId = transactionId;
         if (StringUtils.isNumeric(transactionId)) {
             long id = Long.parseLong(transactionId);
-            savingsAccountTransaction = this.savingsAccountTransactionRepository.findOne(id);
+            savingsAccountTransaction = this.savingsAccountTransactionRepository.findById(id).get();
             modifiedTransactionId = SAVINGS_TRANSACTION_IDENTIFIER + transactionId;
         }
         final JournalEntry journalEntry = JournalEntry.createNew(office, paymentDetail, account, currencyCode, modifiedTransactionId,
@@ -1041,7 +1040,7 @@ public class AccountingProcessorHelper {
                 "Recent Portfolio changes w.r.t Charges for shares have Broken the accounting code",
                 "Recent Portfolio changes w.r.t Charges for shares have Broken the accounting code"); }
     }
-    
+
     private void createDebitJournalEntryForShares(final Office office, final String currencyCode, final GLAccount account,
             final Long shareAccountId, final String transactionId, final Date transactionDate, final BigDecimal amount) {
         final boolean manualEntry = false;

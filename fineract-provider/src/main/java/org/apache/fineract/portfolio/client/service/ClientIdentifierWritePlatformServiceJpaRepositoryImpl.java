@@ -19,9 +19,7 @@
 package org.apache.fineract.portfolio.client.service;
 
 import java.util.Map;
-
 import javax.persistence.PersistenceException;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.fineract.infrastructure.codes.domain.CodeValue;
 import org.apache.fineract.infrastructure.codes.domain.CodeValueRepositoryWrapper;
@@ -103,9 +101,9 @@ public class ClientIdentifierWritePlatformServiceJpaRepositoryImpl implements Cl
             handleClientIdentifierDataIntegrityViolation(documentTypeLabel, documentTypeId, documentKey, dve.getMostSpecificCause(), dve);
             return CommandProcessingResult.empty();
         }catch(final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleClientIdentifierDataIntegrityViolation(documentTypeLabel, documentTypeId, documentKey, throwable, dve);
-         	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleClientIdentifierDataIntegrityViolation(documentTypeLabel, documentTypeId, documentKey, throwable, dve);
+             return CommandProcessingResult.empty();
         }
     }
 
@@ -125,8 +123,8 @@ public class ClientIdentifierWritePlatformServiceJpaRepositoryImpl implements Cl
             CodeValue documentType = null;
 
             final Client client = this.clientRepository.findOneWithNotFoundDetection(clientId);
-            final ClientIdentifier clientIdentifierForUpdate = this.clientIdentifierRepository.findOne(identifierId);
-            if (clientIdentifierForUpdate == null) { throw new ClientIdentifierNotFoundException(identifierId); }
+            final ClientIdentifier clientIdentifierForUpdate = this.clientIdentifierRepository.findById(identifierId)
+                    .orElseThrow(() -> new ClientIdentifierNotFoundException(identifierId));
 
             final Map<String, Object> changes = clientIdentifierForUpdate.update(command);
 
@@ -165,9 +163,9 @@ public class ClientIdentifierWritePlatformServiceJpaRepositoryImpl implements Cl
             handleClientIdentifierDataIntegrityViolation(documentTypeLabel, documentTypeId, documentKey, dve.getMostSpecificCause(), dve);
             return new CommandProcessingResult(Long.valueOf(-1));
         }catch(final PersistenceException dve) {
-        	Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
-        	handleClientIdentifierDataIntegrityViolation(documentTypeLabel, documentTypeId, documentKey, throwable, dve);
-         	return CommandProcessingResult.empty();
+            Throwable throwable = ExceptionUtils.getRootCause(dve.getCause()) ;
+            handleClientIdentifierDataIntegrityViolation(documentTypeLabel, documentTypeId, documentKey, throwable, dve);
+             return CommandProcessingResult.empty();
         }
     }
 
@@ -177,8 +175,8 @@ public class ClientIdentifierWritePlatformServiceJpaRepositoryImpl implements Cl
 
         final Client client = this.clientRepository.findOneWithNotFoundDetection(clientId);
 
-        final ClientIdentifier clientIdentifier = this.clientIdentifierRepository.findOne(identifierId);
-        if (clientIdentifier == null) { throw new ClientIdentifierNotFoundException(identifierId); }
+        final ClientIdentifier clientIdentifier = this.clientIdentifierRepository.findById(identifierId)
+                .orElseThrow(() -> new ClientIdentifierNotFoundException(identifierId));
         this.clientIdentifierRepository.delete(clientIdentifier);
 
         return new CommandProcessingResultBuilder() //

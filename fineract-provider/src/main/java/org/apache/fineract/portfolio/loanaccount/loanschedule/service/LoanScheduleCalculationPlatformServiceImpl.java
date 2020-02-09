@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.fineract.infrastructure.configuration.domain.ConfigurationDomainService;
 import org.apache.fineract.infrastructure.core.api.JsonQuery;
 import org.apache.fineract.infrastructure.core.data.ApiParameterError;
@@ -107,8 +106,8 @@ public class LoanScheduleCalculationPlatformServiceImpl implements LoanScheduleC
          * same
          **/
         final Long productId = this.fromJsonHelper.extractLongNamed("productId", query.parsedJson());
-        final LoanProduct loanProduct = this.loanProductRepository.findOne(productId);
-        if (loanProduct == null) { throw new LoanProductNotFoundException(productId); }
+        final LoanProduct loanProduct = this.loanProductRepository.findById(productId)
+                .orElseThrow(() -> new LoanProductNotFoundException(productId));
 
         if (validateParams) {
             boolean isMeetingMandatoryForJLGLoans = configurationDomainService.isMeetingMandatoryForJLGLoans();

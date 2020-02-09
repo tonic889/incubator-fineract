@@ -25,9 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
-
 import org.apache.fineract.infrastructure.core.data.ApiParameterError;
 import org.apache.fineract.infrastructure.core.data.DataValidatorBuilder;
 import org.apache.fineract.infrastructure.core.exception.PlatformApiDataValidationException;
@@ -75,7 +73,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
     private final DepositAccountOnHoldTransactionRepository depositAccountOnHoldTransactionRepository;
     private final Map<Long, Long> releaseLoanIds = new HashMap<>(2);
     private final SavingsAccountAssembler savingsAccountAssembler;
-    
+
 
     @Autowired
     public GuarantorDomainServiceImpl(final GuarantorRepository guarantorRepository,
@@ -293,7 +291,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
     /**
      * Method reverses all blocked fund(both hold and release) transactions.
      * example: reverses all transactions on undo approval of loan account.
-     * 
+     *
      */
     private void reverseAllFundTransaction(final Loan loan) {
 
@@ -310,7 +308,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
 
             if (!guarantorFundingDetailList.isEmpty()) {
                 loan.setGuaranteeAmount(null);
-                this.guarantorFundingRepository.save(guarantorFundingDetailList);
+                this.guarantorFundingRepository.saveAll(guarantorFundingDetailList);
             }
         }
     }
@@ -318,7 +316,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
     /**
      * Method holds all guarantor's guarantee amount for a loan account.
      * example: hold funds on approval of loan account.
-     * 
+     *
      */
     private void holdGuarantorFunds(final Loan loan) {
         if (loan.loanProduct().isHoldGuaranteeFundsEnabled()) {
@@ -369,8 +367,8 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
             }
             loan.setGuaranteeAmount(totalGuarantee);
             if (!guarantorFundingDetailList.isEmpty()) {
-                this.depositAccountOnHoldTransactionRepository.save(onHoldTransactions);
-                this.guarantorFundingRepository.save(guarantorFundingDetailList);
+                this.depositAccountOnHoldTransactionRepository.saveAll(onHoldTransactions);
+                this.guarantorFundingRepository.saveAll(guarantorFundingDetailList);
             }
         }
     }
@@ -380,7 +378,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
      * and then self guarantee) for a loan account in the portion of guarantee
      * percentage on a paid principal. example: releases funds on repayments of
      * loan account.
-     * 
+     *
      */
     private void releaseGuarantorFunds(final LoanTransaction loanTransaction) {
         final Loan loan = loanTransaction.getLoan();
@@ -422,8 +420,8 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
                 }
 
                 if (!externalGuarantorList.isEmpty()) {
-                    this.depositAccountOnHoldTransactionRepository.save(accountOnHoldTransactions);
-                    this.guarantorFundingRepository.save(externalGuarantorList);
+                    this.depositAccountOnHoldTransactionRepository.saveAll(accountOnHoldTransactions);
+                    this.guarantorFundingRepository.saveAll(externalGuarantorList);
                 }
             }
         }
@@ -433,7 +431,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
     /**
      * Method releases all guarantor's guarantee amount. example: releases funds
      * on write-off of a loan account.
-     * 
+     *
      */
     private void releaseAllGuarantors(final LoanTransaction loanTransaction) {
         Loan loan = loanTransaction.getLoan();
@@ -463,8 +461,8 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
             }
 
             if (!saveGuarantorFundingDetails.isEmpty()) {
-                this.depositAccountOnHoldTransactionRepository.save(onHoldTransactions);
-                this.guarantorFundingRepository.save(saveGuarantorFundingDetails);
+                this.depositAccountOnHoldTransactionRepository.saveAll(onHoldTransactions);
+                this.guarantorFundingRepository.saveAll(saveGuarantorFundingDetails);
             }
         }
     }
@@ -476,7 +474,8 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
      */
     private void completeGuarantorFund(final LoanTransaction loanTransaction) {
         Loan loan = loanTransaction.getLoan();
-        GuarantorFundingDetails guarantorFundingDetails = this.guarantorFundingRepository.findOne(releaseLoanIds.get(loan.getId()));
+        GuarantorFundingDetails guarantorFundingDetails = this.guarantorFundingRepository.findById(releaseLoanIds.get(loan.getId()))
+                .orElse(null);
         if (guarantorFundingDetails != null) {
             BigDecimal amountForRelease = loanTransaction.getAmount(loan.getCurrency()).getAmount();
             BigDecimal guarantorGuarantee = amountForRelease;
@@ -484,7 +483,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
             final List<DepositAccountOnHoldTransaction> accountOnHoldTransactions = new ArrayList<>();
             calculateAndRelaseGuarantorFunds(guarantorList, guarantorGuarantee, amountForRelease, loanTransaction,
                     accountOnHoldTransactions);
-            this.depositAccountOnHoldTransactionRepository.save(accountOnHoldTransactions);
+            this.depositAccountOnHoldTransactionRepository.saveAll(accountOnHoldTransactions);
             this.guarantorFundingRepository.save(guarantorFundingDetails);
         }
     }
@@ -525,7 +524,7 @@ public class GuarantorDomainServiceImpl implements GuarantorDomainService {
             fundingTransaction.reverseTransaction();
         }
         if (!fundingTransactions.isEmpty()) {
-            this.guarantorFundingTransactionRepository.save(fundingTransactions);
+            this.guarantorFundingTransactionRepository.saveAll(fundingTransactions);
         }
     }
 
